@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/halitosis_generator",
+    "up": "extrautilitiesrebirth:block/halitosis_generator",
+    "north": "extrautilitiesrebirth:block/halitosis_generator_front",
+    "east": "extrautilitiesrebirth:block/halitoses_generator_side",
+    "south": "extrautilitiesrebirth:block/halitoses_generator_side",
+    "west": "extrautilitiesrebirth:block/halitoses_generator_side",
+    "particle": "extrautilitiesrebirth:block/halitosis_generator"
+  }
+}

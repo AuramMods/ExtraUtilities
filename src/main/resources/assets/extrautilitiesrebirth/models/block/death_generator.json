@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/death_generator_top_2",
+    "up": "extrautilitiesrebirth:block/death_generator_top_2",
+    "north": "extrautilitiesrebirth:block/death_generator_top",
+    "east": "extrautilitiesrebirth:block/death_generator_side",
+    "south": "extrautilitiesrebirth:block/death_generator_side",
+    "west": "extrautilitiesrebirth:block/death_generator_side",
+    "particle": "extrautilitiesrebirth:block/death_generator_top_2"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/redstoneclock_animated",
+    "up": "extrautilitiesrebirth:block/redstoneclock_animated",
+    "north": "extrautilitiesrebirth:block/redstoneclock_animated",
+    "east": "extrautilitiesrebirth:block/redstoneclock_animated",
+    "south": "extrautilitiesrebirth:block/redstoneclock_animated",
+    "west": "extrautilitiesrebirth:block/redstoneclock_animated",
+    "particle": "extrautilitiesrebirth:block/redstoneclock_animated"
+  }
+}

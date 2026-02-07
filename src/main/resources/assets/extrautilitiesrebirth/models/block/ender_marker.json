@@ -1,0 +1,8 @@
+{
+  "parent": "extrautilitiesrebirth:custom/marker",
+  "textures": {
+    "all": "extrautilitiesrebirth:block/endmarker",
+    "particle": "extrautilitiesrebirth:block/endmarker",
+    "texture": "extrautilitiesrebirth:block/endmarker"
+  }
+}

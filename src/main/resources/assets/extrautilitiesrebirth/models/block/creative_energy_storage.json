@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/creative_base",
+    "up": "extrautilitiesrebirth:block/creative_base",
+    "north": "extrautilitiesrebirth:block/creative_base",
+    "east": "extrautilitiesrebirth:block/creative_base",
+    "south": "extrautilitiesrebirth:block/creative_base",
+    "west": "extrautilitiesrebirth:block/creative_base",
+    "particle": "extrautilitiesrebirth:block/creative_base"
+  }
+}

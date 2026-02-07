@@ -1,0 +1,8 @@
+{
+  "parent": "extrautilitiesrebirth:custom/solar",
+  "textures": {
+    "all": "extrautilitiesrebirth:block/solar_panel",
+    "particle": "extrautilitiesrebirth:block/solar_panel",
+    "texture": "extrautilitiesrebirth:block/solar_panel"
+  }
+}

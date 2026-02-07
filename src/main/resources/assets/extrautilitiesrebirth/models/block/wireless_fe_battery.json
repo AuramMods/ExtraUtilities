@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/wireless_fe_battery_top",
+    "up": "extrautilitiesrebirth:block/wireless_fe_battery_top",
+    "north": "extrautilitiesrebirth:block/wireless_fe_battery_side",
+    "east": "extrautilitiesrebirth:block/wireless_fe_battery_side",
+    "south": "extrautilitiesrebirth:block/wireless_fe_battery_side",
+    "west": "extrautilitiesrebirth:block/wireless_fe_battery_side",
+    "particle": "extrautilitiesrebirth:block/wireless_fe_battery_top"
+  }
+}

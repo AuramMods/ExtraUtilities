@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone",
+    "up": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone",
+    "north": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone",
+    "east": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone",
+    "south": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone",
+    "west": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone",
+    "particle": "extrautilitiesrebirth:block/quintuple_compressed_cobblestone"
+  }
+}

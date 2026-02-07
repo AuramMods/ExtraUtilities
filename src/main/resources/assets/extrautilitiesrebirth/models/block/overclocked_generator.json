@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/overclocked_generator_top",
+    "up": "extrautilitiesrebirth:block/overclocked_generator_top",
+    "north": "extrautilitiesrebirth:block/overclocked_generator_front",
+    "east": "extrautilitiesrebirth:block/overclocked_side",
+    "south": "extrautilitiesrebirth:block/overclocked_side",
+    "west": "extrautilitiesrebirth:block/overclocked_side",
+    "particle": "extrautilitiesrebirth:block/overclocked_generator_top"
+  }
+}

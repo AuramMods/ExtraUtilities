@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/potion_generator_top",
+    "up": "extrautilitiesrebirth:block/potion_generator_top",
+    "north": "extrautilitiesrebirth:block/potion_generator",
+    "east": "extrautilitiesrebirth:block/potion_generator_side",
+    "south": "extrautilitiesrebirth:block/potion_generator_side",
+    "west": "extrautilitiesrebirth:block/potion_generator_side",
+    "particle": "extrautilitiesrebirth:block/potion_generator_top"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "extrautilitiesrebirth:custom/speed3",
+  "textures": {
+    "all": "extrautilitiesrebirth:block/quarryupgrade8",
+    "particle": "extrautilitiesrebirth:block/quarryupgrade8",
+    "texture": "extrautilitiesrebirth:block/quarryupgrade8"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/chiseled_stone_bricks",
+    "up": "extrautilitiesrebirth:block/chiseled_stone_bricks",
+    "north": "extrautilitiesrebirth:block/chiseled_stone_bricks",
+    "east": "extrautilitiesrebirth:block/chiseled_stone_bricks",
+    "south": "extrautilitiesrebirth:block/chiseled_stone_bricks",
+    "west": "extrautilitiesrebirth:block/chiseled_stone_bricks",
+    "particle": "extrautilitiesrebirth:block/chiseled_stone_bricks"
+  }
+}

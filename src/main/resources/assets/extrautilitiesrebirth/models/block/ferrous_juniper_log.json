@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/oak_log_top",
+    "up": "extrautilitiesrebirth:block/oak_log_top",
+    "north": "extrautilitiesrebirth:block/oak_log",
+    "east": "extrautilitiesrebirth:block/oak_log",
+    "south": "extrautilitiesrebirth:block/oak_log",
+    "west": "extrautilitiesrebirth:block/oak_log",
+    "particle": "extrautilitiesrebirth:block/oak_log_top"
+  }
+}

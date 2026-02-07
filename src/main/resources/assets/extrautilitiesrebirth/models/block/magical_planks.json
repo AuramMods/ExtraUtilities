@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/magical_planks",
+    "up": "extrautilitiesrebirth:block/magical_planks",
+    "north": "extrautilitiesrebirth:block/magical_planks",
+    "east": "extrautilitiesrebirth:block/magical_planks",
+    "south": "extrautilitiesrebirth:block/magical_planks",
+    "west": "extrautilitiesrebirth:block/magical_planks",
+    "particle": "extrautilitiesrebirth:block/magical_planks"
+  }
+}

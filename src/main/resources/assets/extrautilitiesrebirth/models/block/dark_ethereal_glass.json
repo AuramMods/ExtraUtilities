@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "extrautilitiesrebirth:block/dark_ethereal_glass",
+    "up": "extrautilitiesrebirth:block/dark_ethereal_glass",
+    "north": "extrautilitiesrebirth:block/dark_ethereal_glass",
+    "east": "extrautilitiesrebirth:block/dark_ethereal_glass",
+    "south": "extrautilitiesrebirth:block/dark_ethereal_glass",
+    "west": "extrautilitiesrebirth:block/dark_ethereal_glass",
+    "particle": "extrautilitiesrebirth:block/dark_ethereal_glass"
+  }
+}

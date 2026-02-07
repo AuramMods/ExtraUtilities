@@ -1,0 +1,7 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "extrautilitiesrebirth:block/chandelier",
+    "particle": "extrautilitiesrebirth:block/chandelier"
+  }
+}
