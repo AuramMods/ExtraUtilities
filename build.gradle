@@ -61,12 +61,10 @@ tasks.withType(JavaCompile).configureEach {
 
 apply from: 'mcreator.gradle'
 
-// --- FIXED DEPLOY TASK ---
-
 task deployToModpack(type: Copy) {
     dependsOn 'reobfJar'
     from tasks.jar
-    into file("../Auram/minecraft/mods")
+    into file("/Users/cyberpwn/Library/Application Support/PrismLauncher/instances/Auram/minecraft/mods")
 
     rename { String fileName ->
         "ExtraUtilities.jar"
