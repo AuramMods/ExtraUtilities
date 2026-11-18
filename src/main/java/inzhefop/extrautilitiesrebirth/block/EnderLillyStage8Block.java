@@ -10,7 +10,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.BlockHitResult;
 
 
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.SoundType;
@@ -19,9 +18,9 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionResult;
@@ -32,12 +31,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
 import java.util.List;
-import java.util.Collections;
 
-import inzhefop.extrautilitiesrebirth.procedures.EnderLillyStage8ColiderProcedure;
 import inzhefop.extrautilitiesrebirth.procedures.EnderLillyStage1BlockValidPlacementConditionProcedure;
-import inzhefop.extrautilitiesrebirth.procedures.EnderLillyRightClickedProcedureProcedure;
-import inzhefop.extrautilitiesrebirth.procedures.EnderLillyDestroyedProcedureProcedure;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 
 public class EnderLillyStage8Block extends Block {
@@ -86,41 +81,23 @@ public class EnderLillyStage8Block extends Block {
 		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
 		if (!dropsOriginal.isEmpty())
 			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(Blocks.AIR));
+		return List.of(new ItemStack(ExtrautilitiesrebirthModBlocks.ENDER_LILLY_STAGE_1.get()), new ItemStack(Items.ENDER_PEARL));
 	}
 
 	@Override
-	public boolean onDestroyedByPlayer(BlockState blockstate, Level world, BlockPos pos, Player entity, boolean willHarvest, FluidState fluid) {
-		boolean retval = super.onDestroyedByPlayer(blockstate, world, pos, entity, willHarvest, fluid);
-		EnderLillyDestroyedProcedureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
-		return retval;
+	public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+		if (!level.isClientSide()) {
+			entity.hurt(entity.damageSources().generic(), 1);
+		}
 	}
 
 	@Override
-	public void wasExploded(Level world, BlockPos pos, Explosion e) {
-		super.wasExploded(world, pos, e);
-		EnderLillyDestroyedProcedureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
-	}
-
-	@Override
-	public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
-		super.entityInside(blockstate, world, pos, entity);
-		EnderLillyStage8ColiderProcedure.execute(entity);
-	}
-
-	@Override
-	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		double hitX = hit.getLocation().x;
-		double hitY = hit.getLocation().y;
-		double hitZ = hit.getLocation().z;
-		Direction direction = hit.getDirection();
-
-		EnderLillyRightClickedProcedureProcedure.execute(world, x, y, z);
-		return InteractionResult.SUCCESS;
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (!level.isClientSide() && level.getBlockState(pos).is(this)
+				&& level.setBlockAndUpdate(pos, ExtrautilitiesrebirthModBlocks.ENDER_LILLY_STAGE_1.get().defaultBlockState())) {
+			popResource(level, pos, new ItemStack(Items.ENDER_PEARL));
+		}
+		return InteractionResult.sidedSuccess(level.isClientSide());
 	}
 
 	@OnlyIn(Dist.CLIENT)
