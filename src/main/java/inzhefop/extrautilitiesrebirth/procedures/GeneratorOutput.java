@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 
-final class GeneratorOutput {
+public final class GeneratorOutput {
     private static final int TRANSFER_LIMIT = 100_000;
     private static final Direction[] OUTPUT_SIDES = {
             Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH, Direction.UP, Direction.DOWN
@@ -63,7 +63,7 @@ final class GeneratorOutput {
         }
     }
 
-    static void transferStoredEnergy(ServerLevel level, BlockEntity generator, int limit) {
+    public static void transferStoredEnergy(ServerLevel level, BlockEntity generator, int limit) {
         generator.getCapability(ForgeCapabilities.ENERGY)
                 .ifPresent(source -> transfer(level, generator.getBlockPos(), source, limit));
     }

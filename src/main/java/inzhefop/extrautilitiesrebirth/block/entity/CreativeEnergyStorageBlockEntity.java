@@ -1,172 +1,80 @@
 package inzhefop.extrautilitiesrebirth.block.entity;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-
-import net.minecraftforge.energy.EnergyStorage;
-
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-
-import net.minecraft.network.chat.Component;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
 
-import java.util.stream.IntStream;
+public class CreativeEnergyStorageBlockEntity extends BlockEntity {
+    private static final IEnergyStorage SOURCE = new IEnergyStorage() {
+        @Override
+        public int receiveEnergy(int amount, boolean simulate) {
+            return 0;
+        }
 
-import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
+        @Override
+        public int extractEnergy(int amount, boolean simulate) {
+            return Math.max(0, amount);
+        }
 
-public class CreativeEnergyStorageBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(0, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+        @Override
+        public int getEnergyStored() {
+            return Integer.MAX_VALUE;
+        }
 
-	public CreativeEnergyStorageBlockEntity(BlockPos position, BlockState state) {
-		super(ExtrautilitiesrebirthModBlockEntities.CREATIVE_ENERGY_STORAGE.get(), position, state);
-	} 
+        @Override
+        public int getMaxEnergyStored() {
+            return Integer.MAX_VALUE;
+        }
 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-		if (compound.get("energyStorage") instanceof IntTag intTag)
-			energyStorage.deserializeNBT(intTag);
-	}
+        @Override
+        public boolean canExtract() {
+            return true;
+        }
 
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-		compound.put("energyStorage", energyStorage.serializeNBT());
-	}
+        @Override
+        public boolean canReceive() {
+            return false;
+        }
+    };
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> SOURCE);
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+    public CreativeEnergyStorageBlockEntity(BlockPos pos, BlockState state) {
+        super(ExtrautilitiesrebirthModBlockEntities.CREATIVE_ENERGY_STORAGE.get(), pos, state);
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putInt("energyStorage", SOURCE.getEnergyStored());
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
+        if (!isRemoved() && capability == ForgeCapabilities.ENERGY) {
+            return energy.cast();
+        }
+        return super.getCapability(capability, side);
+    }
 
-	@Override
-	public Component getDefaultName() {
-		return Component.literal("creative_energy_storage");
-	}
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        energy.invalidate();
+    }
 
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
-
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return ChestMenu.threeRows(id, inventory);
-	}
-
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Creative Energy Storage");
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
-
-	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
-
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		return true;
-	}
-
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
-
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
-
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		return true;
-	}
-
-	private final EnergyStorage energyStorage = new EnergyStorage(2147483647, 2147483647, 2147483647, 2147483647) {
-		@Override
-		public int receiveEnergy(int maxReceive, boolean simulate) {
-			int retval = super.receiveEnergy(maxReceive, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-
-		@Override
-		public int extractEnergy(int maxExtract, boolean simulate) {
-			int retval = super.extractEnergy(maxExtract, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-	};
-
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-			return handlers[facing.ordinal()].cast();
-		if (!this.remove && capability == ForgeCapabilities.ENERGY)
-			return LazyOptional.of(() -> energyStorage).cast();
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        energy = LazyOptional.of(() -> SOURCE);
+    }
 }

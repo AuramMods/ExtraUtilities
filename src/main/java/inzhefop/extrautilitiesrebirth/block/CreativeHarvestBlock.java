@@ -1,48 +1,37 @@
-
 package inzhefop.extrautilitiesrebirth.block;
 
-
-
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.core.BlockPos;
-
-import java.util.List;
-import java.util.Collections;
-
-import inzhefop.extrautilitiesrebirth.procedures.CreativeHarvestDestroyedProcedure;
-import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FluidState;
 
 public class CreativeHarvestBlock extends Block {
-	public CreativeHarvestBlock() {
-		super(BlockBehaviour.Properties.of().sound(SoundType.STONE).strength(-1, 3600000));
-	}
+    public CreativeHarvestBlock() {
+        super(Properties.of().sound(SoundType.STONE).strength(-1, 3600000));
+    }
 
-	@Override
-	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
-		return 15;
-	}
+    @Override
+    public int getLightBlock(BlockState state, BlockGetter level, BlockPos pos) {
+        return 15;
+    }
 
-	@Override
-	public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
-		List<ItemStack> dropsOriginal = super.getDrops(state, builder);
-		if (!dropsOriginal.isEmpty())
-			return dropsOriginal;
-		return Collections.singletonList(new ItemStack(Blocks.AIR));
-	}
-
-	@Override
-	public boolean onDestroyedByPlayer(BlockState blockstate, Level world, BlockPos pos, Player entity, boolean willHarvest, FluidState fluid) {
-		boolean retval = super.onDestroyedByPlayer(blockstate, world, pos, entity, willHarvest, fluid);
-		CreativeHarvestDestroyedProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
-		return retval;
-	}
+    @Override
+    public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
+        if (!player.isShiftKeyDown()) {
+            if (!level.isClientSide) {
+                level.sendBlockUpdated(pos, state, state, UPDATE_CLIENTS);
+            }
+            return false;
+        }
+        boolean removed = super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid);
+        if (removed && !level.isClientSide) {
+            popResource(level, pos, new ItemStack(this));
+        }
+        return removed;
+    }
 }

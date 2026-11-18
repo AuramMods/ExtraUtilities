@@ -1,149 +1,128 @@
 package inzhefop.extrautilitiesrebirth.block.entity;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
+import inzhefop.extrautilitiesrebirth.world.inventory.CreativeChestGUIMenu;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.ContainerHelper;
+import net.minecraft.world.WorldlyContainer;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.wrapper.SidedInvWrapper;
 
 import javax.annotation.Nullable;
 
-import java.util.stream.IntStream;
-
-import io.netty.buffer.Unpooled;
-
-import inzhefop.extrautilitiesrebirth.world.inventory.CreativeChestGUIMenu;
-import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
-
 public class CreativeChestBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+    public static final int TEMPLATE_SLOT = 0;
+    public static final int OUTPUT_SLOT = 1;
+    public static final int SLOT_COUNT = 2;
+    private static final int[] SLOTS = {TEMPLATE_SLOT, OUTPUT_SLOT};
 
-	public CreativeChestBlockEntity(BlockPos position, BlockState state) {
-		super(ExtrautilitiesrebirthModBlockEntities.CREATIVE_CHEST.get(), position, state);
-	}
- 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-	}
+    private NonNullList<ItemStack> stacks = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
+    private LazyOptional<IItemHandler> automation = LazyOptional.of(() -> new SidedInvWrapper(this, Direction.UP));
 
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-	}
+    public CreativeChestBlockEntity(BlockPos pos, BlockState state) {
+        super(ExtrautilitiesrebirthModBlockEntities.CREATIVE_CHEST.get(), pos, state);
+    }
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        stacks = NonNullList.withSize(SLOT_COUNT, ItemStack.EMPTY);
+        if (!tryLoadLootTable(tag)) {
+            ContainerHelper.loadAllItems(tag, stacks);
+        }
+    }
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        if (!trySaveLootTable(tag)) {
+            ContainerHelper.saveAllItems(tag, stacks);
+        }
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    public void refillOutput() {
+        ItemStack template = getItem(TEMPLATE_SLOT);
+        ItemStack output = getItem(OUTPUT_SLOT);
+        int count = template.isEmpty() ? 0 : Math.min(getMaxStackSize(), template.getMaxStackSize());
+        if (count != output.getCount() || !ItemStack.isSameItemSameTags(template, output)) {
+            setItem(OUTPUT_SLOT, template.copyWithCount(count));
+        }
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    @Override
+    public int getContainerSize() {
+        return SLOT_COUNT;
+    }
 
-	@Override
-	public Component getDefaultName() {
-		return Component.literal("creative_chest");
-	}
+    @Override
+    protected Component getDefaultName() {
+        return Component.translatable("block.extrautilitiesrebirth.creative_chest");
+    }
 
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
+    @Override
+    protected AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        return new CreativeChestGUIMenu(id, inventory, this);
+    }
 
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new CreativeChestGUIMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
-	}
+    @Override
+    protected NonNullList<ItemStack> getItems() {
+        return stacks;
+    }
 
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Creative Chest");
-	}
+    @Override
+    protected void setItems(NonNullList<ItemStack> items) {
+        stacks = items;
+    }
 
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
+    @Override
+    public boolean canPlaceItem(int slot, ItemStack stack) {
+        return slot == TEMPLATE_SLOT;
+    }
 
-	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
+    @Override
+    public int[] getSlotsForFace(Direction side) {
+        return SLOTS;
+    }
 
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		if (index == 1)
-			return false;
-		return true;
-	}
+    @Override
+    public boolean canPlaceItemThroughFace(int slot, ItemStack stack, @Nullable Direction side) {
+        return canPlaceItem(slot, stack);
+    }
 
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
+    @Override
+    public boolean canTakeItemThroughFace(int slot, ItemStack stack, Direction side) {
+        return slot == OUTPUT_SLOT;
+    }
 
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
+        if (!isRemoved() && capability == ForgeCapabilities.ITEM_HANDLER) {
+            return automation.cast();
+        }
+        return super.getCapability(capability, side);
+    }
 
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		if (index == 0)
-			return false;
-		return true;
-	}
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        automation.invalidate();
+    }
 
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-			return handlers[facing.ordinal()].cast();
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        automation = LazyOptional.of(() -> new SidedInvWrapper(this, Direction.UP));
+    }
 }
