@@ -1,41 +1,22 @@
-
 package inzhefop.extrautilitiesrebirth.item.inventory;
 
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.ItemStackHandler;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.event.entity.item.ItemTossEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.api.distmarker.Dist;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
-import net.minecraft.client.Minecraft;
 
 import javax.annotation.Nullable;
 import javax.annotation.Nonnull;
 
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
-import inzhefop.extrautilitiesrebirth.client.gui.GoldenBagGUIScreen;
 
-@Mod.EventBusSubscriber(Dist.CLIENT)
 public class GoldenBagOfHoldingInventoryCapability implements ICapabilitySerializable<CompoundTag> {
-	@SubscribeEvent
-	@OnlyIn(Dist.CLIENT)
-	public static void onItemDropped(ItemTossEvent event) {
-		if (event.getEntity().getItem().getItem() == ExtrautilitiesrebirthModItems.GOLDEN_BAG_OF_HOLDING.get()) {
-			if (Minecraft.getInstance().screen instanceof GoldenBagGUIScreen) {
-				Minecraft.getInstance().player.closeContainer();
-			}
-		}
-	}
-
 	private final LazyOptional<ItemStackHandler> inventory = LazyOptional.of(this::createItemHandler);
 
 	@Override

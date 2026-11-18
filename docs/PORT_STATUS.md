@@ -18,7 +18,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Placement and access | Angel Block, Chandelier, Chunk Loading Wand, Overworld Portal, and Portable Globe. Verify placement and activation in the intended dimensions, plus chunk and portal behavior after reload. |
 | [ ] | Spikes and Cursed Earth | Wood, stone, iron, gold, diamond, and creative spikes, Cursed Earth, and Drop of Evil. Verify damage, mob spawning, drops, conversion, and light behavior. |
 | [ ] | Ender Lilies | Endstone feature and all eight stages. Verify End world generation, placement, growth, harvesting, seed drops, and collision. |
-| [ ] | Item and fluid storage | The baseline Gold Chest retained items in slots 0 and 53 across a server restart. Drum GameTests cover all four finite capacities, sided automation, comparators, bucket transfers, and fluid retained when the drum is moved. A creative player can configure the Creative Drum to supply an unlimited amount of its sample fluid. Filled and emptied a Stone Drum by hand in the muted client. Creative Chest tests cover item data, legal stack sizes, template protection, reload, and menu validity. Continue with the Gold Chest and Golden Bag. |
+| [x] | Item and fluid storage | Gold Chest and Golden Bag tests cover all 54 slots, item data, and menu validity. The bag protects the held stack, rejects another bag, and shares its inventory in multiplayer item packets. The chest retained both sampled slots on an upgraded dedicated server after restart. Creative Chest tests cover item data, legal stack sizes, template protection and reload. Drum tests cover all four finite capacities, sided automation, comparators, bucket transfers, and fluid retained when moved. A creative player can configure the Creative Drum to supply an unlimited amount of its sample fluid. |
 | [ ] | Disposal and creative utilities | Trash Can GameTests cover all three variants, including item menu transfers, fluid buckets, sided automation, and input-only capabilities. The muted client confirmed item shift-click disposal and that the Fluid Trash Can returned the empty bucket. Creative Energy Storage supplies unlimited FE and charges machines on all six sides. Creative Harvest stays in place on an ordinary creative break and drops one copy when broken while sneaking. Continue with the Creative Inventory Sample. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [x] | Redstone Clock | Both registered states alternate every 18 ticks. GameTests cover adjacent comparator output and restoration of the saved phase. An upgraded dedicated-server save retained the clock's data and its comparator cycled between 0 and 15 after restart. |
@@ -57,6 +57,9 @@ Block items follow the entry for the block that registers them.
   slots, and they disappeared on the next server tick.
   Shift-clicking a named, damaged pickaxe into the Creative Chest produced a
   single copy with the same name and damage. Taking the output kept the original.
+  The Golden Bag kept both deposited stacks on reopening and prevented the
+  open bag from being dropped. Shift-clicking newly named books into the Gold
+  Chest kept them separate from the differently named books already stored.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
   A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
@@ -65,7 +68,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 57 tests passed in both configurations.
+  optional development mods. All 62 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and
