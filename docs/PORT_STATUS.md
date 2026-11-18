@@ -27,7 +27,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [ ] | Ender Thermic Pump | Verify fluid output, use of FE, range, replacement behavior, and persistence. |
-| [ ] | Automation and production | Mechanical Miner tests cover ordinary ore, named stacks, ripe Ender Lily drops, saved overflow, sided extraction, and upgrades. Mechanical User tests cover placement with block data, mode controls, tagged drops across reload, and mob attacks with sword wear. Sorter tests cover both routes, named stacks, occupied slots, sided insertion, retry after reload, and invalid filters. Verify the Furnace, Enchanter, Resonator, and Inventory Interface. |
+| [ ] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. Verify the three updated production menus in the client and finish the Inventory Interface audit. |
 | [ ] | Tools | Glass Cutter, Reinforced Glass Cutter, Wrench, Fire Axe, Kikoku, Healing Axe, Erosion Shovel, Precision Shears, Reversing Hoe, Etheric Sword, and Destruction Pickaxe. Verify tool actions, durability, drops, and client/server behavior. |
 | [ ] | Mob capture | Golden Lasso. GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Verify real client interactions. |
 | [ ] | Player utilities | Division Sigil, Magical Apple, Golden Feather, Chicken Wing Ring, Advanced Chicken Wing Ring, Angel Ring, and Ring of the Flying Squid. Compare intended actions and progression to the workspace. Review the Angel Ring's external integration. |
@@ -58,7 +58,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 37 quarry, generator, lasso, and automation tests passed in
+  optional development mods. The 44 quarry, generator, lasso, and automation tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. The packaged builds with the generator

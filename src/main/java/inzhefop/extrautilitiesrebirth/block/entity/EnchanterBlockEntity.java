@@ -1,183 +1,94 @@
 package inzhefop.extrautilitiesrebirth.block.entity;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-
-import net.minecraftforge.energy.EnergyStorage;
-
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-
-import javax.annotation.Nullable;
-
-import java.util.stream.IntStream;
-
-import io.netty.buffer.Unpooled;
-
-import inzhefop.extrautilitiesrebirth.world.inventory.EnchanterGUIMenu;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
+import inzhefop.extrautilitiesrebirth.world.inventory.EnchanterGUIMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class EnchanterBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(4, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+import java.util.Map;
+import java.util.function.Predicate;
 
-	public EnchanterBlockEntity(BlockPos position, BlockState state) {
-		super(ExtrautilitiesrebirthModBlockEntities.ENCHANTER.get(), position, state);
-	} 
+public class EnchanterBlockEntity extends PoweredProcessorBlockEntity {
+    private static final int UPGRADE_DIVISOR = 12;
 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-		if (compound.get("energyStorage") instanceof IntTag intTag)
-			energyStorage.deserializeNBT(intTag);
-	}
+    private static final class Recipes {
+        private static final Map<Item, Recipe> BY_INPUT = Map.of(
+                Blocks.BOOKSHELF.asItem(), new Recipe(stack -> stack.is(Items.LAPIS_LAZULI),
+                        ExtrautilitiesrebirthModBlocks.MAGICAL_WOOD.get(), 1, 1, 1, 64_000, 1_600),
+                Items.GOLD_INGOT, new Recipe(stack -> stack.is(Items.LAPIS_LAZULI),
+                        ExtrautilitiesrebirthModItems.ENCHANTED_INGOT.get(), 1, 1, 1, 8_000, 200),
+                Blocks.GOLD_BLOCK.asItem(), new Recipe(stack -> stack.is(Items.LAPIS_LAZULI),
+                        ExtrautilitiesrebirthModBlocks.BLOCK_OF_ENCHANED_METAL.get(), 1, 9, 1, 24_000, 600),
+                Blocks.IRON_BLOCK.asItem(), new Recipe(stack -> stack.is(Items.NETHER_STAR),
+                        ExtrautilitiesrebirthModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.get(), 8, 9, 8, 192_000, 4_800),
+                Items.APPLE, new Recipe(stack -> stack.is(Items.LAPIS_LAZULI),
+                        ExtrautilitiesrebirthModItems.MAGICAL_APPLE.get(), 16, 4, 16, 16_000, 400),
+                Items.IRON_INGOT, new Recipe(stack -> stack.is(Items.NETHER_STAR),
+                        ExtrautilitiesrebirthModItems.EVIL_INFUSED_IRON_INGOT.get(), 8, 1, 8, 24_000, 1_600),
+                ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_UPGRADE_BASE.get().asItem(),
+                        upgrade(Enchantments.SILK_TOUCH, 1, ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE.get()),
+                ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SPEED_UPGRADE.get().asItem(),
+                        upgrade(Enchantments.BLOCK_EFFICIENCY, 3, ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE_2.get()),
+                ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE_2.get().asItem(),
+                        upgrade(Enchantments.BLOCK_EFFICIENCY, 5, ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE_3.get()));
 
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-		compound.put("energyStorage", energyStorage.serializeNBT());
-	}
+        private static Recipe upgrade(Enchantment enchantment, int level, ItemLike output) {
+            return new Recipe(stack -> EnchantmentHelper.getEnchantments(stack).getOrDefault(enchantment, 0) >= level,
+                    output, 1, 1, 1, 64_000, 2_400);
+        }
+    }
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    private record Recipe(Predicate<ItemStack> acceptsCatalyst, ItemLike result, int inputCount, int reagentCount,
+                          int resultCount, int energy, int duration) {
+    }
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+    public EnchanterBlockEntity(BlockPos pos, BlockState state) {
+        super(ExtrautilitiesrebirthModBlockEntities.ENCHANTER.get(), pos, state, 4, 250_000, "progress", "enchanter", "Enchanter");
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        return new EnchanterGUIMenu(id, inventory, worldPosition);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    @Override
+    protected Operation operation(int upgrades) {
+        Item input = getItem(0).getItem();
+        Recipe recipe = Recipes.BY_INPUT.get(input);
+        if (recipe == null || !recipe.acceptsCatalyst().test(getItem(1))) {
+            return null;
+        }
 
-	@Override
-	public Component getDefaultName() {
-		return Component.literal("enchanter");
-	}
+        // An upgrade stack can exceed the maximum useful count for an expensive recipe.
+        int effectiveUpgrades = Math.min(upgrades, energyCapacity() * UPGRADE_DIVISOR / recipe.energy());
+        int cost = effectiveUpgrades == 0 ? recipe.energy() : recipe.energy() * effectiveUpgrades / UPGRADE_DIVISOR;
+        return new Operation(BuiltInRegistries.ITEM.getKey(input).toString(), new ItemStack(recipe.result(), recipe.resultCount()),
+                recipe.inputCount(), recipe.reagentCount(), cost, recipe.duration(), 1 + 1.54 * effectiveUpgrades);
+    }
 
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
-
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new EnchanterGUIMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
-	}
-
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Enchanter");
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
-
-	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
-
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		if (index == 2)
-			return false;
-		return true;
-	}
-
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
-
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
-
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		if (index == 0)
-			return false;
-		if (index == 1)
-			return false;
-		if (index == 3)
-			return false;
-		return true;
-	}
-
-	private final EnergyStorage energyStorage = new EnergyStorage(250000, 250000, 250000, 0) {
-		@Override
-		public int receiveEnergy(int maxReceive, boolean simulate) {
-			int retval = super.receiveEnergy(maxReceive, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-
-		@Override
-		public int extractEnergy(int maxExtract, boolean simulate) {
-			int retval = super.extractEnergy(maxExtract, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-	};
-
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-			return handlers[facing.ordinal()].cast();
-		if (!this.remove && capability == ForgeCapabilities.ENERGY)
-			return LazyOptional.of(() -> energyStorage).cast();
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
+    @Override
+    protected boolean acceptsIngredient(int slot, ItemStack stack) {
+        if (slot == 0) {
+            return Recipes.BY_INPUT.containsKey(stack.getItem());
+        }
+        if (stack.is(Items.LAPIS_LAZULI) || stack.is(Items.NETHER_STAR)) {
+            return true;
+        }
+        var enchantments = EnchantmentHelper.getEnchantments(stack);
+        return enchantments.getOrDefault(Enchantments.SILK_TOUCH, 0) >= 1
+                || enchantments.getOrDefault(Enchantments.BLOCK_EFFICIENCY, 0) >= 3;
+    }
 }

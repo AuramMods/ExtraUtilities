@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "minecraft:amethyst_cluster"
+  },
+  "result": {
+    "item": "minecraft:diamond",
+    "count": 3,
+    "nbt": {
+      "display": {
+        "Name": "{\"text\":\"Smelted Alloy\"}"
+      }
+    }
+  },
+  "experience": 0,
+  "cookingtime": 200
+}

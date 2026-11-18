@@ -1,181 +1,58 @@
 package inzhefop.extrautilitiesrebirth.block.entity;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-
-import net.minecraftforge.energy.EnergyStorage;
-
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction;
-import net.minecraft.core.BlockPos;
-
-import javax.annotation.Nullable;
-
-import java.util.stream.IntStream;
-
-import io.netty.buffer.Unpooled;
-
-import inzhefop.extrautilitiesrebirth.world.inventory.ResonantorGUIMenu;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
+import inzhefop.extrautilitiesrebirth.world.inventory.ResonantorGUIMenu;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class ResonatorBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+import java.util.Map;
 
-	public ResonatorBlockEntity(BlockPos position, BlockState state) {
-		super(ExtrautilitiesrebirthModBlockEntities.RESONATOR.get(), position, state);
-	}
- 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-		if (compound.get("energyStorage") instanceof IntTag intTag)
-			energyStorage.deserializeNBT(intTag);
-	}
+public class ResonatorBlockEntity extends PoweredProcessorBlockEntity {
+    private static final class Recipes {
+        private static final Map<Item, Result> BY_INPUT = Map.of(
+                ExtrautilitiesrebirthModBlocks.POLISHED_STONE.get().asItem(), new Result(ExtrautilitiesrebirthModBlocks.STONEBURNT.get(), 8_000),
+                Blocks.SMOOTH_QUARTZ.asItem(), new Result(ExtrautilitiesrebirthModBlocks.QUARTZBURNT.get(), 8_000),
+                ExtrautilitiesrebirthModBlocks.STONEBURNT.get().asItem(), new Result(ExtrautilitiesrebirthModBlocks.RAINBOW_STONE.get(), 64_000),
+                Items.LAPIS_LAZULI, new Result(ExtrautilitiesrebirthModItems.LUNAR_REACTIVE_DUST.get(), 16_000),
+                Items.COAL, new Result(ExtrautilitiesrebirthModItems.RED_COAL.get(), 16_000),
+                Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asItem(), new Result(ExtrautilitiesrebirthModItems.UPGRADE_BASE.get(), 8_000),
+                Blocks.IRON_BARS.asItem(), new Result(ExtrautilitiesrebirthModItems.WIRELESS_RF_HEATING_COIL.get(), 16_000));
+    }
 
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-		compound.put("energyStorage", energyStorage.serializeNBT());
-	}
+    private record Result(ItemLike item, int energy) {
+    }
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    public ResonatorBlockEntity(BlockPos pos, BlockState state) {
+        super(ExtrautilitiesrebirthModBlockEntities.RESONATOR.get(), pos, state, 3, 100_000, "ticks", "resonator", "Resonator");
+    }
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+    @Override
+    public AbstractContainerMenu createMenu(int id, Inventory inventory) {
+        return new ResonantorGUIMenu(id, inventory, worldPosition);
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    @Override
+    protected Operation operation(int upgrades) {
+        Item item = getItem(0).getItem();
+        Result recipe = Recipes.BY_INPUT.get(item);
+        return recipe == null ? null
+                : new Operation(BuiltInRegistries.ITEM.getKey(item).toString(), new ItemStack(recipe.item()), 1, 0, recipe.energy(), 100,
+                1 + 1.5625 * upgrades);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    @Override
+    protected boolean acceptsIngredient(int slot, ItemStack stack) {
+        return Recipes.BY_INPUT.containsKey(stack.getItem());
+    }
 
-	@Override
-	public Component getDefaultName() {
-		return Component.literal("resonator");
-	}
-
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
-
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return new ResonantorGUIMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(this.worldPosition));
-	}
-
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Resonator");
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
-
-	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
-
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		if (index == 1)
-			return false;
-		return true;
-	}
-
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
-
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
-
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		if (index == 0)
-			return false;
-		if (index == 2)
-			return false;
-		return true;
-	}
-
-	private final EnergyStorage energyStorage = new EnergyStorage(100000, 100000, 100000, 0) {
-		@Override
-		public int receiveEnergy(int maxReceive, boolean simulate) {
-			int retval = super.receiveEnergy(maxReceive, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-
-		@Override
-		public int extractEnergy(int maxExtract, boolean simulate) {
-			int retval = super.extractEnergy(maxExtract, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-	};
-
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-			return handlers[facing.ordinal()].cast();
-		if (!this.remove && capability == ForgeCapabilities.ENERGY)
-			return LazyOptional.of(() -> energyStorage).cast();
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
 }
