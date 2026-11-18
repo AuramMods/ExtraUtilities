@@ -131,7 +131,7 @@ public class EnderQuarryUpdateTickProcedure {
 				target.getZ() + 0.5, 5, 0.3, 0.3, 0, 0);
 	}
 
-	private static boolean advanceCursor(CompoundTag data, int minY) {
+	static boolean advanceCursor(CompoundTag data, int minY) {
 		double y = data.getDouble("ycoord");
 		if (y > minY) {
 			data.putDouble("ycoord", y - 1);

@@ -106,6 +106,12 @@ upgrades against a free face. Speed and Silk Touch work alongside the marker
 setup. The quarry normally replaces mined blocks with dirt. The World Hole
 upgrade leaves the excavation open.
 
+The Ender Thermic Pump uses the same linked marker rectangle. Place the pump
+next to the linked corner, right-click it, supply Forge Energy, and put a fluid
+receiver above it. The first source pumped selects water or lava for that run.
+The pump fills drained positions with stone. Add the World Hole upgrade to
+leave them open.
+
 The Quantum Quarry and its actuators remain work in progress, as they were in
 the bundled workspace.
 

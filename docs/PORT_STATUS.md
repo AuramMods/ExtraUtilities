@@ -26,8 +26,8 @@ Block items follow the entry for the block that registers them.
 | [x] | Rainbow Generator | GameTests craft both halves and the core, use the Wrench to select the core and link all 16 fuel generators, reload those links, and verify generation only while all 16 are producing. Stored power still transfers while the core is idle, and excess stays buffered. |
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
-| [ ] | Ender Thermic Pump | Verify fluid output, use of FE, range, replacement behavior, and persistence. |
-| [ ] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. Verify the three updated production menus in the client and finish the Inventory Interface audit. |
+| [x] | Ender Thermic Pump | GameTests cover normal marker setup, scanning the full rectangle below zero, leaving waterlogged or outside blocks alone, energy use, both replacement modes, partial acceptance by a drum, and resuming with a saved full tank. |
+| [ ] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. The three production menus were exercised in the muted client. Finish the Inventory Interface audit. |
 | [ ] | Tools | Glass Cutter, Reinforced Glass Cutter, Wrench, Fire Axe, Kikoku, Healing Axe, Erosion Shovel, Precision Shears, Reversing Hoe, Etheric Sword, and Destruction Pickaxe. Verify tool actions, durability, drops, and client/server behavior. |
 | [ ] | Mob capture | Golden Lasso. GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Verify real client interactions. |
 | [ ] | Player utilities | Division Sigil, Magical Apple, Golden Feather, Chicken Wing Ring, Advanced Chicken Wing Ring, Angel Ring, and Ring of the Flying Squid. Compare intended actions and progression to the workspace. Review the Angel Ring's external integration. |
@@ -50,6 +50,9 @@ Block items follow the entry for the block that registers them.
   In the Sorter, items waited for a valid filter. Shift-clicking a Name Tag
   renamed to `forge:ores` configured the filter and sent all three iron ores
   and both dirt blocks to their respective chests.
+  The Furnace, Resonator, and Enchanter showed live energy and progress after
+  shift-clicking their inputs in the muted client. Verified each result and
+  shift-clicked a produced iron ingot back into player inventory.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
   A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
@@ -58,14 +61,17 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 44 quarry, generator, lasso, and automation tests passed in
+  optional development mods. The 46 quarry, generator, lasso, and automation tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
-  both the client and dedicated server. The packaged builds with the generator
-  fixes started on Forge 47.4.10 in a dedicated server installation.
+  both the client and dedicated server. Packaged generator, processor, and
+  pump fixes have loaded in a Forge 47.4.10 dedicated server installation.
 - [ ] Upgrade an isolated copy of a representative 1.20.1 save. Check registry
   IDs, inventory contents, FE buffers, fuel and machine state, then restart and
   check again. A copy of the save retained the sampled Gold Chest slots, TNT
   fuel and FE, redstone mode, and named item data after upgrading to the build
   with shared generator logic and restarting. In an earlier upgrade, the
   previously idle east receiver was powered after loading the save at `697949b`.
+  The processor and pump build also preserved named Furnace and Resonator
+  output, completed an active legacy Enchanter job, and moved all 1,234 mB of
+  saved pump fluid into a drum. Those results persisted after restart.

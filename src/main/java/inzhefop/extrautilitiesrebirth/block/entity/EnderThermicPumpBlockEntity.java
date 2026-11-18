@@ -1,202 +1,116 @@
 package inzhefop.extrautilitiesrebirth.block.entity;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-
-import net.minecraftforge.fluids.capability.templates.FluidTank;
-
-import net.minecraftforge.energy.EnergyStorage;
-
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-
-import net.minecraft.network.chat.Component;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 
 import javax.annotation.Nullable;
 
-import java.util.stream.IntStream;
+public class EnderThermicPumpBlockEntity extends BlockEntity {
+    private final EnergyStorage energyStorage = new EnergyStorage(10_000_000) {
+        @Override
+        public int receiveEnergy(int amount, boolean simulate) {
+            int received = super.receiveEnergy(amount, simulate);
+            if (!simulate && received > 0) {
+                setChanged();
+            }
+            return received;
+        }
 
-import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
+        @Override
+        public int extractEnergy(int amount, boolean simulate) {
+            int extracted = super.extractEnergy(amount, simulate);
+            if (!simulate && extracted > 0) {
+                setChanged();
+            }
+            return extracted;
+        }
+    };
 
-public class EnderThermicPumpBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(0, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+    private final FluidTank fluidTank = new FluidTank(64_000, stack ->
+            stack.getFluid().isSame(Fluids.WATER) || stack.getFluid().isSame(Fluids.LAVA)) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+        }
+    };
 
-	public EnderThermicPumpBlockEntity(BlockPos position, BlockState state) {
-		super(ExtrautilitiesrebirthModBlockEntities.ENDER_THERMIC_PUMP.get(), position, state);
-	} 
+    private LazyOptional<EnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+    private LazyOptional<FluidTank> fluid = LazyOptional.of(() -> fluidTank);
 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-		if (compound.get("energyStorage") instanceof IntTag intTag)
-			energyStorage.deserializeNBT(intTag);
-		if (compound.get("fluidTank") instanceof CompoundTag compoundTag)
-			fluidTank.readFromNBT(compoundTag);
-	}
+    public EnderThermicPumpBlockEntity(BlockPos pos, BlockState state) {
+        super(ExtrautilitiesrebirthModBlockEntities.ENDER_THERMIC_PUMP.get(), pos, state);
+    }
 
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-		compound.put("energyStorage", energyStorage.serializeNBT());
-		compound.put("fluidTank", fluidTank.writeToNBT(new CompoundTag()));
-	}
+    public FluidTank tank() {
+        return fluidTank;
+    }
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        energyStorage.deserializeNBT(tag.get("energyStorage") instanceof IntTag savedEnergy ? savedEnergy : IntTag.valueOf(0));
+        if (tag.contains("fluidTank", Tag.TAG_COMPOUND)) {
+            fluidTank.readFromNBT(tag.getCompound("fluidTank"));
+        } else {
+            fluidTank.setFluid(FluidStack.EMPTY);
+        }
+    }
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put("energyStorage", energyStorage.serializeNBT());
+        tag.put("fluidTank", fluidTank.writeToNBT(new CompoundTag()));
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    @Override
+    public ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    @Override
+    public CompoundTag getUpdateTag() {
+        return saveWithFullMetadata();
+    }
 
-	@Override
-	public Component getDefaultName() {
-		return Component.literal("ender_thermic_pump");
-	}
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
+        if (!isRemoved()) {
+            if (capability == ForgeCapabilities.ENERGY) {
+                return energy.cast();
+            }
+            if (capability == ForgeCapabilities.FLUID_HANDLER) {
+                return fluid.cast();
+            }
+        }
+        return super.getCapability(capability, side);
+    }
 
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        energy.invalidate();
+        fluid.invalidate();
+    }
 
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return ChestMenu.threeRows(id, inventory);
-	}
-
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Ender Thermic Pump");
-	}
-
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
-
-	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
-
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		if (index == 0)
-			return false;
-		return true;
-	}
-
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
-
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
-
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		if (index == 0)
-			return false;
-		return true;
-	}
-
-	private final EnergyStorage energyStorage = new EnergyStorage(10000000, 10000000, 10000000, 0) {
-		@Override
-		public int receiveEnergy(int maxReceive, boolean simulate) {
-			int retval = super.receiveEnergy(maxReceive, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-
-		@Override
-		public int extractEnergy(int maxExtract, boolean simulate) {
-			int retval = super.extractEnergy(maxExtract, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-	};
-	private final FluidTank fluidTank = new FluidTank(64000, fs -> {
-		if (fs.getFluid() == Fluids.FLOWING_WATER)
-			return true;
-		if (fs.getFluid() == Fluids.WATER)
-			return true;
-		if (fs.getFluid() == Fluids.FLOWING_LAVA)
-			return true;
-		if (fs.getFluid() == Fluids.LAVA)
-			return true;
-		return false;
-	}) {
-		@Override
-		protected void onContentsChanged() {
-			super.onContentsChanged();
-			setChanged();
-			level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-		}
-	};
-
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-			return handlers[facing.ordinal()].cast();
-		if (!this.remove && capability == ForgeCapabilities.ENERGY)
-			return LazyOptional.of(() -> energyStorage).cast();
-		if (!this.remove && capability == ForgeCapabilities.FLUID_HANDLER)
-			return LazyOptional.of(() -> fluidTank).cast();
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        energy = LazyOptional.of(() -> energyStorage);
+        fluid = LazyOptional.of(() -> fluidTank);
+    }
 }
