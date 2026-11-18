@@ -20,7 +20,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Disposal and creative utilities | Item, energy, and fluid Trash Cans, Creative Energy Storage, Creative Harvest, and Creative Inventory Sample. Verify filters, limits, and creative access. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
-| [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, and a full receiver. Still verify fuel tables, remainders, upgrade rates, full burn behavior, redstone controls, and per-generator effects. |
+| [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, a full receiver, and redstone control through the menu action. Still verify fuel tables, remainders, upgrade rates, and full burn behavior and effects across the family. |
 | [ ] | Rainbow Generator | Core, top, and bottom. Verify assembly, linked generator activity, saved links, output, and power remaining after the multiblock stops. |
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover blocked output/resume, tags, sided insertion, multi-drop serialization, and dirt replacement. Verify normal marker setup, traversal, upgrades, and chunk and server reload. |
 | [ ] | Quantum Quarry | Quarry and actuators. Assembly and menu exist. Implement and verify normal mining, upgrade inputs, storage, and power consumption. |
@@ -35,15 +35,15 @@ Block items follow the entry for the block that registers them.
 - [ ] Verify all 12 registered menus in a muted client on an isolated display.
   Check Creative Chest, generator, Mechanical Miner, Mechanical User,
   Resonator, Furnace, Enchanter, Trash Can, Golden Bag, Gold Chest, Ender Quarry,
-  and Sorter. Include clicks, shift-clicks, menu validity, persistence, and
-  synchronization with the server.
+  and Sorter. Corrected background sizes for the six affected screens. Include
+  clicks, shift-clicks, menu validity, persistence, and server synchronization.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
 - [x] Restore Gradle 8.8 wrapper, align the jar and mod versions, and make
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The eight quarry and generator tests passed in
+  optional development mods. The nine quarry and generator tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server.

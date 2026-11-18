@@ -2,7 +2,6 @@ package inzhefop.extrautilitiesrebirth.client.gui;
 
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.resources.ResourceLocation;
 
@@ -10,31 +9,32 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.core.BlockPos;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.GuiGraphics; // Import GuiGraphics
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.util.Mth;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraftforge.common.capabilities.ForgeCapabilities; // Import ForgeCapabilities
 
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import inzhefop.extrautilitiesrebirth.world.inventory.NormalGUIMenu;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 
 public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
-	private final static HashMap<String, Object> guistate = NormalGUIMenu.guistate;
 	private final Level world;
-	private final int x, y, z;
-	private final Player entity;
+	private final BlockPos position;
+	private Button redstoneButton;
+	private boolean redstoneRequired;
 
 	public NormalGUIScreen(NormalGUIMenu container, Inventory inventory, Component text) {
 		super(container, inventory, text);
 		this.world = container.world;
-		this.x = container.x;
-		this.y = container.y;
-		this.z = container.z;
-		this.entity = container.entity;
+		this.position = container.position;
 		this.imageWidth = 176;
 		this.imageHeight = 166;
 	}
@@ -68,7 +68,7 @@ public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
 					return blockEntity.getPersistentData().getBoolean(tag);
 				return false;
 			}
-		}.getValue(world, BlockPos.containing(x, y, z), "valid");
+		}.getValue(world, position, "valid");
 
 		// Progress Arrow Background
 		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/progress_arrow_back.png"),
@@ -82,13 +82,15 @@ public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
 					return blockEntity.getPersistentData().getDouble(tag);
 				return -1;
 			}
-		}.getValue(world, BlockPos.containing(x, y, z), "progress2");
+		}.getValue(world, position, "progress2");
 
-		int prg = 22 - (int) progress;
+		int prg = 22 - Mth.clamp((int) progress, 0, 22);
 
 		// Progress Arrow Fill
-		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/progress_arrow_fill.png"),
-				this.leftPos + 83, this.topPos + 36, 0, 0, prg, 15, prg, 15);
+		if (prg > 0) {
+			guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/progress_arrow_fill.png"),
+					this.leftPos + 83, this.topPos + 36, 0, 0, prg, 15, 22, 15);
+		}
 
 		// Progress Arrow Negative
 		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/progress_arrow_negative.png"),
@@ -103,25 +105,21 @@ public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
 		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/energy_bar_holder.png"),
 				this.leftPos + 150, this.topPos + 7, 0, 0, 18, 72, 18, 72);
 
-		double power = 0;
-		power = new Object() {
-			public int getEnergyStored(LevelAccessor level, BlockPos pos) {
-				AtomicInteger _retval = new AtomicInteger(0);
-				BlockEntity _ent = level.getBlockEntity(pos);
-				if (_ent != null)
-					_ent.getCapability(ForgeCapabilities.ENERGY, null).ifPresent(capability -> _retval.set(capability.getEnergyStored()));
-				return _retval.get();
-			}
-		}.getEnergyStored(world, BlockPos.containing(x, y, z)) / 1428;
-		int pwr = (int) power;
+		BlockEntity machine = world.getBlockEntity(position);
+		IEnergyStorage storage = machine == null ? null : machine.getCapability(ForgeCapabilities.ENERGY).orElse(null);
+		int pwr = storage == null || storage.getMaxEnergyStored() <= 0 ? 0
+				: (int) (70L * storage.getEnergyStored() / storage.getMaxEnergyStored());
+		pwr = Mth.clamp(pwr, 0, 70);
 
 		// Energy Bar Fill
 		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/energybarfill.png"),
 				this.leftPos + 151, this.topPos + 8, 0, 0, 16, 70, 16, 70);
 
 		// Gray Overlay (Inverse Bar)
-		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/gray.png"),
-				this.leftPos + 151, this.topPos + 8, 0, 0, 16, 70 - pwr, 16, 70 - pwr);
+		if (pwr < 70) {
+			guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/gray.png"),
+					this.leftPos + 151, this.topPos + 8, 0, 0, 16, 70 - pwr, 16, 70);
+		}
 
 		if ((new Object() {
 			public int getFluidTankLevel(LevelAccessor level, BlockPos pos, int tank) {
@@ -132,7 +130,7 @@ public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
 							.ifPresent(capability -> _retval.set(capability.getFluidInTank(tank).getAmount()));
 				return _retval.get();
 			}
-		}.getFluidTankLevel(world, BlockPos.containing(x, y, z), 1)) > 0) {
+		}.getFluidTankLevel(world, position, 0)) > 0) {
 			guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/lava12x2.png"),
 					this.leftPos + 61, this.topPos + 36, 0, 0, 16, 16, 16, 16);
 		}
@@ -152,20 +150,39 @@ public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
 	@Override
 	public void containerTick() {
 		super.containerTick();
+		if (menu.requiresRedstone() != redstoneRequired) {
+			updateRedstoneButton();
+		}
+	}
+
+	@Override
+	protected void renderTooltip(GuiGraphics graphics, int mouseX, int mouseY) {
+		super.renderTooltip(graphics, mouseX, mouseY);
+		if (!isHovering(150, 7, 18, 72, mouseX, mouseY)) {
+			return;
+		}
+		BlockEntity machine = world.getBlockEntity(position);
+		if (machine == null) {
+			return;
+		}
+		List<Component> lines = new ArrayList<>();
+		machine.getCapability(ForgeCapabilities.ENERGY).ifPresent(energy -> lines.add(
+				Component.translatable("gui.extrautilitiesrebirth.generator.stored",
+						energy.getEnergyStored(), energy.getMaxEnergyStored())));
+		String production = machine.getPersistentData().getString("production");
+		String seconds = machine.getPersistentData().getString("seconds");
+		if (!production.isEmpty()) {
+			lines.add(Component.literal(production));
+		}
+		if (!seconds.isEmpty()) {
+			lines.add(Component.translatable("gui.extrautilitiesrebirth.generator.remaining", seconds));
+		}
+		graphics.renderComponentTooltip(font, lines, mouseX, mouseY);
 	}
 
 	@Override
 	protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
-		String machineTitle = new Object() {
-			public String getValue(BlockPos pos, String tag) {
-				BlockEntity BlockEntity = world.getBlockEntity(pos);
-				if (BlockEntity != null)
-					return BlockEntity.getPersistentData().getString(tag);
-				return "";
-			}
-		}.getValue(BlockPos.containing((int) x, (int) y, (int) z), "machine");
-
-		guiGraphics.drawString(this.font, Component.literal(machineTitle), 6, 5, -12829636, false);
+		guiGraphics.drawString(this.font, title, 6, 5, -12829636, false);
 		guiGraphics.drawString(this.font, Component.literal("Inventory"), 6, 71, -12829636, false);
 	}
 
@@ -175,7 +192,18 @@ public class NormalGUIScreen extends AbstractContainerScreen<NormalGUIMenu> {
 	}
 
 	@Override
-	public void init() {
+	protected void init() {
 		super.init();
+		redstoneButton = addRenderableWidget(Button.builder(Component.empty(), button ->
+				minecraft.gameMode.handleInventoryButtonClick(menu.containerId, 0))
+				.bounds(leftPos + 108, topPos + 34, 40, 20).build());
+		updateRedstoneButton();
+	}
+
+	private void updateRedstoneButton() {
+		redstoneRequired = menu.requiresRedstone();
+		String key = "gui.extrautilitiesrebirth.generator.redstone." + (redstoneRequired ? "required" : "ignored");
+		redstoneButton.setMessage(Component.translatable(key));
+		redstoneButton.setTooltip(Tooltip.create(Component.translatable(key + ".tooltip")));
 	}
 }

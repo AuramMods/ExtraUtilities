@@ -14,8 +14,8 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.Container;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
@@ -28,54 +28,18 @@ import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModMenus;
 public class NormalGUIMenu extends AbstractContainerMenu implements Supplier<Map<Integer, Slot>> {
 	public final static HashMap<String, Object> guistate = new HashMap<>();
 	public final Level world;
-	public final Player entity;
-	public int x, y, z;
-	private IItemHandler internal;
+	public final BlockPos position;
+	private final BlockEntity machine;
 	private final Map<Integer, Slot> customSlots = new HashMap<>();
-	private boolean bound = false;
 
 	public NormalGUIMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
 		super(ExtrautilitiesrebirthModMenus.NORMAL_GUI.get(), id);
-		this.entity = inv.player;
 		this.world = inv.player.level();
-		this.internal = new ItemStackHandler(2);
-		BlockPos pos = null;
-		if (extraData != null) {
-			pos = extraData.readBlockPos();
-			this.x = pos.getX();
-			this.y = pos.getY();
-			this.z = pos.getZ();
-		}
-		if (pos != null) {
-			if (extraData.readableBytes() == 1) { // bound to item
-				byte hand = extraData.readByte();
-				ItemStack itemstack;
-				if (hand == 0)
-					itemstack = this.entity.getMainHandItem();
-				else
-					itemstack = this.entity.getOffhandItem();
-				itemstack.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-					this.internal = capability;
-					this.bound = true;
-				});
-			} else if (extraData.readableBytes() > 1) {
-				extraData.readByte(); // drop padding
-				Entity entity = world.getEntity(extraData.readVarInt());
-				if (entity != null)
-					entity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-						this.internal = capability;
-						this.bound = true;
-					});
-			} else { // might be bound to block
-				BlockEntity ent = inv.player != null ? inv.player.level().getBlockEntity(pos) : null;
-				if (ent != null) {
-					ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-						this.internal = capability;
-						this.bound = true;
-					});
-				}
-			}
-		}
+		this.position = extraData == null ? inv.player.blockPosition() : extraData.readBlockPos();
+		this.machine = extraData == null ? null : world.getBlockEntity(position);
+		IItemHandler internal = !world.isClientSide && machine != null
+				? machine.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseGet(() -> new ItemStackHandler(2))
+				: new ItemStackHandler(2);
 		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 61, 36) {
 		}));
 		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 7, 18) {
@@ -89,6 +53,26 @@ public class NormalGUIMenu extends AbstractContainerMenu implements Supplier<Map
 
 	@Override
 	public boolean stillValid(Player player) {
+		if (world.isClientSide) {
+			return true;
+		}
+		return player.level() == world && machine instanceof Container container && container.stillValid(player);
+	}
+
+	public boolean requiresRedstone() {
+		BlockEntity blockEntity = world.getBlockEntity(position);
+		return blockEntity != null && blockEntity.getPersistentData().getBoolean("redinv");
+	}
+
+	@Override
+	public boolean clickMenuButton(Player player, int buttonId) {
+		if (buttonId != 0 || world.isClientSide || machine == null || !stillValid(player)) {
+			return false;
+		}
+		machine.getPersistentData().putBoolean("redinv", !requiresRedstone());
+		machine.setChanged();
+		var state = machine.getBlockState();
+		world.sendBlockUpdated(position, state, state, Block.UPDATE_CLIENTS);
 		return true;
 	}
 
@@ -206,21 +190,6 @@ public class NormalGUIMenu extends AbstractContainerMenu implements Supplier<Map
 	}
 
 	@Override
-	public void removed(Player playerIn) {
-		super.removed(playerIn);
-		if (!bound && playerIn instanceof ServerPlayer serverPlayer) {
-			if (!serverPlayer.isAlive() || serverPlayer.hasDisconnected()) {
-				for (int j = 0; j < internal.getSlots(); ++j) {
-					playerIn.drop(internal.extractItem(j, internal.getStackInSlot(j).getCount(), false), false);
-				}
-			} else {
-				for (int i = 0; i < internal.getSlots(); ++i) {
-					playerIn.getInventory().placeItemBackInInventory(internal.extractItem(i, internal.getStackInSlot(i).getCount(), false));
-				}
-			}
-		}
-	}
-
 	public Map<Integer, Slot> get() {
 		return customSlots;
 	}

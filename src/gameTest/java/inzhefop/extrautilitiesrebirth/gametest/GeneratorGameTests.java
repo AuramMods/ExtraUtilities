@@ -2,10 +2,12 @@ package inzhefop.extrautilitiesrebirth.gametest;
 
 import inzhefop.extrautilitiesrebirth.block.entity.TNTGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
+import inzhefop.extrautilitiesrebirth.world.inventory.NormalGUIMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
@@ -71,6 +73,40 @@ public class GeneratorGameTests {
             test.assertTrue(energyOf(generator).getEnergyStored() > 0,
                     "The generator must keep the remainder");
             test.succeed();
+        });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void generatorRedstoneButtonControlsTheBurn(GameTestHelper test) {
+        TNTGeneratorBlockEntity generator = placeTntGenerator(test);
+        Player player = test.makeMockPlayer();
+        BlockPos position = generator.getBlockPos();
+        player.setPos(position.getX() + 1.5, position.getY(), position.getZ() + 0.5);
+        NormalGUIMenu menu = (NormalGUIMenu) generator.createMenu(1, player.getInventory());
+        test.assertTrue(menu.clickMenuButton(player, 0) && menu.requiresRedstone(),
+                "The menu button should enable redstone control");
+
+        test.runAfterDelay(4, () -> {
+            test.assertTrue(generator.getItem(0).getCount() == 2 && energyOf(generator).getEnergyStored() == 0,
+                    "The generator must wait for a redstone signal");
+            test.setBlock(GENERATOR.east(), Blocks.REDSTONE_BLOCK);
+        });
+        test.runAfterDelay(8, () -> {
+            test.assertTrue(generator.getItem(0).getCount() == 1 && energyOf(generator).getEnergyStored() > 0,
+                    "The powered generator should burn its fuel");
+            test.setBlock(GENERATOR.east(), Blocks.AIR);
+            double burnTime = generator.getPersistentData().getDouble("time");
+            test.runAfterDelay(4, () -> {
+                test.assertTrue(generator.getPersistentData().getDouble("time") == burnTime,
+                        "Losing the signal should pause the existing burn");
+                test.assertTrue(menu.clickMenuButton(player, 0) && !menu.requiresRedstone(),
+                        "The second click should allow the generator to run without redstone");
+                test.runAfterDelay(4, () -> {
+                    test.assertTrue(generator.getPersistentData().getDouble("time") < burnTime,
+                            "Switching to ignore should resume the burn");
+                    test.succeed();
+                });
+            });
         });
     }
 

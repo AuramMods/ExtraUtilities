@@ -169,5 +169,11 @@
   "item.extrautilitiesrebirth.golden_bag_of_holding": "Golden Bag Of Holding",
   "block.extrautilitiesrebirth.ender_quarry_silk_touch_upgrade_2": "Ender Quarry Speed II Upgrade",
   "item.extrautilitiesrebirth.ender_shard": "Ender Shard",
-  "block.extrautilitiesrebirth.ender_quarry_silk_touch_upgrade_3": "Ender Quarry Speed III Upgrade"
+  "block.extrautilitiesrebirth.ender_quarry_silk_touch_upgrade_3": "Ender Quarry Speed III Upgrade",
+  "gui.extrautilitiesrebirth.generator.stored": "%s / %s FE",
+  "gui.extrautilitiesrebirth.generator.remaining": "Burn time: %s",
+  "gui.extrautilitiesrebirth.generator.redstone.required": "Signal",
+  "gui.extrautilitiesrebirth.generator.redstone.required.tooltip": "Runs while powered by redstone",
+  "gui.extrautilitiesrebirth.generator.redstone.ignored": "Ignore",
+  "gui.extrautilitiesrebirth.generator.redstone.ignored.tooltip": "Runs regardless of redstone"
 }
