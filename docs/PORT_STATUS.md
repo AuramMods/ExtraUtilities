@@ -19,7 +19,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Spikes and Cursed Earth | Wood, stone, iron, gold, diamond, and creative spikes, Cursed Earth, and Drop of Evil. Verify damage, mob spawning, drops, conversion, and light behavior. |
 | [ ] | Ender Lilies | Endstone feature and all eight stages. Verify End world generation, placement, growth, harvesting, seed drops, and collision. |
 | [ ] | Item and fluid storage | The baseline Gold Chest retained items in slots 0 and 53 across a server restart. Drum GameTests cover all four finite capacities, sided automation, comparators, bucket transfers, and fluid retained when the drum is moved. A creative player can configure the Creative Drum to supply an unlimited amount of its sample fluid. Filled and emptied a Stone Drum by hand in the muted client. Continue with Creative Chest and remaining Gold Chest and Golden Bag behavior. |
-| [ ] | Disposal and creative utilities | Item, energy, and fluid Trash Cans, Creative Energy Storage, Creative Harvest, and Creative Inventory Sample. Verify filters, limits, and creative access. |
+| [ ] | Disposal and creative utilities | Trash Can GameTests cover all three variants, including item menu transfers, fluid buckets, sided automation, and input-only capabilities. The muted client confirmed item shift-click disposal and that the Fluid Trash Can returned the empty bucket. Continue with Creative Energy Storage, Creative Harvest, and Creative Inventory Sample. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
 | [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. GameTests cover fuel and production for each generator, the TNT menu and six output sides, full storage, serialized Culinary and Magma burns, and bucket and bottle remainders. Magma also covers bucket and pipe filling, slot validation, and exact per-bucket yield with speed upgrades. Continue checking alternate fuel variants, the full yield at each speed tier, and linked Rainbow Generator operation. |
@@ -53,6 +53,8 @@ Block items follow the entry for the block that registers them.
   The Furnace, Resonator, and Enchanter showed live energy and progress after
   shift-clicking their inputs in the muted client. Verified each result and
   shift-clicked a produced iron ingot back into player inventory.
+  Shift-clicking seven emeralds in the Trash Can placed them in its disposal
+  slots, and they disappeared on the next server tick.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
   A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
@@ -61,7 +63,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 50 tests passed in both configurations.
+  optional development mods. All 53 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and
