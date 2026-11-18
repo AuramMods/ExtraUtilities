@@ -59,6 +59,7 @@ public abstract class FuelGeneratorBlockEntity extends RandomizableContainerBloc
         }
     };
     private LazyOptional<EnergyStorage> energy = LazyOptional.of(() -> storage);
+    private LazyOptional<GeneratorEnergyOutput> output = LazyOptional.of(() -> new GeneratorEnergyOutput(storage));
 
     protected FuelGeneratorBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state,
                                        GeneratorFuel fuel, String defaultName, String displayName) {
@@ -186,7 +187,7 @@ public abstract class FuelGeneratorBlockEntity extends RandomizableContainerBloc
                 return sidedItems[side.ordinal()].cast();
             }
             if (capability == ForgeCapabilities.ENERGY) {
-                return energy.cast();
+                return side == null ? energy.cast() : output.cast();
             }
         }
         return super.getCapability(capability, side);
@@ -199,6 +200,7 @@ public abstract class FuelGeneratorBlockEntity extends RandomizableContainerBloc
             handler.invalidate();
         }
         energy.invalidate();
+        output.invalidate();
     }
 
     @Override
@@ -206,6 +208,7 @@ public abstract class FuelGeneratorBlockEntity extends RandomizableContainerBloc
         super.reviveCaps();
         sidedItems = SidedInvWrapper.create(this, Direction.values());
         energy = LazyOptional.of(() -> storage);
+        output = LazyOptional.of(() -> new GeneratorEnergyOutput(storage));
     }
 
     private void syncEnergy() {

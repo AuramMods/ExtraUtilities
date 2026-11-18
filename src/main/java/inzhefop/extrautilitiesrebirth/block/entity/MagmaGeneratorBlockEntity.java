@@ -43,7 +43,7 @@ import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities
 
 public class MagmaGeneratorBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
 	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+	private LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public MagmaGeneratorBlockEntity(BlockPos position, BlockState state) {
 		super(ExtrautilitiesrebirthModBlockEntities.MAGMA_GENERATOR.get(), position, state);
@@ -210,21 +210,38 @@ public class MagmaGeneratorBlockEntity extends RandomizableContainerBlockEntity 
 		}
 	};
 
+	private LazyOptional<EnergyStorage> energy = LazyOptional.of(() -> energyStorage);
+	private LazyOptional<GeneratorEnergyOutput> output = LazyOptional.of(() -> new GeneratorEnergyOutput(energyStorage));
+	private LazyOptional<FluidTank> lava = LazyOptional.of(() -> fluidTank);
+
 	@Override
 	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
 		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
 			return handlers[facing.ordinal()].cast();
 		if (!this.remove && capability == ForgeCapabilities.ENERGY)
-			return LazyOptional.of(() -> energyStorage).cast();
+			return facing == null ? energy.cast() : output.cast();
 		if (!this.remove && capability == ForgeCapabilities.FLUID_HANDLER)
-			return LazyOptional.of(() -> fluidTank).cast();
+			return lava.cast();
 		return super.getCapability(capability, facing);
 	}
 
 	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
+	public void invalidateCaps() {
+		super.invalidateCaps();
+		for (LazyOptional<? extends IItemHandler> handler : handlers) {
 			handler.invalidate();
+		}
+		energy.invalidate();
+		output.invalidate();
+		lava.invalidate();
+	}
+
+	@Override
+	public void reviveCaps() {
+		super.reviveCaps();
+		handlers = SidedInvWrapper.create(this, Direction.values());
+		energy = LazyOptional.of(() -> energyStorage);
+		output = LazyOptional.of(() -> new GeneratorEnergyOutput(energyStorage));
+		lava = LazyOptional.of(() -> fluidTank);
 	}
 }

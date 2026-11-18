@@ -4,6 +4,7 @@ import inzhefop.extrautilitiesrebirth.block.entity.MagmaGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.TNTGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
+import inzhefop.extrautilitiesrebirth.procedures.FuelGeneratorTick;
 import inzhefop.extrautilitiesrebirth.world.inventory.NormalGUIMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -407,6 +408,94 @@ public class GeneratorGameTests {
                     "The faster cycle should still generate exactly 2,000 FE");
             test.succeed();
         });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void specialtyFuelAlternativesBurnThroughTheAutomationSlot(GameTestHelper test) {
+        var death = ExtrautilitiesrebirthModBlocks.DEATH_GENERATOR.get();
+        var frosty = ExtrautilitiesrebirthModBlocks.FROSTY_GENERATOR_1.get();
+        var pink = ExtrautilitiesrebirthModBlocks.PINK_GENERATOR.get();
+        var ender = ExtrautilitiesrebirthModBlocks.ENDER_GENERATOR.get();
+        var slime = ExtrautilitiesrebirthModBlocks.SLIMEY_GENERATOR.get();
+        var potion = ExtrautilitiesrebirthModBlocks.POTION_GENERATOR_1.get();
+        var furnace = ExtrautilitiesrebirthModBlocks.FURNACE_GENERATOR.get();
+        assertFuelGroup(test, death, 40, 600, List.of(Items.BONE, Items.BONE_BLOCK, Items.BONE_MEAL, Items.ROTTEN_FLESH));
+        assertFuelGroup(test, frosty, 35, 1_200, List.of(Items.SNOW, Items.SNOW_BLOCK, Items.PACKED_ICE, Items.ICE, Items.SNOWBALL, Items.BLUE_ICE));
+        assertFuelGroup(test, pink, 75, 300, List.of(Items.PINK_STAINED_GLASS, Items.PINK_GLAZED_TERRACOTTA, Items.PINK_CONCRETE,
+                Items.PINK_CONCRETE_POWDER, Items.PINK_BANNER, Items.PINK_BED, Items.PINK_WOOL, Items.PINK_CARPET,
+                Items.PINK_TERRACOTTA, Items.PINK_STAINED_GLASS_PANE, Items.PINK_SHULKER_BOX, Items.PINK_CANDLE, Items.PINK_DYE, Items.PINK_TULIP));
+        assertFuelGroup(test, ender, 70, 1_200, List.of(Items.ENDER_PEARL, Items.ENDER_EYE));
+        assertFuelGroup(test, slime, 300, 100, List.of(Items.SLIME_BALL, Items.SLIME_BLOCK));
+        assertFuelGroup(test, potion, 40, 600, List.of(Items.POTION, Items.LINGERING_POTION, Items.SPLASH_POTION));
+        assertFuelGroup(test, furnace, 30, 1_600, List.of(Items.COAL, Items.CHARCOAL));
+        assertFuelGroup(test, furnace, 30, 11_200, List.of(ExtrautilitiesrebirthModItems.RED_COAL.get()));
+        assertFuelGroup(test, furnace, 30, 3_200, List.of(ExtrautilitiesrebirthModBlocks.MAGICAL_PLANKS.get().asItem()));
+        test.succeed();
+    }
+
+    @GameTest(template = "machine_test", timeoutTicks = 126)
+    public static void allSpeedTiersPreserveTheExactYieldOfItemsAndLava(GameTestHelper test) {
+        var testSlots = List.of(new BlockPos(1, 2, 1), new BlockPos(4, 2, 1), new BlockPos(1, 2, 4), new BlockPos(4, 2, 4));
+        var speed = List.of(ItemStack.EMPTY, new ItemStack(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get()),
+                new ItemStack(ExtrautilitiesrebirthModItems.ENCHANTED_SPEED_UPGRADE.get()), new ItemStack(ExtrautilitiesrebirthModItems.SUPER_SPEED_UPGRADE.get()));
+        var slimeRates = List.of(300, 315, 330, 360);
+        var lavaRates = List.of(20, 21, 22, 24);
+        for (int tier = 0; tier < speed.size(); tier++) {
+            var slot = testSlots.get(tier);
+            var slimey = placeWithFuel(test, slot, ExtrautilitiesrebirthModBlocks.SLIMEY_GENERATOR.get(), new ItemStack(Items.SLIME_BALL));
+            slimey.setItem(1, speed.get(tier).copy());
+            test.setBlock(slot.above(), ExtrautilitiesrebirthModBlocks.MAGMA_GENERATOR.get());
+            var magma = (MagmaGeneratorBlockEntity) test.getBlockEntity(slot.above());
+            magma.setItem(1, speed.get(tier).copy());
+            for (var direction : Direction.values()) {
+                test.assertTrue(isOutput(slimey, direction) && isOutput(magma, direction),
+                        "A generator's exposed port should only emit energy on " + direction);
+            }
+            magmaTank(magma).fill(new FluidStack(Fluids.LAVA, 1_000), IFluidHandler.FluidAction.EXECUTE);
+            int firstRate = slimeRates.get(tier);
+            int secondRate = lavaRates.get(tier);
+            test.runAfterDelay(5, () -> {
+                test.assertTrue(slimey.getPersistentData().getString("production").equals("Output: " + firstRate + " FE/t"),
+                        "The item generator should show the upgraded rate");
+                test.assertTrue(magma.getPersistentData().getString("production").equals("Output: " + secondRate + " FE/t"),
+                        "The Magma Generator should show the upgraded rate");
+            });
+            test.runAfterDelay(110, () -> {
+                test.assertTrue(energyOf(slimey).getEnergyStored() == 30_000 && slimey.getPersistentData().getDouble("time") == 0,
+                        "Every speed tier must preserve all 30,000 FE per slimeball after the burn");
+                test.assertTrue(energyOf(magma).getEnergyStored() == 2_000 && magmaTank(magma).getFluidInTank(0).isEmpty(),
+                        "Every speed tier must preserve all 2,000 FE per bucket after the burn");
+            });
+        }
+        test.setBlock(GENERATOR, ExtrautilitiesrebirthModBlocks.RAINBOW_GENERATOR.get());
+        var rainbow = test.getBlockEntity(GENERATOR);
+        for (var direction : Direction.values()) {
+            test.assertTrue(isOutput(rainbow, direction), "The Rainbow Generator's ports should only emit energy");
+        }
+        test.runAfterDelay(111, test::succeed);
+    }
+
+    private static boolean isOutput(BlockEntity generator, Direction direction) {
+        var port = generator.getCapability(ForgeCapabilities.ENERGY, direction).orElseThrow(AssertionError::new);
+        return port.canExtract() && !port.canReceive() && port.receiveEnergy(1, false) == 0;
+    }
+
+    private static void assertFuelGroup(GameTestHelper test, Block block, int rate, int duration, List<Item> fuels) {
+        var level = test.getLevel();
+        var pos = test.absolutePos(GENERATOR);
+        for (var fuel : fuels) {
+            test.setBlock(GENERATOR, block);
+            var generator = test.getBlockEntity(GENERATOR);
+            var items = generator.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP).orElseThrow(AssertionError::new);
+            test.assertTrue(items.insertItem(0, new ItemStack(fuel), false).isEmpty(), "The automation slot should accept " + fuel);
+            FuelGeneratorTick.execute(level, pos);
+            test.assertTrue(energyOf(generator).getEnergyStored() == rate && generator.getPersistentData().getInt("burnDuration") == duration,
+                    "Wrong starting rate or duration for " + fuel);
+            if (block == ExtrautilitiesrebirthModBlocks.POTION_GENERATOR_1.get()) {
+                test.assertTrue(items.getStackInSlot(0).is(Items.GLASS_BOTTLE), "The potion container should return an empty bottle for " + fuel);
+            }
+            test.setBlock(GENERATOR, Blocks.AIR);
+        }
     }
 
     private static IFluidHandler magmaTank(BlockEntity generator) {
