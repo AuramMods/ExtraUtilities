@@ -10,8 +10,7 @@ This project is built with MCreator-generated structure plus custom Java code an
 |---|---|---|
 | Mod ID | `extrautilitiesrebirth` | `src/main/resources/META-INF/mods.toml` |
 | Display Name | `Extra Utilities Rebirth` | `src/main/resources/META-INF/mods.toml` |
-| Mod Version (metadata) | `1.7.3` | `src/main/resources/META-INF/mods.toml` |
-| Project Artifact Version | `1.0` | `build.gradle` |
+| Mod and artifact version | `1.7.3` | `build.gradle` |
 | Minecraft Version | `1.20.1` | `build.gradle` / `mods.toml` |
 | Forge Version | `1.20.1-47.4.10` | `build.gradle` |
 | Java Version | `17` | `build.gradle` |
@@ -96,46 +95,24 @@ Includes many generator types such as:
 
 ## Build Instructions
 
-### Prerequisites
-
-- Java 17 JDK installed and available in `PATH`.
-- Gradle 8.8+ installed locally, or a valid Gradle wrapper jar.
-
-### Important Build Caveats in This Repository
-
-1. `gradle/wrapper/gradle-wrapper.jar` is currently empty in this checkout, so `./gradlew` will fail until the wrapper jar is restored/regenerated.
-2. `build.gradle` adds `build.finalizedBy deployToModpack`, which copies the built jar to a local PrismLauncher path:
-   - `/Users/cyberpwn/Library/Application Support/PrismLauncher/instances/Auram/minecraft/mods/ExtraUtilities.jar`
-3. To avoid the machine-specific deploy copy step, build with `-x deployToModpack`.
-
-### Build Commands
-
-If you have system Gradle installed:
+Run the Gradle wrapper with a Java 17 JDK.
 
 ```bash
-gradle clean build -x deployToModpack
+./gradlew build
+./gradlew runGameTestServer
+./gradlew runGameTestServer -PminimalRuntime=true
 ```
 
-For development runs:
+The build produces `build/libs/extrautilitiesrebirth-1.7.3.jar`. The GameTest
+server runs without a window in `build/forge-gametest`. The minimal runtime run
+leaves out JEI and the optional development mod jars.
 
-```bash
-gradle runClient
-gradle runServer
-```
+Use `./gradlew runServer` for a dedicated development server or
+`./gradlew runClient` for a development client.
 
-If you want to restore wrapper usage:
-
-```bash
-gradle wrapper --gradle-version 8.8
-chmod +x gradlew
-./gradlew clean build -x deployToModpack
-```
-
-### Build Outputs
-
-- Main jar: `build/libs/extrautilitiesrebirth-1.0.jar`
-- Reobfuscated output: `build/reobfJar/output.jar`
-- Optional deployed copy task output name: `ExtraUtilities.jar`
+To install the jar into the local PrismLauncher Auram instance, run
+`./gradlew deployToModpack`. Pass `-PmodpackModsDir=/path/to/mods` to choose a
+different destination. The deployment task copies the jar as `ExtraUtilities.jar`.
 
 ## Dependencies and Integrations
 
@@ -149,8 +126,5 @@ chmod +x gradlew
 ## Project Notes
 
 - This is a port/recreation project and not a byte-for-byte reimplementation of legacy Extra Utilities code.
-- Metadata currently has version mismatch:
-  - `mods.toml`: `1.7.3`
-  - `build.gradle`: `1.0`
 - `extrautilitiesrebirth.mcreator` still reports `currentGenerator: forge-1.18.2`, while active Gradle build targets 1.20.1.
 - License is declared as MIT in metadata, but there is no standalone `LICENSE` file in the repository root.

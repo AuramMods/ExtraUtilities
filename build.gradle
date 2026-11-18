@@ -4,13 +4,13 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '[6.0,6.2)', changing: true
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '6.0.54'
     }
 }
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.0'
+version = '1.7.3'
 group = 'art.arcane.extrautilitiesrebirth'
 archivesBaseName = 'extrautilitiesrebirth'
 
@@ -58,6 +58,8 @@ minecraft {
 
         server {
             workingDirectory project.file('run')
+            args 'nogui'
+            jvmArgs '-Djava.awt.headless=true'
 
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
@@ -79,21 +81,23 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' 
 }
 
-apply from: 'mcreator.gradle'
-
-
-task deployToModpack(type: Copy) {
-    dependsOn 'reobfJar'
-    from tasks.jar
-    into file("/Users/cyberpwn/Library/Application Support/PrismLauncher/instances/Auram/minecraft/mods")
-
-    rename { String fileName ->
-        "ExtraUtilities.jar"
-    }
-
-    doLast {
-        println "SUCCESS: Copied build to ../../minecraft/mods/ExtraUtilities.jar"
+tasks.named('processResources', ProcessResources).configure {
+    inputs.property 'modVersion', project.version
+    filesMatching('META-INF/mods.toml') {
+        expand modVersion: project.version
     }
 }
 
-build.finalizedBy deployToModpack
+apply from: 'mcreator.gradle'
+
+
+tasks.register('deployToModpack', Copy) {
+    group = 'distribution'
+    description = 'Copy the reobfuscated mod jar into the PrismLauncher modpack.'
+    dependsOn tasks.named('reobfJar')
+    from tasks.named('jar')
+    def defaultModsDir = new File(System.getProperty('user.home'),
+            'Library/Application Support/PrismLauncher/instances/Auram/minecraft/mods')
+    into providers.gradleProperty('modpackModsDir').map { file(it) }.orElse(defaultModsDir)
+    rename { 'ExtraUtilities.jar' }
+}
