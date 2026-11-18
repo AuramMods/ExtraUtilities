@@ -11,14 +11,14 @@ Block items follow the entry for the block that registers them.
 
 | Status | Feature group | Coverage and current evidence |
 | --- | --- | --- |
-| [ ] | Compressed materials | Every cobblestone, dirt, sand, and gravel tier. Verify recipes in both directions and break/drop behavior. |
+| [x] | Compressed materials | GameTests craft, unpack, place, and break all eight cobblestone tiers, four dirt tiers, two sand tiers, and two gravel tiers. Unpacking the first dirt tier returns nine ordinary dirt blocks. |
 | [ ] | Building materials | Bedrock bricks, cobblestone and slabs, border stone, chiseled and edged stone bricks, polished stone, quartzburnt, rainbow stone, stoneburnt, magical wood and planks, ferrous juniper log and planks. Check crafting, placement, rotation, and drops. |
 | [ ] | Glass | Sandy, creeper, dark ethereal, dark, edged, ethereal, clean, bricks, glowstone, golden edged, heart, ineffable, ineffable inverted, obsidian, reinforced dark, square, and swirling. Check appearance and each variant's light, collision, and harvesting rules. |
 | [ ] | Materials and components | Demon, enchanted and evil infused metal blocks, ender infused obsidian, ender core, machine block, diamond edged matrix, upgrade base, lunar reactive dust, red coal, enchanted ingot, bedrockium ingot, unstable ingot and nugget, evil infused iron ingot, demon ingot, eye of redstone, moon stone, redstone crystal, ender shard, and amazing opinium core. Trace crafting or acquisition through each consumer. |
 | [ ] | Placement and access | Angel Block, Chandelier, Chunk Loading Wand, Overworld Portal, and Portable Globe. Verify placement and activation in the intended dimensions, plus chunk and portal behavior after reload. |
 | [ ] | Spikes and Cursed Earth | Wood, stone, iron, gold, diamond, and creative spikes, Cursed Earth, and Drop of Evil. Verify damage, mob spawning, drops, conversion, and light behavior. |
 | [ ] | Ender Lilies | Endstone feature and all eight stages. Verify End world generation, placement, growth, harvesting, seed drops, and collision. |
-| [x] | Item and fluid storage | Gold Chest and Golden Bag tests cover all 54 slots, item data, and menu validity. The bag protects the held stack, rejects another bag, and shares its inventory in multiplayer item packets. The chest retained both sampled slots on an upgraded dedicated server after restart. Creative Chest tests cover item data, legal stack sizes, template protection and reload. Drum tests cover all four finite capacities, sided automation, comparators, bucket transfers, and fluid retained when moved. A creative player can configure the Creative Drum to supply an unlimited amount of its sample fluid. |
+| [x] | Item and fluid storage | Gold Chest and Golden Bag tests cover 54-slot capacity, item data, and menu validity. The bag protects the held stack, rejects another bag, and shares its inventory in multiplayer item packets. The chest retained both sampled slots on an upgraded dedicated server after restart. Creative Chest tests cover item data, legal stack sizes, template protection and reload. Drum tests cover all four finite capacities, sided automation, comparators, bucket transfers, and fluid retained when moved. A creative player can configure the Creative Drum to supply an unlimited amount of its sample fluid. |
 | [ ] | Disposal and creative utilities | Trash Can GameTests cover all three variants, including item menu transfers, fluid buckets, sided automation, and input-only capabilities. The muted client confirmed item shift-click disposal and that the Fluid Trash Can returned the empty bucket. Creative Energy Storage supplies unlimited FE and charges machines on all six sides. Creative Harvest stays in place on an ordinary creative break and drops one copy when broken while sneaking. Continue with the Creative Inventory Sample. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [x] | Redstone Clock | Both registered states alternate every 18 ticks. GameTests cover adjacent comparator output and restoration of the saved phase. An upgraded dedicated-server save retained the clock's data and its comparator cycled between 0 and 15 after restart. |
@@ -68,7 +68,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 62 tests passed in both configurations.
+  optional development mods. All 66 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and
