@@ -24,17 +24,17 @@ Block items follow the entry for the block that registers them.
 | [x] | Redstone Clock | Both registered states alternate every 18 ticks. GameTests cover adjacent comparator output and restoration of the saved phase. An upgraded dedicated-server save retained the clock's data and its comparator cycled between 0 and 15 after restart. |
 | [x] | Fuel generators | All 16 fuel generators produce and store FE through their normal fuel or fluid input. GameTests cover alternate fuels, Forge fuel burn times, bucket and bottle remainders, saved burns, full buffers, and the TNT Generator’s six outputs and redstone controls. All three upgrades preserve the exact finished yield of both solid fuel and lava. Adjacent generators retain their own production because their sided ports only export FE. |
 | [x] | Rainbow Generator | GameTests craft both halves and the core, use the Wrench to select the core and link all 16 fuel generators, reload those links, and verify generation only while all 16 are producing. Stored power still transfers while the core is idle, and excess stays buffered. |
-| [x] | Ender Quarry | GameTests cover four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. The packaged client linked four markers and started a quarry with Speed and Silk Touch. That save retained the marker link, active quarry, upgrades, and intact ore output across a dedicated-server upgrade and restart. Mining resumed from the saved position. |
+| [x] | Ender Quarry | GameTests cover four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. In the final packaged client, normal clicks linked four markers and started a quarry with Speed and Silk Touch. The quarry deposited intact diamond ore in its output chest. A separate copied save retained the marker link, active quarry, upgrades, and intact ore output across a dedicated-server upgrade and restart. Mining resumed from the saved position. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [x] | Ender Thermic Pump | GameTests cover normal marker setup, scanning the full rectangle below zero, leaving waterlogged or outside blocks alone, energy use, both replacement modes, partial acceptance by a drum, and resuming with a saved full tank. |
 | [x] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. The three production menus were exercised in the muted client. Inventory Interface tests verify the bundled ten-slot automation buffer, vanilla hopper transfer, comparator output, and the iron pickaxe requirement. |
-| [ ] | Tools | Glass Cutter and Reinforced Glass Cutter recover panes and all tagged mod glass. The ordinary cutter retains item data when it wears down in crafting. Fire Axe fells connected logs from the original break and respects Forge break events. Reversing Hoe regresses crops and restores dirt or cobblestone. Wrench tests cover wireless and Rainbow Generator links. Precision Shears recover stone-tier blocks while there is room. Destruction Pickaxe clears ordinary stone quickly, and Erosion Shovel clears loose material above a dig. Both preserve valuable ore drops. Healing Axe transfers health and restores hunger when equipped. Kikoku and Etheric Sword apply their armor-piercing effects during the original hit. Verify normal client interactions. |
+| [x] | Tools | Glass Cutter and Reinforced Glass Cutter recover panes and all tagged mod glass. The ordinary cutter retains item data when it wears down in crafting. Fire Axe fells connected logs from the original break and respects Forge break events. Reversing Hoe regresses crops and restores dirt or cobblestone. Wrench tests cover wireless and Rainbow Generator links. Precision Shears recover stone-tier blocks while there is room. Destruction Pickaxe clears ordinary stone quickly, and Erosion Shovel clears loose material above a dig. Both preserve valuable ore drops. Healing Axe transfers health and restores hunger when equipped. Kikoku and Etheric Sword apply their armor-piercing effects during the original hit. The packaged client recovered Ethereal Glass with a normal click and moved stone directly into inventory with Precision Shears. |
 | [x] | Mob capture | Golden Lasso GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Normal right-clicks in the muted client captured and released a named pig, preserving its name and clearing the filled lasso. |
-| [ ] | Player utilities | GameTests verify sigils from both named bosses, sigil crafting wear and item data, Magical Apple food, non-stacking movement from carried Chicken Wing Rings, and fall protection from the Advanced Ring. Golden Feather is a crafting ingredient. Angel Ring keeps its link to DenisMasterHerobrine’s mod. A packaged dedicated server loaded both Angel Ring IDs with Angel Ring 2.3.1 and Curios 5.14.1 installed. The bundled Flying Squid Ring has no recipe or mechanics and retains its legacy registry ID and model. Verify the ring interactions in the packaged client. |
+| [x] | Player utilities | GameTests verify sigils from both named bosses, sigil crafting wear and item data, Magical Apple food, non-stacking movement from carried Chicken Wing Rings, and fall protection from the Advanced Ring. The packaged client confirmed the base ring’s 10% movement boost and one point of wear per jump. A fall damage check with the Advanced Ring preserved full health and used one point of durability. Golden Feather is a crafting ingredient. The packaged client displayed the clickable link to DenisMasterHerobrine’s Angel Ring mod. A packaged dedicated server loaded both Angel Ring IDs with Angel Ring 2.3.1 and Curios 5.14.1 installed. The bundled Flying Squid Ring retains its legacy registry ID and model. It has no bundled recipe or mechanics. |
 
 ## Menus and runs
 
-- [ ] Verify all 12 registered menus in a muted client on an isolated display.
+- [x] Verify all 12 registered menus in a muted client on an isolated display.
   Check Creative Chest, generator, Mechanical Miner, Mechanical User,
   Resonator, Furnace, Enchanter, Trash Can, Golden Bag, Gold Chest, Sorter, and
   the Quantum Quarry placeholder served by the `ender_quarry_gui` menu type.
@@ -60,23 +60,24 @@ Block items follow the entry for the block that registers them.
   The Golden Bag kept both deposited stacks on reopening and prevented the
   open bag from being dropped. Shift-clicking newly named books into the Gold
   Chest kept them separate from the differently named books already stored.
-- [ ] Walk crafting progression through all gameplay systems. Check unresolved
-  item tags, recipes, assets, and world generation data at startup and reload.
-  GameTests resolved and ran all 155 crafting and smelting recipes in both
-  runtime profiles. A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
-  Portable Globe, and rainbow particle textures after correcting their paths.
+- [x] Walk crafting progression through all gameplay systems. The two runtime
+  profiles resolved and ran all 155 crafting and smelting recipes. The jar
+  includes blockstates and item models for all 130 blocks. The isolated
+  packaged client loaded and reloaded the tags and recipes with JEI enabled.
+  Corrected the Kikoku, Amazing Opinium Core, Portable Globe, and rainbow
+  particle texture paths.
 - [x] Restore Gradle 8.8 wrapper, align the jar and mod versions, and make
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
   optional development mods. All 111 tests passed in both configurations.
   Rerun as coverage grows.
-- [ ] Build the final jar from a clean checkout and load that packaged jar in
-  both the client and dedicated server. Packaged generator, processor, and
-  pump fixes have loaded in a Forge 47.4.10 dedicated server installation. A
-  later packaged jar also loaded in a muted Forge 47.4.10 client and exercised
-  the Ender Quarry's four-marker setup through normal clicks.
-- [ ] Upgrade an isolated copy of a representative 1.20.1 save. Check registry
+- [x] Build the final jar from a clean checkout and load the identical artifact
+  in both the client and dedicated server. Built `1.7.3` from `a3ac9da` with
+  Java 17. The standalone Forge 47.4.10 server reported 200 FE/t from the TNT
+  Generator and transferred 3,300 FE to an east-facing receiver. The muted
+  Forge client joined an isolated save with JEI, Angel Ring, and Curios loaded.
+- [x] Upgrade isolated copies of representative 1.20.1 saves. Check registry
   IDs, inventory contents, FE buffers, fuel and machine state, then restart and
   check again. A copy of the save retained the sampled Gold Chest slots, TNT
   fuel and FE, redstone mode, and named item data after upgrading to the build
@@ -89,3 +90,8 @@ Block items follow the entry for the block that registers them.
   through another dedicated-server restart.
   The quarry save also retained the Golden Bag and both stored stacks,
   including the name of the gold ingots, on upgrade and restart.
+  The final jar repeated both the quarry and machine upgrades with the saves’
+  original optional mods installed. Twenty-four checks passed across upgrade
+  and restart. The quarry advanced from 21 to 31 mined blocks with its marker
+  link and upgrades intact. The Gold Chest, named sorter stack, Golden Bag,
+  TNT fuel, 100,000 FE buffer, and redstone mode all survived.
