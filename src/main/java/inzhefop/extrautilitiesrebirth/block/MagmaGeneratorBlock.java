@@ -92,27 +92,13 @@ public class MagmaGeneratorBlock extends Block
 	@Override
 	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
 		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		MagmaGeneratorUpdateTickProcedure.execute(world, x, y, z);
+		MagmaGeneratorUpdateTickProcedure.execute(world, pos);
 		world.scheduleTick(pos, this, 1);
 	}
 
 	@Override
 	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		double hitX = hit.getLocation().x;
-		double hitY = hit.getLocation().y;
-		double hitZ = hit.getLocation().z;
-		Direction direction = hit.getDirection();
-
-		MagmaGeneratorOnBlockRightClickedProcedure.execute(world, x, y, z, entity);
-		return InteractionResult.SUCCESS;
+		return MagmaGeneratorOnBlockRightClickedProcedure.execute(world, pos, entity, hand);
 	}
 
 	@Override

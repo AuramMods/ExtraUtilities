@@ -22,7 +22,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Disposal and creative utilities | Item, energy, and fluid Trash Cans, Creative Energy Storage, Creative Harvest, and Creative Inventory Sample. Verify filters, limits, and creative access. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
-| [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, a full receiver, and redstone control through the menu action. The Pink and Frosty fuel tags load and are covered by GameTests. Still verify the other fuel tables, remainders, upgrade rates, and full burn behavior and effects across the family. |
+| [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, a full receiver, and redstone control through the menu action. The Pink and Frosty fuel tags load and are covered by GameTests. Magma tests cover bucket and pipe filling, slot validation, FE backpressure, the upgraded burn, and exact per-bucket yield across serialization. Still verify the other fuel tables, remainders, upgrade rates, and full burn behavior and effects across the family. |
 | [ ] | Rainbow Generator | Core, top, and bottom. Verify assembly, linked generator activity, saved links, output, and power remaining after the multiblock stops. |
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
@@ -36,8 +36,9 @@ Block items follow the entry for the block that registers them.
 
 - [ ] Verify all 12 registered menus in a muted client on an isolated display.
   Check Creative Chest, generator, Mechanical Miner, Mechanical User,
-  Resonator, Furnace, Enchanter, Trash Can, Golden Bag, Gold Chest, Ender Quarry,
-  and Sorter. Corrected background sizes for the six affected screens. Include
+  Resonator, Furnace, Enchanter, Trash Can, Golden Bag, Gold Chest, Sorter, and
+  the Quantum Quarry placeholder served by the `ender_quarry_gui` menu type.
+  Corrected background sizes for the six affected screens. Include
   clicks, shift-clicks, menu validity, persistence, and server synchronization.
   An isolated client with master volume set to zero confirmed the layouts of
   Gold Chest, Golden Bag, Mechanical Miner, Sorter, Trash Can, and the Quantum
@@ -52,7 +53,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 15 quarry, generator, and lasso tests passed in
+  optional development mods. The 18 quarry, generator, and lasso tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. The packaged build at `697949b` started
