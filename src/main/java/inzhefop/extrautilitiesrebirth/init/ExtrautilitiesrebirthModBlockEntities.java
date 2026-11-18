@@ -28,7 +28,6 @@ import inzhefop.extrautilitiesrebirth.block.entity.RedstoneClockOffBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.RedstoneClockBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.RainbowGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.QuantumQuarryBlockEntity;
-import inzhefop.extrautilitiesrebirth.block.entity.QuantumQuarryActuatorBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.PotionGenerator1BlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.PinkGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.OverclockedGeneratorBlockEntity;
@@ -155,9 +154,6 @@ public class ExtrautilitiesrebirthModBlockEntities {
 			FeTransmitterBlockEntity::new);
 	public static final RegistryObject<BlockEntityType<?>> QUANTUM_QUARRY = register("quantum_quarry", ExtrautilitiesrebirthModBlocks.QUANTUM_QUARRY,
 			QuantumQuarryBlockEntity::new);
-
-	public static final RegistryObject<BlockEntityType<?>> QUANTUM_QUARRY_ACTUATOR = register("quantum_quarry_actuator",
-			ExtrautilitiesrebirthModBlocks.QUANTUM_QUARRY_ACTUATOR, QuantumQuarryActuatorBlockEntity::new);
 
 	private static RegistryObject<BlockEntityType<?>> register(String registryname, RegistryObject<Block> block,
 			BlockEntityType.BlockEntitySupplier<?> supplier) {
