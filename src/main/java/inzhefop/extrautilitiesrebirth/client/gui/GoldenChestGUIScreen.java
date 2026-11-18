@@ -49,7 +49,8 @@ public class GoldenChestGUIScreen extends AbstractContainerScreen<GoldenChestGUI
 		RenderSystem.defaultBlendFunc();
 
 		// 1.20.1: Pass the texture directly to blit
-		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight,
+				this.imageWidth, this.imageHeight);
 
 		RenderSystem.disableBlend();
 	}

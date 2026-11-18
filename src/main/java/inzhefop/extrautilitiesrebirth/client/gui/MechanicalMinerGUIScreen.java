@@ -55,7 +55,8 @@ public class MechanicalMinerGUIScreen extends AbstractContainerScreen<Mechanical
 		RenderSystem.defaultBlendFunc();
 
 		// Main Background
-		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight,
+				this.imageWidth, this.imageHeight);
 
 		// Upgrade Icon
 		guiGraphics.blit(new ResourceLocation("extrautilitiesrebirth:textures/upgrade_icon.png"),

@@ -48,7 +48,8 @@ public class EnderQuarryGUIScreen extends AbstractContainerScreen<EnderQuarryGUI
 		RenderSystem.defaultBlendFunc();
 
 		// 1.20.1: Pass texture directly to blit
-		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight);
+		guiGraphics.blit(texture, this.leftPos, this.topPos, 0, 0, this.imageWidth, this.imageHeight,
+				this.imageWidth, this.imageHeight);
 
 		RenderSystem.disableBlend();
 	}
