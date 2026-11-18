@@ -19,7 +19,13 @@
       "item": "extrautilitiesrebirth:enchanted_ingot"
     },
     "4": {
-      "item": "extrautilitiesrebirth:golden_lasso"
+      "type": "forge:difference",
+      "base": { "item": "extrautilitiesrebirth:golden_lasso" },
+      "subtracted": {
+        "type": "forge:partial_nbt",
+        "item": "extrautilitiesrebirth:golden_lasso",
+        "nbt": { "CapturedMob": {} }
+      }
     },
     "5": {
       "item": "extrautilitiesrebirth:enchanted_ingot"

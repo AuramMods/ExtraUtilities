@@ -89,6 +89,7 @@
   "block.extrautilitiesrebirth.mechanical_user": "Mechanical User",
   "block.extrautilitiesrebirth.heart_glass": "Heart Glass",
   "item.extrautilitiesrebirth.golden_lasso": "Golden Lasso",
+  "item.extrautilitiesrebirth.golden_lasso.captured": "Holding %s",
   "block.extrautilitiesrebirth.quartzburnt": "Quartzburnt",
   "block.extrautilitiesrebirth.ineffable_glass": "Ineffable Glass",
   "block.extrautilitiesrebirth.trash_can": "Trash Can",

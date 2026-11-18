@@ -29,7 +29,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Ender Thermic Pump | Verify fluid output, use of FE, range, replacement behavior, and persistence. |
 | [ ] | Automation and production | Mechanical Miner, Mechanical User, Furnace, Sorting Machine, Enchanter, Resonator, and Inventory Interface. Verify ordinary inputs and outputs, sided automation, blocked destinations, controls, and recipes. |
 | [ ] | Tools | Glass Cutter, Reinforced Glass Cutter, Wrench, Fire Axe, Kikoku, Healing Axe, Erosion Shovel, Precision Shears, Reversing Hoe, Etheric Sword, and Destruction Pickaxe. Verify tool actions, durability, drops, and client/server behavior. |
-| [ ] | Mob capture | Golden Lasso. Implement and verify capture, serialization, and release. |
+| [ ] | Mob capture | Golden Lasso. GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Verify real client interactions. |
 | [ ] | Player utilities | Division Sigil, Magical Apple, Golden Feather, Chicken Wing Ring, Advanced Chicken Wing Ring, Angel Ring, and Ring of the Flying Squid. Compare intended actions and progression to the workspace. Review the Angel Ring's external integration. |
 
 ## Menus and runs
@@ -45,7 +45,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The ten quarry and generator tests passed in
+  optional development mods. The 13 quarry, generator, and lasso tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. The packaged build at `697949b` started
