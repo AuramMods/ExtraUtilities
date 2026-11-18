@@ -13,7 +13,7 @@ Block items follow the entry for the block that registers them.
 | --- | --- | --- |
 | [x] | Compressed materials | GameTests craft, unpack, place, and break all eight cobblestone tiers, four dirt tiers, two sand tiers, and two gravel tiers. Unpacking the first dirt tier returns nine ordinary dirt blocks. |
 | [x] | Building materials | GameTests exercise the bedrockium, decorative stone, and Magical Wood crafting paths, including the bedrockium conversions. They cover placement, applicable rotation, and drops for all fourteen building blocks. Processor tests cover Quartzburnt, Rainbow Stone, and Stoneburnt. Magical Wood supplies its enchantment bonus, and Ferrous Juniper uses a stone axe or better. |
-| [ ] | Glass | Sandy, creeper, dark ethereal, dark, edged, ethereal, clean, bricks, glowstone, golden edged, heart, ineffable, ineffable inverted, obsidian, reinforced dark, square, and swirling. Check appearance and each variant's light, collision, and harvesting rules. |
+| [x] | Glass | GameTests cover light blocking, light emission, matching-face culling, and drops for all 17 variants. Ethereal, Dark Ethereal, and Ineffable Glass let a standing player pass through and stop mobs and sneaking players. Inverted Ineffable Glass reverses those rules. |
 | [ ] | Materials and components | Demon, enchanted and evil infused metal blocks, ender infused obsidian, ender core, machine block, diamond edged matrix, upgrade base, lunar reactive dust, red coal, enchanted ingot, bedrockium ingot, unstable ingot and nugget, evil infused iron ingot, demon ingot, eye of redstone, moon stone, redstone crystal, ender shard, and amazing opinium core. Trace crafting or acquisition through each consumer. |
 | [ ] | Placement and access | Angel Block, Chandelier, Chunk Loading Wand, Overworld Portal, and Portable Globe. Verify placement and activation in the intended dimensions, plus chunk and portal behavior after reload. |
 | [ ] | Spikes and Cursed Earth | Wood, stone, iron, gold, diamond, and creative spikes, Cursed Earth, and Drop of Evil. Verify damage, mob spawning, drops, conversion, and light behavior. |
@@ -68,7 +68,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 77 tests passed in both configurations.
+  optional development mods. All 79 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and
