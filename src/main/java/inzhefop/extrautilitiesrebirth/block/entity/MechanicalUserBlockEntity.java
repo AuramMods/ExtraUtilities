@@ -9,6 +9,7 @@ import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.common.capabilities.Capability;
 
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.item.ItemStack;
@@ -22,6 +23,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.core.NonNullList;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
@@ -36,7 +38,8 @@ import inzhefop.extrautilitiesrebirth.world.inventory.MechanicalUserGUIMenu;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
 
 public class MechanicalUserBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(9, ItemStack.EMPTY);
+	public static final int UPGRADE_SLOT = 8;
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(UPGRADE_SLOT + 1, ItemStack.EMPTY);
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public MechanicalUserBlockEntity(BlockPos position, BlockState state) {
@@ -117,7 +120,63 @@ public class MechanicalUserBlockEntity extends RandomizableContainerBlockEntity 
 
 	@Override
 	public boolean canPlaceItem(int index, ItemStack stack) {
-		return true;
+		return index < UPGRADE_SLOT || index == UPGRADE_SLOT && MachineSpeed.factorOf(stack) > 0;
+	}
+
+	public double workSpeed() {
+		return MachineSpeed.multiplier(getItem(UPGRADE_SLOT));
+	}
+
+	public Mode mode() {
+		CompoundTag data = getPersistentData();
+		if (!data.contains("machinemode", Tag.TAG_ANY_NUMERIC)) {
+			return Mode.PLACE_BLOCK;
+		}
+		return switch (data.getInt("machinemode")) {
+			case 0 -> Mode.ATTACK;
+			case 2 -> Mode.DROP_ITEM;
+			default -> Mode.PLACE_BLOCK;
+		};
+	}
+
+	public void initializeMode() {
+		if (!getPersistentData().contains("machinemode", Tag.TAG_ANY_NUMERIC)) {
+			setMode(Mode.PLACE_BLOCK);
+		}
+	}
+
+	public void toggleMode() {
+		setMode(switch (mode()) {
+			case ATTACK -> Mode.PLACE_BLOCK;
+			case PLACE_BLOCK -> Mode.DROP_ITEM;
+			case DROP_ITEM -> Mode.ATTACK;
+		});
+	}
+
+	private void setMode(Mode mode) {
+		CompoundTag data = getPersistentData();
+		data.putDouble("machinemode", mode.ordinal());
+		data.putString("mode", mode.label);
+		data.putDouble("ticks", 0);
+		setChanged();
+		BlockState state = getBlockState();
+		level.sendBlockUpdated(worldPosition, state, state, Block.UPDATE_CLIENTS);
+	}
+
+	public enum Mode {
+		ATTACK("Attack [5x5x5]"),
+		PLACE_BLOCK("Place block"),
+		DROP_ITEM("Drop item");
+
+		private final String label;
+
+		Mode(String label) {
+			this.label = label;
+		}
+
+		public String label() {
+			return label;
+		}
 	}
 
 	@Override
@@ -132,25 +191,7 @@ public class MechanicalUserBlockEntity extends RandomizableContainerBlockEntity 
 
 	@Override
 	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		if (index == 0)
-			return false;
-		if (index == 1)
-			return false;
-		if (index == 2)
-			return false;
-		if (index == 3)
-			return false;
-		if (index == 4)
-			return false;
-		if (index == 5)
-			return false;
-		if (index == 6)
-			return false;
-		if (index == 7)
-			return false;
-		if (index == 8)
-			return false;
-		return true;
+		return false;
 	}
 
 	private final EnergyStorage energyStorage = new EnergyStorage(25000, 25000, 25000, 0) {

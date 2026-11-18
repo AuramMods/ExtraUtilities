@@ -6,16 +6,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
-import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.BlockPos;
 
 import java.util.function.Supplier;
-import java.util.HashMap;
 
 import inzhefop.extrautilitiesrebirth.world.inventory.MechanicalUserGUIMenu;
-import inzhefop.extrautilitiesrebirth.procedures.ToggleButtonProcedureProcedure;
 import inzhefop.extrautilitiesrebirth.ExtrautilitiesrebirthMod;
 
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -56,15 +53,10 @@ public class MechanicalUserGUIButtonMessage {
 		context.setPacketHandled(true);
 	}
 
-	public static void handleButtonAction(Player entity, int buttonID, int x, int y, int z) {
-		Level world = entity.level();
-		HashMap guistate = MechanicalUserGUIMenu.guistate;
-		// security measure to prevent arbitrary chunk generation
-		if (!world.hasChunkAt(BlockPos.containing(x, y, z)))
-			return;
-		if (buttonID == 0) {
-
-			ToggleButtonProcedureProcedure.execute(world, x, y, z);
+	private static void handleButtonAction(Player player, int buttonId, int x, int y, int z) {
+		if (player != null && player.containerMenu instanceof MechanicalUserGUIMenu menu
+				&& menu.position.equals(new BlockPos(x, y, z))) {
+			menu.clickMenuButton(player, buttonId);
 		}
 	}
 

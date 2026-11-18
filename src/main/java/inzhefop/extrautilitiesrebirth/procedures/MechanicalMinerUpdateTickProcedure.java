@@ -20,7 +20,6 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.event.level.BlockEvent;
 
@@ -39,27 +38,16 @@ public class MechanicalMinerUpdateTickProcedure {
         BlockState targetState = level.getBlockState(target);
         if (targetState.isAir() || targetState.is(Blocks.END_PORTAL_FRAME) || targetState.getDestroySpeed(level, target) < 0
                 || targetState.getBlock() instanceof LiquidBlock || targetState.getBlock().asItem().getDefaultInstance().is(UNGROWN_LILIES)) {
-            setProgress(miner, 0);
+            MechanicalWork.reset(miner);
             return;
         }
         if (!miner.hasOutputSpace()) {
             return;
         }
 
-        double speed = miner.miningSpeed();
-        int power = (int) Math.pow(4 * speed, 2);
-        var energy = miner.getCapability(ForgeCapabilities.ENERGY).orElseThrow(IllegalStateException::new);
-        if (energy.extractEnergy(power, true) != power) {
-            return;
+        if (MechanicalWork.advance(miner, miner.miningSpeed())) {
+            harvest(level, miner, target, targetState);
         }
-        energy.extractEnergy(power, false);
-        int ticks = Math.max(0, miner.getPersistentData().getInt("ticks")) + 1;
-        if (ticks < 100 / speed) {
-            setProgress(miner, ticks);
-            return;
-        }
-        setProgress(miner, 0);
-        harvest(level, miner, target, targetState);
     }
 
     private static void harvest(ServerLevel level, MechanicalMinerBlockEntity miner, BlockPos target, BlockState state) {
@@ -94,10 +82,4 @@ public class MechanicalMinerUpdateTickProcedure {
         }
     }
 
-    private static void setProgress(MechanicalMinerBlockEntity miner, int ticks) {
-        if (miner.getPersistentData().getInt("ticks") != ticks) {
-            miner.getPersistentData().putDouble("ticks", ticks);
-            miner.setChanged();
-        }
-    }
 }
