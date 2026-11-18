@@ -43,6 +43,7 @@ public class EnderThermicPumpGameTests {
         test.setBlock(stairs, Blocks.OAK_STAIRS.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, true));
         BlockPos outside = MARKER.east().north().below(2);
         encloseSource(test, outside, Blocks.WATER);
+        test.setBlock(outside.above(), Blocks.STONE);
 
         var drum = ExtrautilitiesrebirthModBlocks.STONE_DRUM.get();
         test.setBlock(PUMP.above(), drum);

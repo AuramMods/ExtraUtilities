@@ -1,52 +1,34 @@
-
 package inzhefop.extrautilitiesrebirth.item;
 
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.item.UseAnim;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.InteractionResult;
-
-import inzhefop.extrautilitiesrebirth.procedures.GlassCutterRightclickedOnBlockProcedure;
-
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
 
 public class GlassCutterItem extends Item {
-	public GlassCutterItem() {
-		super(new Item.Properties().durability(256).rarity(Rarity.COMMON));
-	}
+    public GlassCutterItem() {
+        super(new Properties().durability(256));
+    }
 
-	@Override
-	public UseAnim getUseAnimation(ItemStack itemstack) {
-		return UseAnim.EAT;
-	}
+    @Override
+    public boolean hasCraftingRemainingItem(ItemStack stack) {
+        return true;
+    }
 
-	@Override
-	public boolean hasCraftingRemainingItem() {
-		return true;
-	}
+    @Override
+    public ItemStack getCraftingRemainingItem(ItemStack stack) {
+        var remainder = stack.copyWithCount(1);
+        remainder.setDamageValue(stack.getDamageValue() + 1);
+        return remainder.getDamageValue() >= remainder.getMaxDamage() ? ItemStack.EMPTY : remainder;
+    }
 
-	@Override
-	public ItemStack getCraftingRemainingItem(ItemStack itemstack) {
-		ItemStack retval = new ItemStack(this);
-		retval.setDamageValue(itemstack.getDamageValue() + 1);
-		if (retval.getDamageValue() >= retval.getMaxDamage()) {
-			return ItemStack.EMPTY;
-		}
-		return retval;
-	}
+    @Override
+    public boolean isRepairable(ItemStack stack) {
+        return false;
+    }
 
-	@Override
-	public boolean isRepairable(ItemStack itemstack) {
-		return false;
-	}
-
-	@Override
-	public InteractionResult useOn(UseOnContext context) {
-		InteractionResult retval = super.useOn(context);
-		GlassCutterRightclickedOnBlockProcedure.execute(context.getLevel(), context.getClickedPos().getX(), context.getClickedPos().getY(),
-				context.getClickedPos().getZ(), context.getLevel().getBlockState(context.getClickedPos()), context.getPlayer(),
-				context.getItemInHand());
-		return retval;
-	}
+    @Override
+    public InteractionResult onItemUseFirst(ItemStack stack, UseOnContext context) {
+        return GlassCutting.use(context, 10);
+    }
 }
