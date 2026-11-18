@@ -12,10 +12,12 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.phys.BlockHitResult;
@@ -116,6 +118,104 @@ public class ToolGameTests {
         test.assertTrue(rightClick(player, InteractionHand.MAIN_HAND, actual).consumesAction(), "The hoe should restore stone");
         test.assertBlockPresent(Blocks.STONE, pos);
         test.assertTrue(hoe.getDamageValue() == 3, "Only successful reversals should cost durability");
+        test.succeed();
+    }
+
+    @GameTest(template = "machine_test")
+    public static void precisionShearsPickUpAllowableBlocksOnlyIfInventoryHasRoom(GameTestHelper test) {
+        var player = test.makeMockSurvivalPlayer();
+        var pos = new BlockPos(3, 2, 3);
+        var actual = test.absolutePos(pos);
+        var shears = new ItemStack(ExtrautilitiesrebirthModItems.PRECISION_SHEARS.get());
+        player.setItemInHand(InteractionHand.OFF_HAND, shears);
+        player.setShiftKeyDown(true);
+        test.setBlock(pos, Blocks.DIAMOND_ORE);
+        test.assertTrue(!rightClick(player, InteractionHand.OFF_HAND, actual).consumesAction(), "A stone-tier tool cannot pick up diamond ore");
+        test.assertBlockPresent(Blocks.DIAMOND_ORE, pos);
+        test.setBlock(pos, Blocks.STONE);
+        test.assertTrue(rightClick(player, InteractionHand.OFF_HAND, actual).consumesAction(), "Sneaking should pick up stone into the inventory");
+        test.assertBlockPresent(Blocks.AIR, pos);
+        test.assertTrue(player.getInventory().countItem(Items.STONE) == 1 && test.getEntities(EntityType.ITEM, pos, 2).isEmpty(),
+                "The exact block should appear once in the inventory");
+        player.getInventory().items.replaceAll(stack -> new ItemStack(Items.COBBLESTONE, 64));
+        test.setBlock(pos, Blocks.STONE);
+        test.assertTrue(!rightClick(player, InteractionHand.OFF_HAND, actual).consumesAction(), "A full inventory should reject the pickup");
+        test.assertBlockPresent(Blocks.STONE, pos);
+        test.succeed();
+    }
+
+    @GameTest(template = "machine_test")
+    public static void erosionAndDestructionToolsClearTheirTargetMaterialsAndProtectValuables(GameTestHelper test) {
+        var level = test.getLevel();
+        var player = test.makeMockSurvivalPlayer();
+        var pos = new BlockPos(3, 2, 3);
+        var actual = test.absolutePos(pos);
+        var pick = new ItemStack(ExtrautilitiesrebirthModItems.DESTRUCTION_PICKAXE.get());
+        var stone = Blocks.STONE.defaultBlockState();
+        var diamond = Blocks.DIAMOND_ORE.defaultBlockState();
+        test.assertTrue(pick.getDestroySpeed(stone) > 35 && pick.getDestroySpeed(diamond) < 1,
+                "Destruction Pickaxe speed should target ordinary stone");
+        test.assertTrue(Block.getDrops(stone, level, actual, null, player, pick).isEmpty()
+                && Block.getDrops(diamond, level, actual, null, player, pick).stream().anyMatch(drop -> drop.is(Items.DIAMOND)),
+                "The pickaxe should void stone while valuable ore still yields its loot");
+        var shovel = new ItemStack(ExtrautilitiesrebirthModItems.EROSION_SHOVEL.get());
+        var dirt = Blocks.DIRT.defaultBlockState();
+        test.assertTrue(Block.getDrops(dirt, level, actual, null, player, shovel).isEmpty(), "The erosion shovel should void the primary dirt drop");
+        test.setBlock(pos.above(), Blocks.SAND);
+        test.setBlock(pos.above(2), Blocks.GRAVEL);
+        test.setBlock(pos.above(3), Blocks.DIAMOND_ORE);
+        player.setItemInHand(InteractionHand.MAIN_HAND, shovel);
+        shovel.mineBlock(level, dirt, actual, player);
+        test.assertBlockPresent(Blocks.AIR, pos.above());
+        test.assertBlockPresent(Blocks.AIR, pos.above(2));
+        test.assertBlockPresent(Blocks.DIAMOND_ORE, pos.above(3));
+        test.assertTrue(test.getEntities(EntityType.ITEM, pos.above(), 3).isEmpty() && shovel.getDamageValue() == 3,
+                "The falling column should produce no items and count each removed block for wear");
+        test.succeed();
+    }
+
+    @GameTest(template = "machine_test")
+    public static void healingAxeTransfersHealthAndReplenishesHunger(GameTestHelper test) {
+        var level = test.getLevel();
+        var player = test.makeMockSurvivalPlayer();
+        var tool = new ItemStack(ExtrautilitiesrebirthModItems.HEALING_AXE.get());
+        player.setItemInHand(InteractionHand.MAIN_HAND, tool);
+        var target = test.spawnWithNoFreeWill(EntityType.PIG, new BlockPos(3, 2, 3));
+        target.setHealth(4);
+        float before = player.getHealth();
+        player.attack(target);
+        test.assertTrue(target.getHealth() > 4 && player.getHealth() < before && tool.getDamageValue() == 1,
+                "The axe should pay some of the player's health to heal a living target");
+        var undead = test.spawnWithNoFreeWill(EntityType.ZOMBIE, new BlockPos(4, 2, 3));
+        player.attack(undead);
+        test.assertTrue(undead.getHealth() == 12 && tool.getDamageValue() == 2, "The same transfer should harm undead creatures");
+        player.getFoodData().setFoodLevel(10);
+        player.tickCount = 40;
+        tool.inventoryTick(level, player, 0, true);
+        test.assertTrue(player.getFoodData().getFoodLevel() == 11, "Equipping the axe should feed the player slowly");
+        test.succeed();
+    }
+
+    @GameTest(template = "machine_test")
+    public static void kikokuAndEthericSwordApplyTheirArmorPiercingInTheOriginalHit(GameTestHelper test) {
+        var level = test.getLevel();
+        var player = test.makeMockSurvivalPlayer();
+        var pos = new BlockPos(3, 2, 3);
+        var unarmored = test.spawnWithNoFreeWill(EntityType.PIG, pos);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ExtrautilitiesrebirthModItems.KIKOKU.get()));
+        unarmored.hurt(level.damageSources().playerAttack(player), 2);
+        test.assertTrue(unarmored.getHealth() == 4, "A Kikoku hit should include four points of armor-piercing damage exactly once");
+
+        var normalTarget = test.spawnWithNoFreeWill(EntityType.ZOMBIE, pos.east());
+        var ethericTarget = test.spawnWithNoFreeWill(EntityType.ZOMBIE, pos.south());
+        for (var target : List.of(normalTarget, ethericTarget)) {
+            target.setItemSlot(EquipmentSlot.CHEST, new ItemStack(Items.DIAMOND_CHESTPLATE));
+        }
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(Items.IRON_SWORD));
+        normalTarget.hurt(level.damageSources().playerAttack(player), 6);
+        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ExtrautilitiesrebirthModItems.ETHERIC_SWORD.get()));
+        ethericTarget.hurt(level.damageSources().playerAttack(player), 6);
+        test.assertTrue(ethericTarget.getHealth() < normalTarget.getHealth(), "An Etheric hit should hurt more against the same armor");
         test.succeed();
     }
 

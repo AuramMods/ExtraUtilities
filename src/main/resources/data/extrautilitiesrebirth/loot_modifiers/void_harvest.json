@@ -1,0 +1,11 @@
+{
+  "type": "extrautilitiesrebirth:void_harvest",
+  "conditions": [
+    {
+      "condition": "minecraft:match_tool",
+      "predicate": {
+        "items": ["extrautilitiesrebirth:destruction_pickaxe", "extrautilitiesrebirth:erosion_shovel"]
+      }
+    }
+  ]
+}

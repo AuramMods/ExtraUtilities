@@ -28,7 +28,7 @@ Block items follow the entry for the block that registers them.
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [x] | Ender Thermic Pump | GameTests cover normal marker setup, scanning the full rectangle below zero, leaving waterlogged or outside blocks alone, energy use, both replacement modes, partial acceptance by a drum, and resuming with a saved full tank. |
 | [x] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. The three production menus were exercised in the muted client. Inventory Interface tests verify the bundled ten-slot automation buffer, vanilla hopper transfer, comparator output, and the iron pickaxe requirement. |
-| [ ] | Tools | Glass Cutter and Reinforced Glass Cutter recover panes and all tagged mod glass. The ordinary cutter retains item data when it wears down in crafting. Fire Axe fells connected logs from the original break and respects Forge break events. Reversing Hoe regresses crops and restores dirt or cobblestone. Wrench tests cover wireless and Rainbow Generator links. Verify Kikoku, Healing Axe, Erosion Shovel, Precision Shears, Etheric Sword, and Destruction Pickaxe. |
+| [ ] | Tools | Glass Cutter and Reinforced Glass Cutter recover panes and all tagged mod glass. The ordinary cutter retains item data when it wears down in crafting. Fire Axe fells connected logs from the original break and respects Forge break events. Reversing Hoe regresses crops and restores dirt or cobblestone. Wrench tests cover wireless and Rainbow Generator links. Precision Shears recover stone-tier blocks while there is room. Destruction Pickaxe clears ordinary stone quickly, and Erosion Shovel clears loose material above a dig. Both preserve valuable ore drops. Healing Axe transfers health and restores hunger when equipped. Kikoku and Etheric Sword apply their armor-piercing effects during the original hit. Verify normal client interactions. |
 | [x] | Mob capture | Golden Lasso GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Normal right-clicks in the muted client captured and released a named pig, preserving its name and clearing the filled lasso. |
 | [ ] | Player utilities | Division Sigil, Magical Apple, Golden Feather, Chicken Wing Ring, Advanced Chicken Wing Ring, Angel Ring, and Ring of the Flying Squid. Compare intended actions and progression to the workspace. Review the Angel Ring's external integration. |
 
@@ -69,7 +69,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 101 tests passed in both configurations.
+  optional development mods. All 105 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and

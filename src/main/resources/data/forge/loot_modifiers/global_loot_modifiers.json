@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "entries": ["extrautilitiesrebirth:redstone_crystal"]
+  "entries": [
+    "extrautilitiesrebirth:redstone_crystal",
+    "extrautilitiesrebirth:void_harvest"
+  ]
 }

@@ -9,13 +9,11 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.entity.LivingEntity;
 
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
-import inzhefop.extrautilitiesrebirth.procedures.KikokuLivingEntityIsHitWithToolProcedure;
 
 
 public class KikokuItem extends SwordItem {
@@ -45,13 +43,6 @@ public class KikokuItem extends SwordItem {
 				return Ingredient.of(new ItemStack(Items.NETHER_STAR));
 			}
 		}, 3, 1f, new Item.Properties().fireResistant());
-	}
-
-	@Override
-	public boolean hurtEnemy(ItemStack itemstack, LivingEntity entity, LivingEntity sourceentity) {
-		boolean retval = super.hurtEnemy(itemstack, entity, sourceentity);
-		KikokuLivingEntityIsHitWithToolProcedure.execute(entity);
-		return retval;
 	}
 
 	@Override

@@ -3,6 +3,9 @@ package inzhefop.extrautilitiesrebirth.item;
 
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.Tiers;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Item;
@@ -38,4 +41,14 @@ public class DestructionPickaxeItem extends PickaxeItem {
 			}
 		}, 1, -3f, new Item.Properties().fireResistant());
 	}
+
+	public static boolean clears(BlockState state) {
+		return state.is(Blocks.STONE) || state.is(Blocks.COBBLESTONE) || state.is(Blocks.DEEPSLATE) || state.is(Blocks.COBBLED_DEEPSLATE);
+	}
+
+	@Override
+	public float getDestroySpeed(ItemStack stack, BlockState state) {
+		return clears(state) ? Tiers.DIAMOND.getSpeed() * 5 : 0.2f;
+	}
+
 }
