@@ -46,7 +46,7 @@ import io.netty.buffer.Unpooled;
 
 import inzhefop.extrautilitiesrebirth.world.inventory.NormalGUIMenu;
 import inzhefop.extrautilitiesrebirth.procedures.GeneratorMK1PlacedProcedure;
-import inzhefop.extrautilitiesrebirth.procedures.FrostyGeneratorProcedure;
+import inzhefop.extrautilitiesrebirth.procedures.FuelGeneratorTick;
 import inzhefop.extrautilitiesrebirth.block.entity.FrostyGenerator1BlockEntity;
 
 public class FrostyGenerator1Block extends Block
@@ -101,11 +101,7 @@ public class FrostyGenerator1Block extends Block
 	@Override
 	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
 		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		FrostyGeneratorProcedure.execute(world, x, y, z);
+		FuelGeneratorTick.execute(world, pos);
 		world.scheduleTick(pos, this, 1);
 	}
 

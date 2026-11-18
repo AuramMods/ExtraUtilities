@@ -12,6 +12,7 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -27,6 +28,8 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+
+import java.util.List;
 
 @GameTestHolder("extrautilitiesrebirth")
 @PrefixGameTestTemplate(false)
@@ -85,6 +88,153 @@ public class GeneratorGameTests {
                     "The generator must keep the remainder");
             test.succeed();
         });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void tntGeneratorPausesWhenItsOwnBufferIsFull(GameTestHelper test) {
+        TNTGeneratorBlockEntity generator = placeTntGenerator(test);
+        IEnergyStorage energy = energyOf(generator);
+        energy.receiveEnergy(99_990, false);
+
+        test.runAfterDelay(5, () -> {
+            test.assertTrue(generator.getItem(0).getCount() == 2 && energy.getEnergyStored() == 99_990,
+                    "TNT should wait until there is space for a complete generation tick");
+            energy.extractEnergy(200, false);
+        });
+        test.runAfterDelay(10, () -> {
+            test.assertTrue(generator.getItem(0).getCount() == 1 && energy.getEnergyStored() == 99_990,
+                    "TNT generation should resume when space becomes available");
+            test.assertTrue(generator.getPersistentData().getDouble("time") == 1_199,
+                    "A full buffer should preserve the remaining burn after the first tick");
+            test.succeed();
+        });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void culinaryGeneratorRemembersTheFoodItIsBurning(GameTestHelper test) {
+        var generator = placeWithFuel(test, GENERATOR, ExtrautilitiesrebirthModBlocks.CULINARY_GENERATOR.get(),
+                new ItemStack(Items.BAKED_POTATO));
+        test.runAfterDelay(5, () -> {
+            test.assertTrue(generator.getItem(0).isEmpty(), "The generator should consume the potato");
+            test.assertTrue(generator.getPersistentData().getString("production").equals("Output: 30 FE/t"),
+                    "A single baked potato should continue to produce 30 FE/t after leaving the slot");
+            generator.load(generator.saveWithFullMetadata());
+            generator.setItem(0, new ItemStack(Items.CARROT));
+        });
+        test.runAfterDelay(10, () -> {
+            test.assertTrue(generator.getItem(0).is(Items.CARROT)
+                            && generator.getPersistentData().getString("production").equals("Output: 30 FE/t"),
+                    "After reloading, the first burn should still use the potato's rate");
+            test.succeed();
+        });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void generatorMenuRoutesFuelUpgradesAndOtherItems(GameTestHelper test) {
+        test.setBlock(GENERATOR, ExtrautilitiesrebirthModBlocks.TNT_GENERATOR.get());
+        var generator = (TNTGeneratorBlockEntity) test.getBlockEntity(GENERATOR);
+        var player = test.makeMockPlayer();
+        var inventory = player.getInventory();
+        inventory.setItem(0, new ItemStack(Items.TNT, 2));
+        inventory.setItem(1, new ItemStack(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get()));
+        inventory.setItem(2, new ItemStack(Items.DIAMOND));
+        NormalGUIMenu menu = (NormalGUIMenu) generator.createMenu(1, inventory);
+
+        int hotbarStart = menu.slots.size() - 9;
+        test.assertTrue(menu.quickMoveStack(player, hotbarStart).is(Items.TNT) && generator.getItem(0).getCount() == 2,
+                "Shift-click should move TNT to the fuel slot");
+        test.assertTrue(menu.quickMoveStack(player, hotbarStart + 1).is(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get())
+                && generator.getItem(1).is(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get()),
+                "Shift-click should route a speed upgrade to the upgrade slot");
+        test.assertTrue(menu.quickMoveStack(player, hotbarStart + 2).is(Items.DIAMOND)
+                        && inventory.getItem(9).is(Items.DIAMOND),
+                "Shift-click should move other items between the hotbar and player inventory");
+        test.succeed();
+    }
+
+    @GameTest(template = "machine_test")
+    public static void specialtyGeneratorsUseTheirFixedFuelRates(GameTestHelper test) {
+        assertGeneratorRates(test, List.of(
+                new FuelCase(ExtrautilitiesrebirthModBlocks.DEATH_GENERATOR.get(), Items.BONE, 40),
+                new FuelCase(ExtrautilitiesrebirthModBlocks.DISENCHANTMENT_GENERATOR.get(), Items.ENCHANTED_BOOK, 125),
+                new FuelCase(ExtrautilitiesrebirthModBlocks.ENDER_GENERATOR.get(), Items.ENDER_EYE, 70),
+                new FuelCase(ExtrautilitiesrebirthModBlocks.SLIMEY_GENERATOR.get(), Items.SLIME_BALL, 300),
+                new FuelCase(ExtrautilitiesrebirthModBlocks.REDSTONE_GENERATOR.get(), Items.REDSTONE, 300)));
+    }
+
+    @GameTest(template = "machine_test")
+    public static void furnaceFamilyUsesForgeFuelBurnTimes(GameTestHelper test) {
+        assertGeneratorRates(test, List.of(
+                new FuelCase(ExtrautilitiesrebirthModBlocks.FURNACE_GENERATOR.get(), Items.COAL, 30),
+                new FuelCase(ExtrautilitiesrebirthModBlocks.OVERCLOCKED_GENERATOR.get(), Items.COAL, 60),
+                new FuelCase(ExtrautilitiesrebirthModBlocks.SURVIVAL_GENERATOR.get(), Items.COAL, 30)));
+    }
+
+    @GameTest(template = "machine_test")
+    public static void generatorsPreserveContainerRemainders(GameTestHelper test) {
+        var furnace = placeWithFuel(test, new BlockPos(1, 2, 1), ExtrautilitiesrebirthModBlocks.FURNACE_GENERATOR.get(),
+                new ItemStack(Items.LAVA_BUCKET));
+        var potion = placeWithFuel(test, new BlockPos(4, 2, 1), ExtrautilitiesrebirthModBlocks.POTION_GENERATOR_1.get(),
+                new ItemStack(Items.SPLASH_POTION));
+        var halitosisPos = new BlockPos(1, 2, 4);
+        var halitosis = placeWithFuel(test, halitosisPos, ExtrautilitiesrebirthModBlocks.HALITOSIS_GENERATOR.get(),
+                new ItemStack(Items.DRAGON_BREATH, 2));
+
+        test.runAfterDelay(5, () -> {
+            var furnaceItems = furnace.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN)
+                    .orElseThrow(AssertionError::new);
+            test.assertTrue(furnaceItems.extractItem(0, 1, false).is(Items.BUCKET)
+                            && energyOf(furnace).getEnergyStored() > 0,
+                    "A hopper should be able to remove the spent furnace bucket");
+            test.assertTrue(potion.getItem(0).is(Items.GLASS_BOTTLE) && energyOf(potion).getEnergyStored() > 0,
+                    "The potion generator should keep the empty bottle in the fuel slot");
+            test.assertTrue(halitosis.getItem(0).getCount() == 1 && energyOf(halitosis).getEnergyStored() > 0,
+                    "The Halitosis Generator should keep the rest of a fuel stack");
+            test.assertItemEntityCountIs(Items.GLASS_BOTTLE, halitosisPos, 1.5, 1);
+            test.succeed();
+        });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void netherStarGeneratorPreservesYieldWhenUpgradesExceedCapacity(GameTestHelper test) {
+        var generator = placeWithFuel(test, GENERATOR, ExtrautilitiesrebirthModBlocks.NETHERSTAR_GENERATOR.get(),
+                new ItemStack(Items.NETHER_STAR));
+        generator.setItem(1, new ItemStack(ExtrautilitiesrebirthModItems.SUPER_SPEED_UPGRADE.get(), 3));
+        var energy = energyOf(generator);
+        test.runAfterDelay(5, () -> {
+            test.assertTrue(energy.getEnergyStored() == 100_000 && generator.getPersistentData().getDouble("time") == 2_399,
+                    "The generator should fill its buffer and preserve the energy it could not store");
+            energy.extractEnergy(100_000, false);
+        });
+        test.runAfterDelay(9, () -> {
+            test.assertTrue(energy.getEnergyStored() == 100_000 && generator.getPersistentData().getDouble("time") == 2_398,
+                    "The remaining energy should be available when the buffer drains");
+            test.succeed();
+        });
+    }
+
+    private record FuelCase(Block block, Item item, int rate) {
+    }
+
+    private static void assertGeneratorRates(GameTestHelper test, List<FuelCase> cases) {
+        List<BlockPos> positions = List.of(new BlockPos(1, 2, 1), new BlockPos(4, 2, 1), new BlockPos(1, 2, 4),
+                new BlockPos(4, 2, 4), GENERATOR);
+        for (int index = 0; index < cases.size(); index++) {
+            FuelCase fuelCase = cases.get(index);
+            BlockPos pos = positions.get(index);
+            test.setBlock(pos, fuelCase.block());
+            var generator = (RandomizableContainerBlockEntity) test.getBlockEntity(pos);
+            var items = generator.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.UP)
+                    .orElseThrow(AssertionError::new);
+            test.assertTrue(!items.insertItem(0, new ItemStack(Items.DIAMOND), false).isEmpty(),
+                    "The fuel slot should reject an item that cannot burn");
+            test.assertTrue(items.insertItem(0, new ItemStack(fuelCase.item()), false).isEmpty(),
+                    "The fuel slot should accept " + fuelCase.item());
+            test.runAfterDelay(5, () -> test.assertTrue(generator.getItem(0).isEmpty()
+                            && generator.getPersistentData().getString("production").equals("Output: " + fuelCase.rate() + " FE/t"),
+                    "The generator should consume " + fuelCase.item() + " and run at " + fuelCase.rate() + " FE/t"));
+        }
+        test.runAfterDelay(6, test::succeed);
     }
 
     @GameTest(template = "machine_test")

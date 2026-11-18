@@ -40,7 +40,6 @@ import io.netty.buffer.Unpooled;
 
 import inzhefop.extrautilitiesrebirth.world.inventory.NormalGUIMenu;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
-import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
 
 public class MagmaGeneratorBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
 	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(2, ItemStack.EMPTY);
@@ -127,25 +126,13 @@ public class MagmaGeneratorBlockEntity extends RandomizableContainerBlockEntity 
 
 	@Override
 	public boolean canPlaceItem(int index, ItemStack stack) {
-		return index == 1 && upgradeSpeed(stack) > 1;
+		return index == 1 && GeneratorSpeed.multiplier(stack) > 1;
 	}
 
 	public double getSpeedMultiplier() {
-		return upgradeSpeed(getItem(1));
+		return GeneratorSpeed.multiplier(getItem(1));
 	}
 
-	private static double upgradeSpeed(ItemStack stack) {
-		if (stack.is(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get())) {
-			return stack.getCount() * 1.05;
-		}
-		if (stack.is(ExtrautilitiesrebirthModItems.ENCHANTED_SPEED_UPGRADE.get())) {
-			return stack.getCount() * 1.1;
-		}
-		if (stack.is(ExtrautilitiesrebirthModItems.SUPER_SPEED_UPGRADE.get())) {
-			return stack.getCount() * 1.2;
-		}
-		return 1;
-	}
 
 	public boolean hasSpaceForEnergy(int energy) {
 		return energyStorage.receiveEnergy(energy, true) == energy;

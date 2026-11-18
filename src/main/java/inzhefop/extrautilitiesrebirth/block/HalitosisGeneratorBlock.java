@@ -45,7 +45,7 @@ import java.util.Collections;
 import io.netty.buffer.Unpooled;
 
 import inzhefop.extrautilitiesrebirth.world.inventory.NormalGUIMenu;
-import inzhefop.extrautilitiesrebirth.procedures.HalitosisGenratorUpdateTickProcedure;
+import inzhefop.extrautilitiesrebirth.procedures.FuelGeneratorTick;
 import inzhefop.extrautilitiesrebirth.procedures.GeneratorMK1PlacedProcedure;
 import inzhefop.extrautilitiesrebirth.block.entity.HalitosisGeneratorBlockEntity;
 
@@ -101,11 +101,7 @@ public class HalitosisGeneratorBlock extends Block
 	@Override
 	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
 		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		HalitosisGenratorUpdateTickProcedure.execute(world, x, y, z);
+		FuelGeneratorTick.execute(world, pos);
 		world.scheduleTick(pos, this, 1);
 	}
 

@@ -4,7 +4,6 @@ import inzhefop.extrautilitiesrebirth.block.entity.MagmaGeneratorBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.block.Block;
 
 public class MagmaGeneratorUpdateTickProcedure {
     private static final double BURN_TIME = 100;
@@ -41,14 +40,7 @@ public class MagmaGeneratorUpdateTickProcedure {
             }
         }
 
-        boolean valid = hasLava || time > 0;
-        int progress = (int) (time / BURN_TIME * 22);
-        if (valid != data.getBoolean("valid") || progress != data.getInt("progress2")) {
-            data.putBoolean("valid", valid);
-            data.putInt("progress2", progress);
-            var state = generator.getBlockState();
-            level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS);
-        }
+        GeneratorOutput.syncBurnProgress(level, generator, hasLava || time > 0, time, BURN_TIME);
         if (generated > 0) {
             generator.setChanged();
         }

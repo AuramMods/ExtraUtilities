@@ -37,9 +37,15 @@ public class NormalGUIMenu extends AbstractContainerMenu implements Supplier<Map
 		this.world = inv.player.level();
 		this.position = extraData == null ? inv.player.blockPosition() : extraData.readBlockPos();
 		this.machine = extraData == null ? null : world.getBlockEntity(position);
+		ItemStackHandler displaySlots = new ItemStackHandler(2) {
+			@Override
+			public boolean isItemValid(int slot, ItemStack stack) {
+				return !(machine instanceof Container container) || container.canPlaceItem(slot, stack);
+			}
+		};
 		IItemHandler internal = !world.isClientSide && machine != null
-				? machine.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseGet(() -> new ItemStackHandler(2))
-				: new ItemStackHandler(2);
+				? machine.getCapability(ForgeCapabilities.ITEM_HANDLER).orElse(displaySlots)
+				: displaySlots;
 		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 61, 36) {
 		}));
 		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 7, 18) {
@@ -98,7 +104,6 @@ public class NormalGUIMenu extends AbstractContainerMenu implements Supplier<Map
 						return ItemStack.EMPTY;
 					}
 				}
-				return ItemStack.EMPTY;
 			}
 			if (itemstack1.getCount() == 0) {
 				slot.set(ItemStack.EMPTY);

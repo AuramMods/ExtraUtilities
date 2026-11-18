@@ -29,6 +29,17 @@ final class GeneratorOutput {
                 .map(storage -> storage.receiveEnergy(amount, false)).orElse(0);
     }
 
+    static void syncBurnProgress(ServerLevel level, BlockEntity generator, boolean valid, double time, double duration) {
+        CompoundTag data = generator.getPersistentData();
+        int progress = duration > 0 ? (int) (time / duration * 22) : 0;
+        if (valid != data.getBoolean("valid") || progress != data.getInt("progress2")) {
+            data.putBoolean("valid", valid);
+            data.putInt("progress2", progress);
+            BlockState state = generator.getBlockState();
+            level.sendBlockUpdated(generator.getBlockPos(), state, state, Block.UPDATE_CLIENTS);
+        }
+    }
+
     static void finishTick(LevelAccessor world, BlockPos pos, int generated, double speed) {
         if (!(world instanceof ServerLevel level)) {
             return;
