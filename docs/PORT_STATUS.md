@@ -24,7 +24,7 @@ Block items follow the entry for the block that registers them.
 | [x] | Redstone Clock | Both registered states alternate every 18 ticks. GameTests cover adjacent comparator output and restoration of the saved phase. An upgraded dedicated-server save retained the clock's data and its comparator cycled between 0 and 15 after restart. |
 | [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. GameTests cover fuel and production for each generator, the TNT menu and six output sides, full storage, serialized Culinary and Magma burns, and bucket and bottle remainders. Magma also covers bucket and pipe filling, slot validation, and exact per-bucket yield with speed upgrades. Continue checking alternate fuel variants, the full yield at each speed tier, and linked Rainbow Generator operation. |
 | [x] | Rainbow Generator | GameTests craft both halves and the core, use the Wrench to select the core and link all 16 fuel generators, reload those links, and verify generation only while all 16 are producing. Stored power still transfers while the core is idle, and excess stays buffered. |
-| [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
+| [x] | Ender Quarry | GameTests cover four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. The packaged client linked four markers and started a quarry with Speed and Silk Touch. That save retained the marker link, active quarry, upgrades, and intact ore output across a dedicated-server upgrade and restart. Mining resumed from the saved position. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [x] | Ender Thermic Pump | GameTests cover normal marker setup, scanning the full rectangle below zero, leaving waterlogged or outside blocks alone, energy use, both replacement modes, partial acceptance by a drum, and resuming with a saved full tank. |
 | [ ] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. The three production menus were exercised in the muted client. Finish the Inventory Interface audit. |
@@ -72,7 +72,9 @@ Block items follow the entry for the block that registers them.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and
-  pump fixes have loaded in a Forge 47.4.10 dedicated server installation.
+  pump fixes have loaded in a Forge 47.4.10 dedicated server installation. A
+  later packaged jar also loaded in a muted Forge 47.4.10 client and exercised
+  the Ender Quarry's four-marker setup through normal clicks.
 - [ ] Upgrade an isolated copy of a representative 1.20.1 save. Check registry
   IDs, inventory contents, FE buffers, fuel and machine state, then restart and
   check again. A copy of the save retained the sampled Gold Chest slots, TNT
@@ -84,3 +86,5 @@ Block items follow the entry for the block that registers them.
   saved pump fluid into a drum. Those results persisted after restart.
   A later upgrade retained the same drum's water in its legacy tank data
   through another dedicated-server restart.
+  The quarry save also retained the Golden Bag and both stored stacks,
+  including the name of the gold ingots, on upgrade and restart.
