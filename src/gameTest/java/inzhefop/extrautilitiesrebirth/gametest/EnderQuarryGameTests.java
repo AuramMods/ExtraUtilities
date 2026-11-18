@@ -10,12 +10,14 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.ChestBlockEntity;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 
 import java.util.List;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -143,6 +145,88 @@ public class EnderQuarryGameTests {
             test.assertTrue(quarry.getItem(0).is(Items.DIRT) && quarry.getItem(0).getCount() == 1,
                     "The quarry must harvest the original block before placing fill");
             test.succeed();
+        });
+    }
+
+    @GameTest(template = "machine_test", timeoutTicks = 180)
+    public static void enderQuarryStartsFromFourLinkedMarkersAndUsesSilkTouch(GameTestHelper test) {
+        BlockPos anchor = new BlockPos(5, 3, 5);
+        BlockPos markerCorner = anchor.north(4).west(4);
+        var marker = ExtrautilitiesrebirthModBlocks.ENDER_MARKER.get();
+        test.setBlock(anchor, marker);
+        test.setBlock(anchor.north(4), marker);
+        test.setBlock(anchor.west(4), marker);
+        test.useBlock(anchor);
+        test.assertTrue(!test.getBlockEntity(anchor).getPersistentData().getBoolean("complete"),
+                "Three markers must not establish a rectangular boundary");
+        test.setBlock(markerCorner, marker);
+        test.useBlock(anchor);
+        test.assertTrue(test.getBlockEntity(anchor).getPersistentData().getBoolean("complete"),
+                "Right-clicking the corner must link all four markers");
+
+        BlockPos machine = anchor.east();
+        BlockPos destination = machine.above();
+        BlockPos firstOre = anchor.north().west().below();
+        BlockPos outside = anchor.north().east().below();
+        test.setBlock(firstOre, Blocks.DIAMOND_ORE);
+        test.setBlock(outside, Blocks.GOLD_ORE);
+        test.setBlock(machine, ExtrautilitiesrebirthModBlocks.ENDER_QUARRY.get());
+        test.setBlock(destination, Blocks.CHEST);
+        test.setBlock(machine.north(), ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE.get());
+        test.setBlock(machine.south(), ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SPEED_UPGRADE.get());
+        BlockEntity quarry = test.getBlockEntity(machine);
+        test.useBlock(machine);
+        test.assertTrue(quarry.getPersistentData().getInt("state") == 1,
+                "The quarry must start when used next to the linked marker");
+        test.assertTrue(quarry.getPersistentData().getInt("eqspeed") == 3
+                        && quarry.getPersistentData().getBoolean("eqsilk"),
+                "Placing the adjacent Speed and Silk Touch upgrades must affect the quarry");
+
+        var energy = quarry.getCapability(ForgeCapabilities.ENERGY).orElseThrow(AssertionError::new);
+        test.assertTrue(energy.receiveEnergy(500_000, false) == 500_000, "The quarry must accept Forge Energy");
+        var chest = (ChestBlockEntity) test.getBlockEntity(destination);
+        test.succeedWhen(() -> {
+            test.assertTrue(chest.countItem(Items.DIAMOND_ORE) == 1, "Silk Touch must deliver intact ore to the chest");
+            test.assertBlockPresent(Blocks.DIRT, firstOre);
+            test.assertBlockPresent(Blocks.GOLD_ORE, outside);
+            test.assertTrue(energy.getEnergyStored() < 500_000, "Mining must use stored Forge Energy");
+        });
+    }
+
+    @GameTest(template = "machine_test", timeoutTicks = 280)
+    public static void enderQuarryTraversesTheWholeMarkerRectangleInWorldHoleMode(GameTestHelper test) {
+        BlockPos anchor = new BlockPos(5, 3, 5);
+        var marker = ExtrautilitiesrebirthModBlocks.ENDER_MARKER.get();
+        for (BlockPos pos : List.of(anchor, anchor.north(3), anchor.west(3), anchor.north(3).west(3))) {
+            test.setBlock(pos, marker);
+        }
+        test.useBlock(anchor);
+        BlockPos machine = anchor.east();
+        BlockPos destination = machine.above();
+        List<BlockPos> topBlocks = List.of(anchor.north().west().below(), anchor.north(2).west().below(),
+                anchor.north().west(2).below(), anchor.north(2).west(2).below());
+        for (BlockPos block : topBlocks) {
+            test.setBlock(block, Blocks.DIAMOND_BLOCK);
+        }
+        BlockPos outside = anchor.north().east().below();
+        test.setBlock(outside, Blocks.GOLD_BLOCK);
+        test.setBlock(machine, ExtrautilitiesrebirthModBlocks.ENDER_QUARRY.get());
+        test.setBlock(destination, Blocks.CHEST);
+        test.setBlock(machine.north(), ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE.get());
+        test.setBlock(machine.south(), ExtrautilitiesrebirthModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE_3.get());
+        test.useBlock(machine);
+        var quarry = test.getBlockEntity(machine);
+        test.assertTrue(quarry.getPersistentData().getBoolean("eqhole"), "The adjacent World Hole upgrade must activate");
+        quarry.getCapability(ForgeCapabilities.ENERGY).orElseThrow(AssertionError::new).receiveEnergy(1_000_000, false);
+
+        var chest = (ChestBlockEntity) test.getBlockEntity(destination);
+        test.succeedWhen(() -> {
+            test.assertTrue(quarry.getPersistentData().getInt("state") == 2, "The quarry must finish all four columns");
+            for (BlockPos block : topBlocks) {
+                test.assertBlockPresent(Blocks.AIR, block);
+            }
+            test.assertTrue(chest.countItem(Items.DIAMOND_BLOCK) == 4, "All bounded drops must reach the chest");
+            test.assertBlockPresent(Blocks.GOLD_BLOCK, outside);
         });
     }
 

@@ -24,6 +24,8 @@ sourceSets {
     }
 }
 
+def gameTestProfile = providers.gradleProperty('minimalRuntime').map { it.toBoolean() ? 'minimal' : 'integrations' }.orElse('integrations')
+
 minecraft {
     mappings channel: 'official', version: '1.20.1'
 
@@ -31,7 +33,7 @@ minecraft {
 
     runs {
         gameTestServer {
-            workingDirectory project.file('build/forge-gametest')
+            workingDirectory project.file("build/forge-gametest/${gameTestProfile.get()}")
             property 'forge.enabledGameTestNamespaces', 'extrautilitiesrebirth'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"

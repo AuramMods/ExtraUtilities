@@ -24,8 +24,8 @@ Block items follow the entry for the block that registers them.
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
 | [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, a full receiver, and redstone control through the menu action. The Pink and Frosty fuel tags load and are covered by GameTests. Still verify the other fuel tables, remainders, upgrade rates, and full burn behavior and effects across the family. |
 | [ ] | Rainbow Generator | Core, top, and bottom. Verify assembly, linked generator activity, saved links, output, and power remaining after the multiblock stops. |
-| [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover blocked output/resume, tags, sided insertion, multi-drop serialization, and dirt replacement. Verify normal marker setup, traversal, upgrades, and chunk and server reload. |
-| [ ] | Quantum Quarry | Quarry and actuators. Assembly and menu exist. Implement and verify normal mining, upgrade inputs, storage, and power consumption. |
+| [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
+| [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [ ] | Ender Thermic Pump | Verify fluid output, use of FE, range, replacement behavior, and persistence. |
 | [ ] | Automation and production | Mechanical Miner, Mechanical User, Furnace, Sorting Machine, Enchanter, Resonator, and Inventory Interface. Verify ordinary inputs and outputs, sided automation, blocked destinations, controls, and recipes. |
 | [ ] | Tools | Glass Cutter, Reinforced Glass Cutter, Wrench, Fire Axe, Kikoku, Healing Axe, Erosion Shovel, Precision Shears, Reversing Hoe, Etheric Sword, and Destruction Pickaxe. Verify tool actions, durability, drops, and client/server behavior. |
@@ -45,7 +45,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 13 quarry, generator, and lasso tests passed in
+  optional development mods. The 15 quarry, generator, and lasso tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. The packaged build at `697949b` started

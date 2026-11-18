@@ -93,6 +93,22 @@ Includes many generator types such as:
 - `extra-mods-1.20.1/` - local jar dependencies loaded as runtime mods for dev.
 - `models/` - model source assets used by elements/resources.
 
+## Setting up the Ender Quarry
+
+Place four Ender Markers at the corners of a rectangle at the same height.
+Right-click the marker that will connect to the Ender Quarry, and confirm that
+the scan finds all four corners. Place the quarry next to that marker and
+right-click the quarry to start it. Supply Forge Energy and place an inventory
+on a free face to receive the drops.
+
+The quarry scans the interior starting one block below the machine. Place
+upgrades against a free face. Speed and Silk Touch work alongside the marker
+setup. The quarry normally replaces mined blocks with dirt. The World Hole
+upgrade leaves the excavation open.
+
+The Quantum Quarry and its actuators remain work in progress, as they were in
+the bundled workspace.
+
 ## Build Instructions
 
 Run the Gradle wrapper with a Java 17 JDK.
@@ -104,8 +120,9 @@ Run the Gradle wrapper with a Java 17 JDK.
 ```
 
 The build produces `build/libs/extrautilitiesrebirth-1.7.3.jar`. The GameTest
-server runs without a window in `build/forge-gametest`. The minimal runtime run
-leaves out JEI and the optional development mod jars.
+server runs without a window and stores separate worlds for the two profiles in
+`build/forge-gametest`. The minimal runtime run leaves out JEI and the optional
+development mod jars.
 
 Use `./gradlew runServer` for a dedicated development server or
 `./gradlew runClient` for a development client.
