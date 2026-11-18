@@ -98,7 +98,7 @@ public class MechanicalMinerGameTests {
                 "The outputs should reject input and the upgrade slot should reject unrelated items");
         test.assertTrue(menu.quickMoveStack(player, hotbarStart).is(Items.DIAMOND) && inventory.getItem(9).is(Items.DIAMOND),
                 "Shift-clicking an unrelated item should move it within the player's inventory");
-        test.assertTrue(menu.quickMoveStack(player, hotbarStart + 1).getCount() == 10 && miner.getItem(9).getCount() == 10,
+        test.assertTrue(menu.quickMoveStack(player, hotbarStart + 1).getCount() == 8 && miner.getItem(9).getCount() == 8,
                 "Shift-clicking upgrades should fill the miner's upgrade slot");
         test.setBlock(MINER, Blocks.AIR);
         test.assertTrue(!menu.stillValid(player), "Removing the miner should invalidate the menu");
@@ -115,7 +115,7 @@ public class MechanicalMinerGameTests {
     }
 
     private static ItemStack speedUpgrade() {
-        return new ItemStack(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get(), 10);
+        return new ItemStack(ExtrautilitiesrebirthModItems.ENCHANTED_SPEED_UPGRADE.get(), 8);
     }
 
     private static IEnergyStorage energyOf(MechanicalMinerBlockEntity miner) {

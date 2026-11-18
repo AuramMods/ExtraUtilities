@@ -26,7 +26,6 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
@@ -35,17 +34,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-import java.util.Random;
 import java.util.List;
 import java.util.Collections;
 
-import io.netty.buffer.Unpooled;
 
-import inzhefop.extrautilitiesrebirth.world.inventory.SorterGUIMenu;
 import inzhefop.extrautilitiesrebirth.procedures.SortingMachineUpdateTickProcedure;
 import inzhefop.extrautilitiesrebirth.block.entity.SortingMachineBlockEntity;
 
@@ -108,31 +103,16 @@ public class SortingMachineBlock extends Block
 	@Override
 	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
 		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		SortingMachineUpdateTickProcedure.execute(world, x, y, z);
+		SortingMachineUpdateTickProcedure.execute(world, pos);
 		world.scheduleTick(pos, this, 1);
 	}
 
 	@Override
 	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		if (entity instanceof ServerPlayer player) {
-			NetworkHooks.openScreen(player, new MenuProvider() {
-				@Override
-				public Component getDisplayName() {
-					return Component.literal("Sorting Machine");
-				}
-
-				@Override
-				public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					return new SorterGUIMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
-				}
-			}, pos);
+		if (entity instanceof ServerPlayer player && world.getBlockEntity(pos) instanceof SortingMachineBlockEntity sorter) {
+			NetworkHooks.openScreen(player, sorter, pos);
 		}
-		return InteractionResult.SUCCESS;
+		return InteractionResult.sidedSuccess(world.isClientSide);
 	}
 
 	@Override

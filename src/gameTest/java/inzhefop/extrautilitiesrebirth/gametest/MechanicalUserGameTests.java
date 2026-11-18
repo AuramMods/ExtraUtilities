@@ -120,7 +120,7 @@ public class MechanicalUserGameTests {
         test.setBlock(USER, ExtrautilitiesrebirthModBlocks.MECHANICAL_USER.get().defaultBlockState()
                 .setValue(MechanicalUserBlock.FACING, Direction.EAST));
         var user = (MechanicalUserBlockEntity) test.getBlockEntity(USER);
-        user.setItem(8, new ItemStack(ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get(), 10));
+        user.setItem(8, new ItemStack(ExtrautilitiesrebirthModItems.ENCHANTED_SPEED_UPGRADE.get(), 8));
         energyOf(user).receiveEnergy(25_000, false);
         return user;
     }

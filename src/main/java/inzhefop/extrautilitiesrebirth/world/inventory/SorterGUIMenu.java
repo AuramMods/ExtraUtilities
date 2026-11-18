@@ -1,257 +1,148 @@
-
 package inzhefop.extrautilitiesrebirth.world.inventory;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.SlotItemHandler;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.IItemHandler;
-
-
-import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.core.BlockPos;
-
-import java.util.function.Supplier;
-import java.util.Map;
-import java.util.HashMap;
-
+import inzhefop.extrautilitiesrebirth.block.entity.SortingMachineBlockEntity;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModMenus;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.DataSlot;
+import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.SlotItemHandler;
 
-public class SorterGUIMenu extends AbstractContainerMenu implements Supplier<Map<Integer, Slot>> {
-	public final static HashMap<String, Object> guistate = new HashMap<>();
-	public final Level world;
-	public final Player entity;
-	public int x, y, z;
-	private IItemHandler internal;
-	private final Map<Integer, Slot> customSlots = new HashMap<>();
-	private boolean bound = false;
+public class SorterGUIMenu extends AbstractContainerMenu {
+    private static final int UPGRADE_SLOT = SortingMachineBlockEntity.UPGRADE_SLOT;
+    private static final int FILTER_SLOT = SortingMachineBlockEntity.FILTER_SLOT;
+    private static final int PLAYER_START = FILTER_SLOT + 1;
+    private static final int HOTBAR_START = PLAYER_START + 27;
+    private static final int VALID_FILTER = 1;
+    private static final int MATCHING_OUTPUT = 2;
+    private static final int OTHER_OUTPUT = 4;
 
-	public SorterGUIMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
-		super(ExtrautilitiesrebirthModMenus.SORTER_GUI.get(), id);
-		this.entity = inv.player;
-		this.world = inv.player.level();
-		this.internal = new ItemStackHandler(17);
-		BlockPos pos = null;
-		if (extraData != null) {
-			pos = extraData.readBlockPos();
-			this.x = pos.getX();
-			this.y = pos.getY();
-			this.z = pos.getZ();
-		}
-		if (pos != null) {
-			if (extraData.readableBytes() == 1) { // bound to item
-				byte hand = extraData.readByte();
-				ItemStack itemstack;
-				if (hand == 0)
-					itemstack = this.entity.getMainHandItem();
-				else
-					itemstack = this.entity.getOffhandItem();
-				itemstack.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-					this.internal = capability;
-					this.bound = true;
-				});
-			} else if (extraData.readableBytes() > 1) {
-				extraData.readByte(); // drop padding
-				Entity entity = world.getEntity(extraData.readVarInt());
-				if (entity != null)
-					entity.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-						this.internal = capability;
-						this.bound = true;
-					});
-			} else { // might be bound to block
-				BlockEntity ent = inv.player != null ? inv.player.level().getBlockEntity(pos) : null;
-				if (ent != null) {
-					ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null).ifPresent(capability -> {
-						this.internal = capability;
-						this.bound = true;
-					});
-				}
-			}
-		}
-		this.customSlots.put(0, this.addSlot(new SlotItemHandler(internal, 0, 44, 23) {
-		}));
-		this.customSlots.put(1, this.addSlot(new SlotItemHandler(internal, 1, 62, 23) {
-		}));
-		this.customSlots.put(2, this.addSlot(new SlotItemHandler(internal, 2, 80, 23) {
-		}));
-		this.customSlots.put(3, this.addSlot(new SlotItemHandler(internal, 3, 98, 23) {
-		}));
-		this.customSlots.put(4, this.addSlot(new SlotItemHandler(internal, 4, 116, 23) {
-		}));
-		this.customSlots.put(5, this.addSlot(new SlotItemHandler(internal, 5, 44, 41) {
-		}));
-		this.customSlots.put(6, this.addSlot(new SlotItemHandler(internal, 6, 62, 41) {
-		}));
-		this.customSlots.put(7, this.addSlot(new SlotItemHandler(internal, 7, 80, 41) {
-		}));
-		this.customSlots.put(8, this.addSlot(new SlotItemHandler(internal, 8, 98, 41) {
-		}));
-		this.customSlots.put(9, this.addSlot(new SlotItemHandler(internal, 9, 116, 41) {
-		}));
-		this.customSlots.put(10, this.addSlot(new SlotItemHandler(internal, 10, 44, 59) {
-		}));
-		this.customSlots.put(11, this.addSlot(new SlotItemHandler(internal, 11, 62, 59) {
-		}));
-		this.customSlots.put(12, this.addSlot(new SlotItemHandler(internal, 12, 80, 59) {
-		}));
-		this.customSlots.put(13, this.addSlot(new SlotItemHandler(internal, 13, 98, 59) {
-		}));
-		this.customSlots.put(14, this.addSlot(new SlotItemHandler(internal, 14, 116, 59) {
-		}));
-		this.customSlots.put(15, this.addSlot(new SlotItemHandler(internal, 15, 8, 23) {
-		}));
-		this.customSlots.put(16, this.addSlot(new SlotItemHandler(internal, 16, 8, 42) {
-		}));
-		for (int si = 0; si < 3; ++si)
-			for (int sj = 0; sj < 9; ++sj)
-				this.addSlot(new Slot(inv, sj + (si + 1) * 9, 0 + 8 + sj * 18, 0 + 84 + si * 18));
-		for (int si = 0; si < 9; ++si)
-			this.addSlot(new Slot(inv, si, 0 + 8 + si * 18, 0 + 142));
-	}
+    private final Level world;
+    private final SortingMachineBlockEntity sorter;
+    private int status;
 
-	@Override
-	public boolean stillValid(Player player) {
-		return true;
-	}
+    public SorterGUIMenu(int id, Inventory inventory, FriendlyByteBuf extraData) {
+        super(ExtrautilitiesrebirthModMenus.SORTER_GUI.get(), id);
+        world = inventory.player.level();
+        BlockPos position = extraData == null ? inventory.player.blockPosition() : extraData.readBlockPos();
+        sorter = extraData != null && world.getBlockEntity(position) instanceof SortingMachineBlockEntity machine ? machine : null;
+        IItemHandler slots = !world.isClientSide && sorter != null
+                ? sorter.getCapability(ForgeCapabilities.ITEM_HANDLER).orElseGet(() -> new ItemStackHandler(PLAYER_START))
+                : new ItemStackHandler(PLAYER_START);
 
-	@Override
-	public ItemStack quickMoveStack(Player playerIn, int index) {
-		ItemStack itemstack = ItemStack.EMPTY;
-		Slot slot = (Slot) this.slots.get(index);
-		if (slot != null && slot.hasItem()) {
-			ItemStack itemstack1 = slot.getItem();
-			itemstack = itemstack1.copy();
-			if (index < 17) {
-				if (!this.moveItemStackTo(itemstack1, 17, this.slots.size(), true)) {
-					return ItemStack.EMPTY;
-				}
-				slot.onQuickCraft(itemstack1, itemstack);
-			} else if (!this.moveItemStackTo(itemstack1, 0, 17, false)) {
-				if (index < 17 + 27) {
-					if (!this.moveItemStackTo(itemstack1, 17 + 27, this.slots.size(), true)) {
-						return ItemStack.EMPTY;
-					}
-				} else {
-					if (!this.moveItemStackTo(itemstack1, 17, 17 + 27, false)) {
-						return ItemStack.EMPTY;
-					}
-				}
-				return ItemStack.EMPTY;
-			}
-			if (itemstack1.getCount() == 0) {
-				slot.set(ItemStack.EMPTY);
-			} else {
-				slot.setChanged();
-			}
-			if (itemstack1.getCount() == itemstack.getCount()) {
-				return ItemStack.EMPTY;
-			}
-			slot.onTake(playerIn, itemstack1);
-		}
-		return itemstack;
-	}
+        for (int index = 0; index < UPGRADE_SLOT; index++) {
+            addMachineSlot(slots, index, 44 + index % 5 * 18, 23 + index / 5 * 18);
+        }
+        addMachineSlot(slots, UPGRADE_SLOT, 8, 23);
+        addMachineSlot(slots, FILTER_SLOT, 8, 42);
 
-	@Override
-	protected boolean moveItemStackTo(ItemStack p_38904_, int p_38905_, int p_38906_, boolean p_38907_) {
-		boolean flag = false;
-		int i = p_38905_;
-		if (p_38907_) {
-			i = p_38906_ - 1;
-		}
-		if (p_38904_.isStackable()) {
-			while (!p_38904_.isEmpty()) {
-				if (p_38907_) {
-					if (i < p_38905_) {
-						break;
-					}
-				} else if (i >= p_38906_) {
-					break;
-				}
-				Slot slot = this.slots.get(i);
-				ItemStack itemstack = slot.getItem();
-				if (slot.mayPlace(itemstack) && !itemstack.isEmpty() && ItemStack.isSameItemSameTags(p_38904_, itemstack)) {
-					int j = itemstack.getCount() + p_38904_.getCount();
-					int maxSize = Math.min(slot.getMaxStackSize(), p_38904_.getMaxStackSize());
-					if (j <= maxSize) {
-						p_38904_.setCount(0);
-						itemstack.setCount(j);
-						slot.set(itemstack);
-						flag = true;
-					} else if (itemstack.getCount() < maxSize) {
-						p_38904_.shrink(maxSize - itemstack.getCount());
-						itemstack.setCount(maxSize);
-						slot.set(itemstack);
-						flag = true;
-					}
-				}
-				if (p_38907_) {
-					--i;
-				} else {
-					++i;
-				}
-			}
-		}
-		if (!p_38904_.isEmpty()) {
-			if (p_38907_) {
-				i = p_38906_ - 1;
-			} else {
-				i = p_38905_;
-			}
-			while (true) {
-				if (p_38907_) {
-					if (i < p_38905_) {
-						break;
-					}
-				} else if (i >= p_38906_) {
-					break;
-				}
-				Slot slot1 = this.slots.get(i);
-				ItemStack itemstack1 = slot1.getItem();
-				if (itemstack1.isEmpty() && slot1.mayPlace(p_38904_)) {
-					if (p_38904_.getCount() > slot1.getMaxStackSize()) {
-						slot1.set(p_38904_.split(slot1.getMaxStackSize()));
-					} else {
-						slot1.set(p_38904_.split(p_38904_.getCount()));
-					}
-					slot1.setChanged();
-					flag = true;
-					break;
-				}
-				if (p_38907_) {
-					--i;
-				} else {
-					++i;
-				}
-			}
-		}
-		return flag;
-	}
+        for (int row = 0; row < 3; row++) {
+            for (int column = 0; column < 9; column++) {
+                addSlot(new Slot(inventory, column + (row + 1) * 9, 8 + column * 18, 84 + row * 18));
+            }
+        }
+        for (int index = 0; index < 9; index++) {
+            addSlot(new Slot(inventory, index, 8 + index * 18, 142));
+        }
 
-	@Override
-	public void removed(Player playerIn) {
-		super.removed(playerIn);
-		if (!bound && playerIn instanceof ServerPlayer serverPlayer) {
-			if (!serverPlayer.isAlive() || serverPlayer.hasDisconnected()) {
-				for (int j = 0; j < internal.getSlots(); ++j) {
-					playerIn.drop(internal.extractItem(j, internal.getStackInSlot(j).getCount(), false), false);
-				}
-			} else {
-				for (int i = 0; i < internal.getSlots(); ++i) {
-					playerIn.getInventory().placeItemBackInInventory(internal.extractItem(i, internal.getStackInSlot(i).getCount(), false));
-				}
-			}
-		}
-	}
+        addDataSlot(new DataSlot() {
+            @Override
+            public int get() {
+                if (world.isClientSide || sorter == null || sorter.isRemoved()) {
+                    return status;
+                }
+                int value = sorter.filter() == null ? 0 : VALID_FILTER;
+                if (sorter.output(true).isPresent()) {
+                    value |= MATCHING_OUTPUT;
+                }
+                if (sorter.output(false).isPresent()) {
+                    value |= OTHER_OUTPUT;
+                }
+                return value;
+            }
 
-	public Map<Integer, Slot> get() {
-		return customSlots;
-	}
+            @Override
+            public void set(int value) {
+                status = value;
+            }
+        });
+    }
+
+    private void addMachineSlot(IItemHandler handler, int index, int x, int y) {
+        addSlot(new SlotItemHandler(handler, index, x, y) {
+            @Override
+            public boolean mayPlace(ItemStack stack) {
+                return sorter != null && sorter.canPlaceItem(index, stack);
+            }
+
+            @Override
+            public void setChanged() {
+                if (!world.isClientSide && sorter != null) {
+                    sorter.setChanged();
+                }
+            }
+        });
+    }
+
+    public String filterLabel() {
+        ItemStack filter = getSlot(FILTER_SLOT).getItem();
+        return filter.hasCustomHoverName() ? filter.getHoverName().getString() : "";
+    }
+
+    public boolean hasValidFilter() {
+        return (status & VALID_FILTER) != 0;
+    }
+
+    public boolean hasMatchingOutput() {
+        return (status & MATCHING_OUTPUT) != 0;
+    }
+
+    public boolean hasOtherOutput() {
+        return (status & OTHER_OUTPUT) != 0;
+    }
+
+    @Override
+    public boolean stillValid(Player player) {
+        return world.isClientSide || (player.level() == world && sorter != null && sorter.stillValid(player));
+    }
+
+    @Override
+    public ItemStack quickMoveStack(Player player, int index) {
+        Slot slot = slots.get(index);
+        if (!slot.hasItem()) {
+            return ItemStack.EMPTY;
+        }
+        ItemStack stack = slot.getItem();
+        ItemStack original = stack.copy();
+        if (index < PLAYER_START) {
+            if (!moveItemStackTo(stack, PLAYER_START, slots.size(), true)) {
+                return ItemStack.EMPTY;
+            }
+        } else {
+            int target = getSlot(UPGRADE_SLOT).mayPlace(stack) ? UPGRADE_SLOT
+                    : getSlot(FILTER_SLOT).mayPlace(stack) ? FILTER_SLOT : 0;
+            int end = target == 0 ? UPGRADE_SLOT : target + 1;
+            if (!moveItemStackTo(stack, target, end, false)) {
+                if (index < HOTBAR_START) {
+                    if (!moveItemStackTo(stack, HOTBAR_START, slots.size(), true)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (!moveItemStackTo(stack, PLAYER_START, HOTBAR_START, false)) {
+                    return ItemStack.EMPTY;
+                }
+            }
+        }
+
+        slot.set(stack.isEmpty() ? ItemStack.EMPTY : stack);
+        slot.onTake(player, stack);
+        return original;
+    }
 }

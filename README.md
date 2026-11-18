@@ -56,7 +56,7 @@ Includes many generator types such as:
 - Ender Quarry + upgrades (speed/silk/world-hole style upgrade blocks)
 - Quantum Quarry and actuator (legacy WIP placeholders)
 - Ender Thermic Pump
-- Sorting Machine
+- Sorting Machine. Insert a Name Tag renamed to a tag such as `forge:ores` and connect inventories on both sides. Facing the front of the machine, matching items go right and other items go left.
 - Inventory Interface
 - Resonator / machine component chain
 

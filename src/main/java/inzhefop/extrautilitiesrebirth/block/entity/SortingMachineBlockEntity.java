@@ -10,6 +10,13 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.WorldlyContainer;
@@ -25,15 +32,19 @@ import net.minecraft.core.BlockPos;
 
 import javax.annotation.Nullable;
 
+import java.util.Locale;
 import java.util.stream.IntStream;
 
 import io.netty.buffer.Unpooled;
 
 import inzhefop.extrautilitiesrebirth.world.inventory.SorterGUIMenu;
+import inzhefop.extrautilitiesrebirth.block.SortingMachineBlock;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
 
 public class SortingMachineBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(17, ItemStack.EMPTY);
+	public static final int UPGRADE_SLOT = 15;
+	public static final int FILTER_SLOT = 16;
+	private NonNullList<ItemStack> stacks = NonNullList.withSize(FILTER_SLOT + 1, ItemStack.EMPTY);
 	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
 
 	public SortingMachineBlockEntity(BlockPos position, BlockState state) {
@@ -111,7 +122,45 @@ public class SortingMachineBlockEntity extends RandomizableContainerBlockEntity 
 
 	@Override
 	public boolean canPlaceItem(int index, ItemStack stack) {
-		return true;
+		if (index == UPGRADE_SLOT) {
+			return MachineSpeed.factorOf(stack) > 0;
+		}
+		if (index == FILTER_SLOT) {
+			return stack.is(Items.NAME_TAG);
+		}
+		return index >= 0 && index < UPGRADE_SLOT;
+	}
+
+	public int ticksPerTransfer() {
+		ItemStack upgrade = getItem(UPGRADE_SLOT);
+		int reduction = MachineSpeed.factorOf(upgrade) > 0 ? upgrade.getCount() : 0;
+		return Math.max(1, 20 - reduction);
+	}
+
+	@Nullable
+	public TagKey<Item> filter() {
+		ItemStack stack = getItem(FILTER_SLOT);
+		if (level == null || !stack.is(Items.NAME_TAG) || !stack.hasCustomHoverName()) {
+			return null;
+		}
+		String text = stack.getHoverName().getString().trim().toLowerCase(Locale.ROOT);
+		ResourceLocation id = ResourceLocation.tryParse(text);
+		if (id == null) {
+			return null;
+		}
+		TagKey<Item> tag = ItemTags.create(id);
+		return level.registryAccess().registryOrThrow(Registries.ITEM).getTag(tag).isPresent() ? tag : null;
+	}
+
+	public LazyOptional<IItemHandler> output(boolean matchesFilter) {
+		if (level == null) {
+			return LazyOptional.empty();
+		}
+		Direction facing = getBlockState().getValue(SortingMachineBlock.FACING);
+		Direction side = matchesFilter ? facing.getCounterClockWise() : facing.getClockWise();
+		BlockPos destination = worldPosition.relative(side);
+		BlockEntity neighbor = level.hasChunkAt(destination) ? level.getBlockEntity(destination) : null;
+		return neighbor == null ? LazyOptional.empty() : neighbor.getCapability(ForgeCapabilities.ITEM_HANDLER, side.getOpposite());
 	}
 
 	@Override
@@ -126,41 +175,7 @@ public class SortingMachineBlockEntity extends RandomizableContainerBlockEntity 
 
 	@Override
 	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		if (index == 1)
-			return false;
-		if (index == 2)
-			return false;
-		if (index == 3)
-			return false;
-		if (index == 4)
-			return false;
-		if (index == 5)
-			return false;
-		if (index == 6)
-			return false;
-		if (index == 7)
-			return false;
-		if (index == 8)
-			return false;
-		if (index == 9)
-			return false;
-		if (index == 10)
-			return false;
-		if (index == 11)
-			return false;
-		if (index == 0)
-			return false;
-		if (index == 12)
-			return false;
-		if (index == 13)
-			return false;
-		if (index == 14)
-			return false;
-		if (index == 15)
-			return false;
-		if (index == 16)
-			return false;
-		return true;
+		return false;
 	}
 
 	@Override
