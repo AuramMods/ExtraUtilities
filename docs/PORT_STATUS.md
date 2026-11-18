@@ -18,7 +18,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Placement and access | Angel Block, Chandelier, Chunk Loading Wand, Overworld Portal, and Portable Globe. Verify placement and activation in the intended dimensions, plus chunk and portal behavior after reload. |
 | [ ] | Spikes and Cursed Earth | Wood, stone, iron, gold, diamond, and creative spikes, Cursed Earth, and Drop of Evil. Verify damage, mob spawning, drops, conversion, and light behavior. |
 | [ ] | Ender Lilies | Endstone feature and all eight stages. Verify End world generation, placement, growth, harvesting, seed drops, and collision. |
-| [ ] | Item and fluid storage | Gold Chest, Creative Chest, Golden Bag of Holding, and stone, iron, reinforced, bedrock, and creative drums. The baseline Gold Chest retained items in slots 0 and 53 across a server restart. Verify slot and tank limits, automation, and all storage actions. |
+| [ ] | Item and fluid storage | The baseline Gold Chest retained items in slots 0 and 53 across a server restart. Drum GameTests cover all four finite capacities, sided automation, comparators, bucket transfers, and fluid retained when the drum is moved. A creative player can configure the Creative Drum to supply an unlimited amount of its sample fluid. Filled and emptied a Stone Drum by hand in the muted client. Continue with Creative Chest and remaining Gold Chest and Golden Bag behavior. |
 | [ ] | Disposal and creative utilities | Item, energy, and fluid Trash Cans, Creative Energy Storage, Creative Harvest, and Creative Inventory Sample. Verify filters, limits, and creative access. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
@@ -61,8 +61,8 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 46 quarry, generator, lasso, and automation tests passed in
-  both configurations. Rerun as coverage grows.
+  optional development mods. All 50 tests passed in both configurations.
+  Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and
   pump fixes have loaded in a Forge 47.4.10 dedicated server installation.
@@ -75,3 +75,5 @@ Block items follow the entry for the block that registers them.
   The processor and pump build also preserved named Furnace and Resonator
   output, completed an active legacy Enchanter job, and moved all 1,234 mB of
   saved pump fluid into a drum. Those results persisted after restart.
+  A later upgrade retained the same drum's water in its legacy tank data
+  through another dedicated-server restart.

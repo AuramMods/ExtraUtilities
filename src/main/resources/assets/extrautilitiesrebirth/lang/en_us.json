@@ -176,5 +176,9 @@
   "gui.extrautilitiesrebirth.generator.redstone.required": "Signal",
   "gui.extrautilitiesrebirth.generator.redstone.required.tooltip": "Runs while powered by redstone",
   "gui.extrautilitiesrebirth.generator.redstone.ignored": "Ignore",
-  "gui.extrautilitiesrebirth.generator.redstone.ignored.tooltip": "Runs regardless of redstone"
+  "gui.extrautilitiesrebirth.generator.redstone.ignored.tooltip": "Runs regardless of redstone",
+  "message.extrautilitiesrebirth.drum.empty": "Empty drum (%s mB capacity)",
+  "message.extrautilitiesrebirth.drum.stored": "%s (%s / %s mB)",
+  "message.extrautilitiesrebirth.drum.carried": "%s (%s mB)",
+  "message.extrautilitiesrebirth.drum.infinite": "Unlimited %s"
 }
