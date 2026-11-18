@@ -53,6 +53,8 @@
   "block.extrautilitiesrebirth.block_of_enchaned_metal": "Block of Enchaned Metal",
   "block.extrautilitiesrebirth.halitosis_generator": "Halitosis Generator",
   "block.extrautilitiesrebirth.quantum_quarry": "Quantum Quarry",
+  "gui.extrautilitiesrebirth.quantum_quarry.missing_actuators": "Place a Quantum Quarry Actuator on each of the six faces.",
+  "gui.extrautilitiesrebirth.quantum_quarry.upgrade": "Efficiency, Fortune, or Silk Touch enchanted book",
   "block.extrautilitiesrebirth.chunk_loading_wand": "Chunk Loading Wand",
   "block.extrautilitiesrebirth.ineffable_inverted_glass": "Ineffable Inverted Glass",
   "block.extrautilitiesrebirth.compressed_dirt": "Compressed Dirt",

@@ -19,7 +19,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.TieredItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -36,8 +35,11 @@ import net.minecraft.core.BlockPos;
 import java.util.List;
 import java.util.Collections;
 
-import inzhefop.extrautilitiesrebirth.procedures.QuantumQuarryOnBlockRightClickedProcedure;
-import inzhefop.extrautilitiesrebirth.procedures.QuantumQuarryNeighbourBlockChangesProcedure;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraftforge.network.NetworkHooks;
 import inzhefop.extrautilitiesrebirth.block.entity.QuantumQuarryBlockEntity;
 
 public class QuantumQuarryBlock extends Block
@@ -50,12 +52,6 @@ public class QuantumQuarryBlock extends Block
 		super(BlockBehaviour.Properties.of().sound(SoundType.METAL).strength(2.5f, 8000f).requiresCorrectToolForDrops());
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
 	} 
-
-	@Override
-	public void appendHoverText(ItemStack itemstack, BlockGetter world, List<Component> list, TooltipFlag flag) {
-		super.appendHoverText(itemstack, world, list, flag);
-		list.add(Component.literal("\u00A7c\u00A7lWIP!"));
-	}
 
 	@Override
 	public int getLightBlock(BlockState state, BlockGetter worldIn, BlockPos pos) {
@@ -96,24 +92,28 @@ public class QuantumQuarryBlock extends Block
 	}
 
 	@Override
-	public void neighborChanged(BlockState blockstate, Level world, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean moving) {
-		super.neighborChanged(blockstate, world, pos, neighborBlock, fromPos, moving);
-		QuantumQuarryNeighbourBlockChangesProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ());
+	public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> type) {
+		return level instanceof ServerLevel serverLevel ? (world, pos, blockState, entity) -> {
+			if (entity instanceof QuantumQuarryBlockEntity quarry) {
+				quarry.tick(serverLevel);
+			}
+		} : null;
 	}
 
 	@Override
-	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		double hitX = hit.getLocation().x;
-		double hitY = hit.getLocation().y;
-		double hitZ = hit.getLocation().z;
-		Direction direction = hit.getDirection();
+	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+		if (player instanceof ServerPlayer serverPlayer && level.getBlockEntity(pos) instanceof QuantumQuarryBlockEntity quarry) {
+			openQuarry(serverPlayer, quarry);
+		}
+		return InteractionResult.sidedSuccess(level.isClientSide);
+	}
 
-		QuantumQuarryOnBlockRightClickedProcedure.execute(world, x, y, z, entity);
-		return InteractionResult.SUCCESS;
+	static void openQuarry(ServerPlayer player, QuantumQuarryBlockEntity quarry) {
+		if (quarry.isAssembled()) {
+			NetworkHooks.openScreen(player, quarry, quarry.getBlockPos());
+		} else {
+			player.displayClientMessage(Component.translatable("gui.extrautilitiesrebirth.quantum_quarry.missing_actuators"), true);
+		}
 	}
 
 	@Override
@@ -140,6 +140,7 @@ public class QuantumQuarryBlock extends Block
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof QuantumQuarryBlockEntity be) {
 				Containers.dropContents(world, pos, be);
+				be.dropPendingDrops();
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
 			super.onRemove(state, world, pos, newState, isMoving);

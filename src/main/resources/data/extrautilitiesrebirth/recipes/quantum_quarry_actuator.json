@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": ["ERE", "EPE", "SSS"],
+  "key": {
+    "E": { "item": "minecraft:end_stone" },
+    "R": { "item": "minecraft:end_rod" },
+    "P": { "item": "minecraft:diamond_pickaxe" },
+    "S": { "item": "extrautilitiesrebirth:stoneburnt" }
+  },
+  "result": { "item": "extrautilitiesrebirth:quantum_quarry_actuator" }
+}
