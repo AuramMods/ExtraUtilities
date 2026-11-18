@@ -2,7 +2,6 @@
 package inzhefop.extrautilitiesrebirth.block;
 
 import net.minecraft.world.level.storage.loot.LootParams;
-import org.checkerframework.checker.units.qual.s;
 
 import net.minecraft.world.phys.BlockHitResult;
 
@@ -18,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
 import java.util.List;
@@ -53,16 +51,7 @@ public class OverworldPortalBlock extends Block {
 
 	@Override
 	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		double hitX = hit.getLocation().x;
-		double hitY = hit.getLocation().y;
-		double hitZ = hit.getLocation().z;
-		Direction direction = hit.getDirection();
-
-		OverworldPortalOnBlockRightClickedProcedure.execute(world, x, y, z, entity);
-		return InteractionResult.SUCCESS;
+		return OverworldPortalOnBlockRightClickedProcedure.use(entity, pos.above())
+				? InteractionResult.sidedSuccess(world.isClientSide()) : InteractionResult.PASS;
 	}
 }

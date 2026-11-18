@@ -13,6 +13,7 @@
  */
 package inzhefop.extrautilitiesrebirth;
 
+import inzhefop.extrautilitiesrebirth.block.ChunkLoadingWandBlock;
 import inzhefop.extrautilitiesrebirth.init.*;
 import inzhefop.extrautilitiesrebirth.world.loot.RedstoneCrystalLootModifier;
 import net.minecraft.core.registries.Registries;
@@ -70,6 +71,7 @@ public class ExtrautilitiesrebirthMod {
 		RedstoneCrystalLootModifier.REGISTRY.register(bus);
 		ExtrautilitiesrebirthModParticleTypes.REGISTRY.register(bus);
 		CREATIVE_TABS.register(bus);
+		bus.addListener(ChunkLoadingWandBlock::registerTicketValidation);
 	}
 
 	public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder,

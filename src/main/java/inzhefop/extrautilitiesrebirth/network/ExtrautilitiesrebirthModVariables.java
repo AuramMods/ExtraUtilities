@@ -27,6 +27,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.nbt.Tag;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.Direction;
 import net.minecraft.client.Minecraft;
@@ -85,11 +86,7 @@ public class ExtrautilitiesrebirthModVariables {
 					.orElse(new PlayerVariables()));
 			PlayerVariables clone = ((PlayerVariables) event.getEntity().getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 					.orElse(new PlayerVariables()));
-			clone.overworld_portal_x = original.overworld_portal_x;
-			clone.overworld_portal_y = original.overworld_portal_y;
-			clone.overworld_portal_z = original.overworld_portal_z;
-			if (!event.isWasDeath()) {
-			}
+			clone.readNBT(original.writeNBT());
 		}
 
 		@SubscribeEvent
@@ -266,6 +263,18 @@ public class ExtrautilitiesrebirthModVariables {
 		public double overworld_portal_x = 0;
 		public double overworld_portal_y = 0;
 		public double overworld_portal_z = 0;
+		private boolean overworldReturnSet;
+
+		public void setOverworldReturn(BlockPos pos) {
+			overworld_portal_x = pos.getX();
+			overworld_portal_y = pos.getY();
+			overworld_portal_z = pos.getZ();
+			overworldReturnSet = true;
+		}
+
+		public BlockPos getOverworldReturn() {
+			return overworldReturnSet ? BlockPos.containing(overworld_portal_x, overworld_portal_y, overworld_portal_z) : null;
+		}
 
 		public void syncPlayerVariables(Entity entity) {
 			if (entity instanceof ServerPlayer serverPlayer)
@@ -277,6 +286,7 @@ public class ExtrautilitiesrebirthModVariables {
 			nbt.putDouble("overworld_portal_x", overworld_portal_x);
 			nbt.putDouble("overworld_portal_y", overworld_portal_y);
 			nbt.putDouble("overworld_portal_z", overworld_portal_z);
+			nbt.putBoolean("overworld_portal_set", overworldReturnSet);
 			return nbt;
 		}
 
@@ -285,6 +295,8 @@ public class ExtrautilitiesrebirthModVariables {
 			overworld_portal_x = nbt.getDouble("overworld_portal_x");
 			overworld_portal_y = nbt.getDouble("overworld_portal_y");
 			overworld_portal_z = nbt.getDouble("overworld_portal_z");
+			overworldReturnSet = nbt.contains("overworld_portal_set", Tag.TAG_BYTE)
+					? nbt.getBoolean("overworld_portal_set") : overworld_portal_x != 0 || overworld_portal_y != 0 || overworld_portal_z != 0;
 		}
 	}
 
@@ -310,9 +322,7 @@ public class ExtrautilitiesrebirthModVariables {
 				if (!context.getDirection().getReceptionSide().isServer()) {
 					PlayerVariables variables = ((PlayerVariables) Minecraft.getInstance().player.getCapability(PLAYER_VARIABLES_CAPABILITY, null)
 							.orElse(new PlayerVariables()));
-					variables.overworld_portal_x = message.data.overworld_portal_x;
-					variables.overworld_portal_y = message.data.overworld_portal_y;
-					variables.overworld_portal_z = message.data.overworld_portal_z;
+					variables.readNBT(message.data.writeNBT());
 				}
 			});
 			context.setPacketHandled(true);

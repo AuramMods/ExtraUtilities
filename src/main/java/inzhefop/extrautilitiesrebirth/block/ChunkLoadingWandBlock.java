@@ -1,7 +1,20 @@
 
 package inzhefop.extrautilitiesrebirth.block;
 
+import inzhefop.extrautilitiesrebirth.ExtrautilitiesrebirthMod;
+import inzhefop.extrautilitiesrebirth.world.ChunkBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.TickTask;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraftforge.common.world.ForgeChunkManager;
+import net.minecraftforge.event.level.ChunkEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.api.distmarker.Dist;
 
@@ -30,14 +43,14 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 
-public class ChunkLoadingWandBlock extends Block implements SimpleWaterloggedBlock
-
-{
+@Mod.EventBusSubscriber(modid = ExtrautilitiesrebirthMod.MODID)
+public class ChunkLoadingWandBlock extends Block implements SimpleWaterloggedBlock {
 	public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 	public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -45,6 +58,58 @@ public class ChunkLoadingWandBlock extends Block implements SimpleWaterloggedBlo
 		super(BlockBehaviour.Properties.of().sound(SoundType.WOOD).strength(5f, 50f).noOcclusion()
 				.isRedstoneConductor((bs, br, bp) -> false));
 		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, false));
+	}
+
+	public static void registerTicketValidation(FMLCommonSetupEvent event) {
+		event.enqueueWork(() -> ForgeChunkManager.setForcedChunkLoadingCallback(ExtrautilitiesrebirthMod.MODID, (level, tickets) -> {
+			for (BlockPos owner : tickets.getBlockTickets().keySet()) {
+				if (!level.getBlockState(owner).is(ExtrautilitiesrebirthModBlocks.CHUNK_LOADING_WAND.get())) {
+					tickets.removeAllTickets(owner);
+				}
+			}
+		}));
+	}
+
+	private static void setTicket(ServerLevel level, BlockPos owner, boolean add) {
+		ChunkPos chunk = new ChunkPos(owner);
+		ForgeChunkManager.forceChunk(level, ExtrautilitiesrebirthMod.MODID, owner, chunk.x, chunk.z, add, true);
+	}
+
+	@Override
+	public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean moving) {
+		super.onPlace(state, level, pos, oldState, moving);
+		if (level instanceof ServerLevel serverLevel && !oldState.is(this)) {
+			setTicket(serverLevel, pos, true);
+		}
+	}
+
+	@Override
+	public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moving) {
+		if (level instanceof ServerLevel serverLevel && !newState.is(this)) {
+			setTicket(serverLevel, pos, false);
+		}
+		super.onRemove(state, level, pos, newState, moving);
+	}
+
+	@SubscribeEvent
+	public static void restoreLegacyWands(ChunkEvent.Load event) {
+		if (event.isNewChunk() || !(event.getLevel() instanceof ServerLevel level) || !(event.getChunk() instanceof LevelChunk chunk)) {
+			return;
+		}
+		var wand = ExtrautilitiesrebirthModBlocks.CHUNK_LOADING_WAND.get();
+		var owners = new ArrayList<BlockPos>();
+		ChunkBlocks.forEach(chunk, wand, owners::add);
+		if (!owners.isEmpty()) {
+			// ChunkEvent.Load can run before promotion to FULL. Add tickets on the server queue.
+			var server = level.getServer();
+			server.tell(new TickTask(server.getTickCount(), () -> {
+				for (BlockPos owner : owners) {
+					if (level.getBlockState(owner).is(wand)) {
+						setTicket(level, owner, true);
+					}
+				}
+			}));
+		}
 	}
 
 	@Override

@@ -52,12 +52,14 @@ import inzhefop.extrautilitiesrebirth.item.DemonIngotItem;
 import inzhefop.extrautilitiesrebirth.item.ChickenWingRingItem;
 import inzhefop.extrautilitiesrebirth.item.BedrockiumIngotItem;
 import inzhefop.extrautilitiesrebirth.item.AngelRingItem;
+import inzhefop.extrautilitiesrebirth.item.AngelBlockItem;
 import inzhefop.extrautilitiesrebirth.item.AdvancedChickenWingRingItem;
 import inzhefop.extrautilitiesrebirth.ExtrautilitiesrebirthMod;
 
 public class ExtrautilitiesrebirthModItems {
 	public static final DeferredRegister<Item> REGISTRY = DeferredRegister.create(ForgeRegistries.ITEMS, ExtrautilitiesrebirthMod.MODID);
-	public static final RegistryObject<Item> ANGEL_BLOCK = block(ExtrautilitiesrebirthModBlocks.ANGEL_BLOCK);
+	public static final RegistryObject<Item> ANGEL_BLOCK = REGISTRY.register("angel_block",
+			() -> new AngelBlockItem(ExtrautilitiesrebirthModBlocks.ANGEL_BLOCK.get()));
 	public static final RegistryObject<Item> CHANDELIER = block(ExtrautilitiesrebirthModBlocks.CHANDELIER);
 	public static final RegistryObject<Item> BEDROCK_BRICKS = block(ExtrautilitiesrebirthModBlocks.BEDROCK_BRICKS);
 	public static final RegistryObject<Item> BEDROCK_COBBLESTONE = block(ExtrautilitiesrebirthModBlocks.BEDROCK_COBBLESTONE);

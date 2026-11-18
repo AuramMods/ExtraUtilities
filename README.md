@@ -67,6 +67,10 @@ Includes many generator types such as:
 - Trash Cans (item, energy, fluid)
 - Wireless FE Battery and FE Transmitter. Right-click an FE receiver with a Wrench, then right-click the battery. Each battery supports ten links, with each receiver less than ten blocks away. Sneak-right-click the battery with a linked receiver selected to remove that link.
 - Redstone clock variants
+- A placed Chunk Loading Wand keeps its own chunk ticking. Breaking it
+  releases the ticket for that wand.
+- Chandeliers hang from solid ceilings and block natural hostile spawns
+  within 16 blocks.
 
 ### Tools, Mobility, and Utility Items
 
