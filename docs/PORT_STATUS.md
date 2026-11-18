@@ -39,8 +39,15 @@ Block items follow the entry for the block that registers them.
   Resonator, Furnace, Enchanter, Trash Can, Golden Bag, Gold Chest, Ender Quarry,
   and Sorter. Corrected background sizes for the six affected screens. Include
   clicks, shift-clicks, menu validity, persistence, and server synchronization.
+  An isolated client with master volume set to zero confirmed the layouts of
+  Gold Chest, Golden Bag, Mechanical Miner, Sorter, Trash Can, and the Quantum
+  Quarry placeholder. Gold Chest and Golden Bag retained mouse transfers after
+  closing and reopening. The TNT Generator displayed live energy, output, and
+  burn time and responded to changes in redstone mode.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
+  A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
+  Portable Globe, and rainbow particle textures after correcting their paths.
 - [x] Restore Gradle 8.8 wrapper, align the jar and mod versions, and make
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
