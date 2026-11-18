@@ -8,6 +8,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.common.ForgeHooks;
 
+import java.util.Locale;
+
 public enum GeneratorFuel {
     CULINARY(600, 6),
     DEATH(600, 40),
@@ -31,10 +33,12 @@ public enum GeneratorFuel {
 
     private final int duration;
     private final int basePower;
+    private final String rainbowKey;
 
     GeneratorFuel(int duration, int basePower) {
         this.duration = duration;
         this.basePower = basePower;
+        this.rainbowKey = name().equals("NETHERSTAR") ? "neatherstar" : name().toLowerCase(Locale.ROOT);
     }
 
     public int burnDuration(ItemStack stack) {
@@ -61,6 +65,10 @@ public enum GeneratorFuel {
 
     public int defaultDuration() {
         return duration;
+    }
+
+    public String rainbowKey() {
+        return rainbowKey;
     }
 
     public int power(ItemStack stack) {

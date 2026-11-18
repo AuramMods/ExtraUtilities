@@ -35,7 +35,7 @@ public class MagmaGeneratorUpdateTickProcedure {
                 }
                 data.putDouble("time", time);
                 generated = GeneratorOutput.storeGeneratedEnergy(level, pos, amount);
-                UpdateRGBProcedure.execute(level, pos.getX(), pos.getY(), pos.getZ());
+                UpdateRGBProcedure.execute(level, generator, "magma");
                 hasLava = generator.hasLavaBucket();
             }
         }

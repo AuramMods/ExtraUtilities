@@ -47,7 +47,7 @@ Includes many generator types such as:
 - Furnace, Culinary, Ender, TNT, Frosty, Halitosis, Netherstar.
 - Overclocked, Pink, Potion, Slimey, Survival, Redstone, Magma.
 - Death and Disenchantment generators.
-- Rainbow generator multiblock-style structure (top/bottom/core parts present).
+- Rainbow Generator, crafted by combining its top and bottom halves. Sneak-right-click the core with a Wrench, then right-click each of the 16 fuel generators with the same Wrench. Keep all 16 fueled and give each an energy destination so its buffer can continue to drain.
 
 ### Automation and Machines
 

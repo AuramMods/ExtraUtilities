@@ -53,7 +53,7 @@ public final class FuelGeneratorTick {
                 data.putInt("burnDuration", duration);
                 data.putInt("burnPower", power);
                 generated = storage.receiveEnergy(amount, false);
-                UpdateRGBProcedure.execute(level, pos.getX(), pos.getY(), pos.getZ());
+                UpdateRGBProcedure.execute(level, generator, type.rainbowKey());
             }
         }
 

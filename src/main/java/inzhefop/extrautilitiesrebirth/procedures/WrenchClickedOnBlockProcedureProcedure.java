@@ -25,47 +25,6 @@ public class WrenchClickedOnBlockProcedureProcedure {
 		if (entity == null)
 			return;
 		double airdistance = 0;
-		if (ExtrautilitiesrebirthModBlocks.RAINBOW_GENERATOR.get() == (world.getBlockState(BlockPos.containing(x, y, z))).getBlock()) {
-			itemstack.getOrCreateTag().putDouble("x", x);
-			itemstack.getOrCreateTag().putDouble("y", y);
-			itemstack.getOrCreateTag().putDouble("z", z);
-			itemstack.getOrCreateTag().putDouble("wrenchmode", 1);
-			(itemstack).setHoverName(Component.literal((("\u00A7r\u00A7fWrench [Rainbow Gen at " + x) + "" + (" " + ((y + " ") + "" + (z + "]"))))));
-			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal((("[Rainbow Gen at " + x) + "" + (" " + ((y + " ") + "" + (z + "]"))))), (true));
-		} else if ((new ItemStack((world.getBlockState(BlockPos.containing(x, y, z))).getBlock()))
-				.is(ItemTags.create(ResourceLocation.parse("forge:generator_eur")))) {
-			if (!world.isClientSide()) {
-				BlockPos _bp = BlockPos.containing(x, y, z);
-				BlockEntity _blockEntity = world.getBlockEntity(_bp);
-				BlockState _bs = world.getBlockState(_bp);
-				if (_blockEntity != null)
-					_blockEntity.getPersistentData().putDouble("rbg_x", (itemstack.getOrCreateTag().getDouble("x")));
-				if (world instanceof Level _level)
-					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
-			}
-			if (!world.isClientSide()) {
-				BlockPos _bp = BlockPos.containing(x, y, z);
-				BlockEntity _blockEntity = world.getBlockEntity(_bp);
-				BlockState _bs = world.getBlockState(_bp);
-				if (_blockEntity != null)
-					_blockEntity.getPersistentData().putDouble("rbg_y", (itemstack.getOrCreateTag().getDouble("y")));
-				if (world instanceof Level _level)
-					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
-			}
-			if (!world.isClientSide()) {
-				BlockPos _bp = BlockPos.containing(x, y, z);
-				BlockEntity _blockEntity = world.getBlockEntity(_bp);
-				BlockState _bs = world.getBlockState(_bp);
-				if (_blockEntity != null)
-					_blockEntity.getPersistentData().putDouble("rbg_z", (itemstack.getOrCreateTag().getDouble("z")));
-				if (world instanceof Level _level)
-					_level.sendBlockUpdated(_bp, _bs, _bs, 3);
-			}
-			if (entity instanceof Player _player && !_player.level().isClientSide())
-				_player.displayClientMessage(Component.literal(("Binded Rainbow Generator to "
-						+ (new ItemStack((world.getBlockState(BlockPos.containing(x, y, z))).getBlock())).getDisplayName().getString())), (false));
-		}
 		if (new Object() {
 			public int getFluidTankLevel(LevelAccessor level, BlockPos pos, int tank) {
 				AtomicInteger _retval = new AtomicInteger(0);
