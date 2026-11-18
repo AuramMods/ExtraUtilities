@@ -1,172 +1,204 @@
 package inzhefop.extrautilitiesrebirth.block.entity;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.wrapper.SidedInvWrapper;
-import net.minecraftforge.items.IItemHandler;
-
-import net.minecraftforge.energy.EnergyStorage;
-
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.common.capabilities.Capability;
-
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.inventory.ChestMenu;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.entity.player.Inventory;
-import net.minecraft.world.WorldlyContainer;
-import net.minecraft.world.ContainerHelper;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-
-import net.minecraft.network.chat.Component;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.core.NonNullList;
-import net.minecraft.core.Direction;
+import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.IntTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.stream.IntStream;
+public class WirelessFEBatteryBlockEntity extends BlockEntity {
+    private static final int CAPACITY = 3_300;
+    private static final int MAX_CONNECTIONS = 10;
+    private static final int RANGE = 10;
+    private static final String CONNECTIONS_TAG = "connections";
+    private static final String ENERGY_TAG = "energyStorage";
 
-import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlockEntities;
+    private final List<BlockPos> links = new ArrayList<>();
+    private final EnergyStorage storage = new EnergyStorage(CAPACITY) {
+        @Override
+        public int receiveEnergy(int amount, boolean simulate) {
+            int received = super.receiveEnergy(Math.max(0, amount), simulate);
+            if (!simulate && received > 0) {
+                setChanged();
+            }
+            return received;
+        }
 
-public class WirelessFEBatteryBlockEntity extends RandomizableContainerBlockEntity implements WorldlyContainer {
-	private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(0, ItemStack.EMPTY);
-	private final LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.values());
+        @Override
+        public int extractEnergy(int amount, boolean simulate) {
+            int extracted = super.extractEnergy(Math.max(0, amount), simulate);
+            if (!simulate && extracted > 0) {
+                setChanged();
+            }
+            return extracted;
+        }
+    };
+    private LazyOptional<IEnergyStorage> energy = LazyOptional.of(() -> storage);
 
-	public WirelessFEBatteryBlockEntity(BlockPos position, BlockState state) {
-		super(ExtrautilitiesrebirthModBlockEntities.WIRELESS_FE_BATTERY.get(), position, state);
-	}
- 
-	@Override
-	public void load(CompoundTag compound) {
-		super.load(compound);
-		if (!this.tryLoadLootTable(compound))
-			this.stacks = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
-		ContainerHelper.loadAllItems(compound, this.stacks);
-		if (compound.get("energyStorage") instanceof IntTag intTag)
-			energyStorage.deserializeNBT(intTag);
-	}
+    public WirelessFEBatteryBlockEntity(BlockPos pos, BlockState state) {
+        super(ExtrautilitiesrebirthModBlockEntities.WIRELESS_FE_BATTERY.get(), pos, state);
+    }
 
-	@Override
-	public void saveAdditional(CompoundTag compound) {
-		super.saveAdditional(compound);
-		if (!this.trySaveLootTable(compound)) {
-			ContainerHelper.saveAllItems(compound, this.stacks);
-		}
-		compound.put("energyStorage", energyStorage.serializeNBT());
-	}
+    public void tickOutput(ServerLevel level) {
+        if (links.isEmpty() || storage.getEnergyStored() == 0) {
+            return;
+        }
 
-	@Override
-	public ClientboundBlockEntityDataPacket getUpdatePacket() {
-		return ClientboundBlockEntityDataPacket.create(this);
-	}
+        List<IEnergyStorage> receivers = new ArrayList<>(links.size());
+        for (BlockPos pos : links) {
+            if (level.hasChunkAt(pos)) {
+                IEnergyStorage receiver = findReceiver(level.getBlockEntity(pos));
+                if (receiver != null) {
+                    receivers.add(receiver);
+                }
+            }
+        }
 
-	@Override
-	public CompoundTag getUpdateTag() {
-		return this.saveWithFullMetadata();
-	}
+        for (int index = 0; index < receivers.size(); index++) {
+            int available = storage.getEnergyStored();
+            int remaining = receivers.size() - index;
+            int offer = (available + remaining - 1) / remaining;
+            if (offer == 0) {
+                break;
+            }
+            int accepted = receivers.get(index).receiveEnergy(offer, false);
+            if (accepted > 0) {
+                storage.extractEnergy(accepted, false);
+            }
+        }
+    }
 
-	@Override
-	public int getContainerSize() {
-		return stacks.size();
-	}
+    public static @Nullable IEnergyStorage findReceiver(@Nullable BlockEntity target) {
+        if (target == null || target instanceof WirelessFEBatteryBlockEntity) {
+            return null;
+        }
+        IEnergyStorage unrestricted = target.getCapability(ForgeCapabilities.ENERGY).filter(IEnergyStorage::canReceive).orElse(null);
+        if (unrestricted != null) {
+            return unrestricted;
+        }
+        for (Direction side : Direction.values()) {
+            IEnergyStorage sided = target.getCapability(ForgeCapabilities.ENERGY, side).filter(IEnergyStorage::canReceive).orElse(null);
+            if (sided != null) {
+                return sided;
+            }
+        }
+        return null;
+    }
 
-	@Override
-	public boolean isEmpty() {
-		for (ItemStack itemstack : this.stacks)
-			if (!itemstack.isEmpty())
-				return false;
-		return true;
-	}
+    public Component changeLink(ServerLevel level, BlockPos pos, boolean remove) {
+        if (remove && links.remove(pos)) {
+            writeLinks();
+            return Component.translatable("message.extrautilitiesrebirth.wireless.unlinked", pos.toShortString());
+        }
+        if (links.contains(pos)) {
+            return Component.translatable("message.extrautilitiesrebirth.wireless.already_linked");
+        }
+        if (!inRange(pos)) {
+            return Component.translatable("message.extrautilitiesrebirth.wireless.out_of_range", RANGE);
+        }
+        if (links.size() == MAX_CONNECTIONS) {
+            return Component.translatable("message.extrautilitiesrebirth.wireless.full", MAX_CONNECTIONS);
+        }
+        if (!level.hasChunkAt(pos) || findReceiver(level.getBlockEntity(pos)) == null) {
+            return Component.translatable("message.extrautilitiesrebirth.wireless.missing_receiver");
+        }
+        links.add(pos.immutable());
+        writeLinks();
+        return Component.translatable("message.extrautilitiesrebirth.wireless.linked", pos.toShortString(), links.size(), MAX_CONNECTIONS);
+    }
 
-	@Override
-	public Component getDefaultName() {
-		return Component.literal("wireless_fe_battery");
-	}
+    public void showStatus(ServerLevel level, Player player) {
+        player.displayClientMessage(Component.translatable("message.extrautilitiesrebirth.wireless.status",
+                storage.getEnergyStored(), CAPACITY, links.size(), MAX_CONNECTIONS), false);
+        for (BlockPos pos : links) {
+            Component name = level.hasChunkAt(pos) ? level.getBlockState(pos).getBlock().getName()
+                    : Component.translatable("message.extrautilitiesrebirth.wireless.unloaded");
+            player.displayClientMessage(Component.translatable("message.extrautilitiesrebirth.wireless.receiver", name, pos.toShortString()), false);
+        }
+    }
 
-	@Override
-	public int getMaxStackSize() {
-		return 64;
-	}
+    private boolean inRange(BlockPos pos) {
+        return !worldPosition.equals(pos) && worldPosition.distSqr(pos) < RANGE * RANGE;
+    }
 
-	@Override
-	public AbstractContainerMenu createMenu(int id, Inventory inventory) {
-		return ChestMenu.threeRows(id, inventory);
-	}
+    private void writeLinks() {
+        CompoundTag data = getPersistentData();
+        data.putDouble(CONNECTIONS_TAG, links.size());
+        for (int index = 0; index < MAX_CONNECTIONS; index++) {
+            String key = "connection" + (index + 1);
+            if (index < links.size()) {
+                BlockPos pos = links.get(index);
+                data.putDouble(key + "x", pos.getX());
+                data.putDouble(key + "y", pos.getY());
+                data.putDouble(key + "z", pos.getZ());
+            } else {
+                data.remove(key + "x");
+                data.remove(key + "y");
+                data.remove(key + "z");
+            }
+        }
+        setChanged();
+    }
 
-	@Override
-	public Component getDisplayName() {
-		return Component.literal("Wireless FE Battery");
-	}
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        storage.deserializeNBT(IntTag.valueOf(Mth.clamp(tag.getInt(ENERGY_TAG), 0, CAPACITY)));
 
-	@Override
-	protected NonNullList<ItemStack> getItems() {
-		return this.stacks;
-	}
+        links.clear();
+        CompoundTag data = getPersistentData();
+        int count = Mth.clamp(data.getInt(CONNECTIONS_TAG), 0, MAX_CONNECTIONS);
+        for (int index = 1; index <= count; index++) {
+            String key = "connection" + index;
+            if (data.contains(key + "x", Tag.TAG_ANY_NUMERIC) && data.contains(key + "y", Tag.TAG_ANY_NUMERIC)
+                    && data.contains(key + "z", Tag.TAG_ANY_NUMERIC)) {
+                BlockPos pos = new BlockPos(data.getInt(key + "x"), data.getInt(key + "y"), data.getInt(key + "z"));
+                if (inRange(pos) && !links.contains(pos)) {
+                    links.add(pos);
+                }
+            }
+        }
+    }
 
-	@Override
-	protected void setItems(NonNullList<ItemStack> stacks) {
-		this.stacks = stacks;
-	}
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.put(ENERGY_TAG, storage.serializeNBT());
+    }
 
-	@Override
-	public boolean canPlaceItem(int index, ItemStack stack) {
-		return true;
-	}
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction side) {
+        if (!isRemoved() && capability == ForgeCapabilities.ENERGY) {
+            return energy.cast();
+        }
+        return super.getCapability(capability, side);
+    }
 
-	@Override
-	public int[] getSlotsForFace(Direction side) {
-		return IntStream.range(0, this.getContainerSize()).toArray();
-	}
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        energy.invalidate();
+    }
 
-	@Override
-	public boolean canPlaceItemThroughFace(int index, ItemStack stack, @Nullable Direction direction) {
-		return this.canPlaceItem(index, stack);
-	}
-
-	@Override
-	public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-		return true;
-	}
-
-	private final EnergyStorage energyStorage = new EnergyStorage(3300, 3300, 3300, 0) {
-		@Override
-		public int receiveEnergy(int maxReceive, boolean simulate) {
-			int retval = super.receiveEnergy(maxReceive, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-
-		@Override
-		public int extractEnergy(int maxExtract, boolean simulate) {
-			int retval = super.extractEnergy(maxExtract, simulate);
-			if (!simulate) {
-				setChanged();
-				level.sendBlockUpdated(worldPosition, level.getBlockState(worldPosition), level.getBlockState(worldPosition), 2);
-			}
-			return retval;
-		}
-	};
-
-	@Override
-	public <T> LazyOptional<T> getCapability(Capability<T> capability, @Nullable Direction facing) {
-		if (!this.remove && facing != null && capability == ForgeCapabilities.ITEM_HANDLER)
-			return handlers[facing.ordinal()].cast();
-		if (!this.remove && capability == ForgeCapabilities.ENERGY)
-			return LazyOptional.of(() -> energyStorage).cast();
-		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public void setRemoved() {
-		super.setRemoved();
-		for (LazyOptional<? extends IItemHandler> handler : handlers)
-			handler.invalidate();
-	}
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        energy = LazyOptional.of(() -> storage);
+    }
 }

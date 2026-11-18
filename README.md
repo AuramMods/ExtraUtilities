@@ -65,7 +65,7 @@ Includes many generator types such as:
 - Gold/Creative chests
 - Drums (Stone, Iron, Reinforced, Bedrock, Creative)
 - Trash Cans (item, energy, fluid)
-- Wireless FE Battery / FE Transmitter blocks
+- Wireless FE Battery and FE Transmitter. Right-click an FE receiver with a Wrench, then right-click the battery. Each battery supports ten links, with each receiver less than ten blocks away. Sneak-right-click the battery with a linked receiver selected to remove that link.
 - Redstone clock variants
 
 ### Tools, Mobility, and Utility Items

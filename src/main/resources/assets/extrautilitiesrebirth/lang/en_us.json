@@ -180,5 +180,19 @@
   "message.extrautilitiesrebirth.drum.empty": "Empty drum (%s mB capacity)",
   "message.extrautilitiesrebirth.drum.stored": "%s (%s / %s mB)",
   "message.extrautilitiesrebirth.drum.carried": "%s (%s mB)",
-  "message.extrautilitiesrebirth.drum.infinite": "Unlimited %s"
+  "message.extrautilitiesrebirth.drum.infinite": "Unlimited %s",
+  "message.extrautilitiesrebirth.wireless.already_linked": "That receiver is already linked.",
+  "message.extrautilitiesrebirth.wireless.full": "The battery already has %s links.",
+  "message.extrautilitiesrebirth.wireless.linked": "Linked the receiver at %s (%s / %s links).",
+  "message.extrautilitiesrebirth.wireless.missing_receiver": "The selected receiver is missing or unavailable.",
+  "message.extrautilitiesrebirth.wireless.out_of_range": "The receiver must be less than %s blocks away.",
+  "message.extrautilitiesrebirth.wireless.receiver": "%s at %s",
+  "message.extrautilitiesrebirth.wireless.select_first": "Select an FE receiver in this dimension first.",
+  "message.extrautilitiesrebirth.wireless.selected": "Selected %s at %s.",
+  "message.extrautilitiesrebirth.wireless.status": "%s / %s FE, %s / %s links",
+  "message.extrautilitiesrebirth.wireless.unlinked": "Removed the link to %s.",
+  "message.extrautilitiesrebirth.wireless.unloaded": "Unloaded receiver",
+  "message.extrautilitiesrebirth.wrench.fluid": "%s (%s mB)",
+  "tooltip.extrautilitiesrebirth.wireless.link": "Right-click a receiver with a Wrench, then right-click the battery.",
+  "tooltip.extrautilitiesrebirth.wireless.unlink": "Sneak-right-click the battery to remove the selected link."
 }

@@ -4,6 +4,11 @@ package inzhefop.extrautilitiesrebirth.item;
 import inzhefop.extrautilitiesrebirth.block.entity.FuelGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.MagmaGeneratorBlockEntity;
 import inzhefop.extrautilitiesrebirth.block.entity.RainbowGeneratorBlockEntity;
+import inzhefop.extrautilitiesrebirth.block.entity.WirelessFEBatteryBlockEntity;
+import net.minecraft.ChatFormatting;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.Tag;
 import net.minecraft.world.entity.player.Player;
@@ -21,10 +26,12 @@ import net.minecraft.network.chat.Component;
 
 import java.util.List;
 
-import inzhefop.extrautilitiesrebirth.procedures.WrenchClickedOnBlockProcedureProcedure;
-
-
 public class WrenchItem extends Item {
+	private static final String RECEIVER_X = "reciever_x";
+	private static final String RECEIVER_Y = "reciever_y";
+	private static final String RECEIVER_Z = "reciever_z";
+	private static final String RECEIVER_DIMENSION = "receiverDimension";
+
 	public WrenchItem() {
 		super(new Item.Properties().stacksTo(1).rarity(Rarity.COMMON));
 	}
@@ -39,7 +46,7 @@ public class WrenchItem extends Item {
 		super.appendHoverText(itemstack, world, list, flag);
 		list.add(Component.literal("\u00A77Sneak-right-click a Rainbow Generator to select it."));
 		list.add(Component.literal("\u00A77Right-click each fuel generator to link it."));
-		list.add(Component.literal("\u00A77*Connects Wireless Battery and reciever!"));
+		list.add(Component.translatable("tooltip.extrautilitiesrebirth.wireless.link").withStyle(ChatFormatting.GRAY));
 	}
 
 	@Override
@@ -89,14 +96,49 @@ public class WrenchItem extends Item {
 			}
 			return InteractionResult.sidedSuccess(level.isClientSide);
 		}
+		if (target instanceof WirelessFEBatteryBlockEntity battery) {
+			if (level instanceof ServerLevel server) {
+				BlockPos receiver = selectedReceiver(selection, level);
+				Component result = receiver == null
+						? Component.translatable("message.extrautilitiesrebirth.wireless.select_first")
+						: battery.changeLink(server, receiver, player.isSecondaryUseActive());
+				player.displayClientMessage(result, true);
+			}
+			return InteractionResult.sidedSuccess(level.isClientSide);
+		}
+		if (!(target instanceof RainbowGeneratorBlockEntity || target instanceof FuelGeneratorBlockEntity
+				|| target instanceof MagmaGeneratorBlockEntity) && WirelessFEBatteryBlockEntity.findReceiver(target) != null) {
+			if (!level.isClientSide) {
+				CompoundTag data = stack.getOrCreateTag();
+				data.putDouble(RECEIVER_X, pos.getX());
+				data.putDouble(RECEIVER_Y, pos.getY());
+				data.putDouble(RECEIVER_Z, pos.getZ());
+				data.putString(RECEIVER_DIMENSION, level.dimension().location().toString());
+				player.displayClientMessage(Component.translatable("message.extrautilitiesrebirth.wireless.selected",
+						target.getBlockState().getBlock().getName(), pos.toShortString()), true);
+			}
+			return InteractionResult.sidedSuccess(level.isClientSide);
+		}
+		if (target != null && !level.isClientSide) {
+			target.getCapability(ForgeCapabilities.FLUID_HANDLER).ifPresent(tanks -> {
+				for (int tank = 0; tank < tanks.getTanks(); tank++) {
+					var fluid = tanks.getFluidInTank(tank);
+					if (!fluid.isEmpty()) {
+						player.displayClientMessage(Component.translatable("message.extrautilitiesrebirth.wrench.fluid",
+								fluid.getDisplayName(), fluid.getAmount()), false);
+					}
+				}
+			});
+		}
 		return InteractionResult.PASS;
 	}
 
-	@Override
-	public InteractionResult useOn(UseOnContext context) {
-		InteractionResult retval = super.useOn(context);
-		WrenchClickedOnBlockProcedureProcedure.execute(context.getLevel(), context.getClickedPos().getX(), context.getClickedPos().getY(),
-				context.getClickedPos().getZ(), context.getPlayer(), context.getItemInHand());
-		return retval;
+	private static BlockPos selectedReceiver(CompoundTag tag, Level level) {
+		if (tag == null || !tag.contains(RECEIVER_X, Tag.TAG_ANY_NUMERIC) || !tag.contains(RECEIVER_Y, Tag.TAG_ANY_NUMERIC)
+				|| !tag.contains(RECEIVER_Z, Tag.TAG_ANY_NUMERIC)
+				|| (tag.contains(RECEIVER_DIMENSION) && !tag.getString(RECEIVER_DIMENSION).equals(level.dimension().location().toString()))) {
+			return null;
+		}
+		return BlockPos.containing(tag.getDouble(RECEIVER_X), tag.getDouble(RECEIVER_Y), tag.getDouble(RECEIVER_Z));
 	}
 }
