@@ -30,7 +30,7 @@ Block items follow the entry for the block that registers them.
 | [x] | Automation and production | Mechanical Miner, Mechanical User, and Sorter GameTests cover their inputs, modes, outputs, and saved state. Powered processor tests cover Furnace recipe counts and item data, exact FE, blocked or named output, all seven Resonator recipes, all nine Enchanter recipes, and resuming legacy work in progress. The three production menus were exercised in the muted client. Inventory Interface tests verify the bundled ten-slot automation buffer, vanilla hopper transfer, comparator output, and the iron pickaxe requirement. |
 | [ ] | Tools | Glass Cutter and Reinforced Glass Cutter recover panes and all tagged mod glass. The ordinary cutter retains item data when it wears down in crafting. Fire Axe fells connected logs from the original break and respects Forge break events. Reversing Hoe regresses crops and restores dirt or cobblestone. Wrench tests cover wireless and Rainbow Generator links. Precision Shears recover stone-tier blocks while there is room. Destruction Pickaxe clears ordinary stone quickly, and Erosion Shovel clears loose material above a dig. Both preserve valuable ore drops. Healing Axe transfers health and restores hunger when equipped. Kikoku and Etheric Sword apply their armor-piercing effects during the original hit. Verify normal client interactions. |
 | [x] | Mob capture | Golden Lasso GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Normal right-clicks in the muted client captured and released a named pig, preserving its name and clearing the filled lasso. |
-| [ ] | Player utilities | Division Sigil, Magical Apple, Golden Feather, Chicken Wing Ring, Advanced Chicken Wing Ring, Angel Ring, and Ring of the Flying Squid. Compare intended actions and progression to the workspace. Review the Angel Ring's external integration. |
+| [ ] | Player utilities | GameTests verify sigils from both named bosses, sigil crafting wear and item data, Magical Apple food, non-stacking movement from carried Chicken Wing Rings, and fall protection from the Advanced Ring. Golden Feather is a crafting ingredient. Angel Ring keeps its link to DenisMasterHerobrine’s mod. The bundled Flying Squid Ring has no recipe or mechanics and retains its legacy registry ID and model. Verify the ring interactions in the packaged client. |
 
 ## Menus and runs
 
@@ -69,7 +69,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 105 tests passed in both configurations.
+  optional development mods. All 109 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and

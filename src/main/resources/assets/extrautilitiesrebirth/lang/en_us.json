@@ -195,5 +195,8 @@
   "message.extrautilitiesrebirth.wrench.fluid": "%s (%s mB)",
   "tooltip.extrautilitiesrebirth.wireless.link": "Right-click a receiver with a Wrench, then right-click the battery.",
   "tooltip.extrautilitiesrebirth.wireless.unlink": "Sneak-right-click the battery to remove the selected link.",
-  "message.extrautilitiesrebirth.overworld_return_set": "Overworld return position set"
+  "message.extrautilitiesrebirth.overworld_return_set": "Overworld return position set",
+  "tooltip.extrautilitiesrebirth.angel_ring.external": "Flight is available in Angel Ring by DenisMasterHerobrine",
+  "tooltip.extrautilitiesrebirth.angel_ring.link": "Right-click for the download link",
+  "message.extrautilitiesrebirth.angel_ring.download": "Download Angel Ring for Forge"
 }

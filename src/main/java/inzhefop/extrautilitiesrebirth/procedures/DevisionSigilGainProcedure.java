@@ -1,43 +1,48 @@
 package inzhefop.extrautilitiesrebirth.procedures;
 
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.eventbus.api.Event;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.Entity;
-
-import javax.annotation.Nullable;
-
+import inzhefop.extrautilitiesrebirth.ExtrautilitiesrebirthMod;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
+import net.minecraft.server.TickTask;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.GameRules;
+import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = ExtrautilitiesrebirthMod.MODID)
 public class DevisionSigilGainProcedure {
-	@SubscribeEvent
-	public static void onEntityDeath(LivingDeathEvent event) {
-		if (event != null && event.getEntity() != null) {
-			execute(event, event.getEntity().level(), event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), event.getEntity());
-		}
-	}
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void witherDropsSigil(LivingDropsEvent event) {
+        var entity = event.getEntity();
+        if (entity.getType() == EntityType.WITHER && entity.level() instanceof ServerLevel level
+                && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+            event.getDrops().add(createDrop(level, entity));
+        }
+    }
 
-	public static void execute(LevelAccessor world, double x, double y, double z, Entity entity) {
-		execute(null, world, x, y, z, entity);
-	}
+    @SubscribeEvent
+    public static void dragonDropsSigil(EntityLeaveLevelEvent event) {
+        var entity = event.getEntity();
+        if (entity.getType() == EntityType.ENDER_DRAGON && entity.getRemovalReason() == Entity.RemovalReason.KILLED
+                && event.getLevel() instanceof ServerLevel level && level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+            var drop = createDrop(level, entity);
+            var server = level.getServer();
+            // Drop the sigil after the dragon's removal has finished updating the entity lists.
+            server.tell(new TickTask(server.getTickCount(), () -> level.addFreshEntity(drop)));
+        }
+    }
 
-	private static void execute(@Nullable Event event, LevelAccessor world, double x, double y, double z, Entity entity) {
-		if (entity == null)
-			return;
-		if (("Wither").equals(entity.getDisplayName().getString()) || ("Enderdragon").equals(entity.getDisplayName().getString())) {
-			if (world instanceof Level _level && !_level.isClientSide()) {
-				ItemEntity entityToSpawn = new ItemEntity(_level, x, y, z, new ItemStack(ExtrautilitiesrebirthModItems.DEVISION_SIGIL.get()));
-				entityToSpawn.setPickUpDelay(10);
-				entityToSpawn.setUnlimitedLifetime();
-				_level.addFreshEntity(entityToSpawn);
-			}
-		}
-	}
+    private static ItemEntity createDrop(ServerLevel level, Entity entity) {
+        var stack = new ItemStack(ExtrautilitiesrebirthModItems.DEVISION_SIGIL.get());
+        var drop = new ItemEntity(level, entity.getX(), entity.getY(), entity.getZ(), stack);
+        drop.setDefaultPickUpDelay();
+        drop.setUnlimitedLifetime();
+        return drop;
+    }
 }

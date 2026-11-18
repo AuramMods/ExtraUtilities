@@ -24,16 +24,14 @@ public class DevisionSigilItem extends Item {
 		return UseAnim.EAT;
 	}
 
-	// FIX 1: Update signature to accept ItemStack (Forge Extension)
 	@Override
 	public boolean hasCraftingRemainingItem(ItemStack stack) {
 		return true;
 	}
 
-	// FIX 2: Rename getContainerItem to getCraftingRemainingItem
 	@Override
 	public ItemStack getCraftingRemainingItem(ItemStack itemstack) {
-		ItemStack retval = new ItemStack(this);
+		ItemStack retval = itemstack.copyWithCount(1);
 		retval.setDamageValue(itemstack.getDamageValue() + 1);
 		if (retval.getDamageValue() >= retval.getMaxDamage()) {
 			return ItemStack.EMPTY;
