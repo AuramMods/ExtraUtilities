@@ -29,7 +29,6 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import java.util.List;
 import java.util.Collections;
 
-import inzhefop.extrautilitiesrebirth.procedures.CreativeSpikeProcedureProcedure;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 
 public class CreativeSpikesBlock extends Block {
@@ -80,13 +79,13 @@ public class CreativeSpikesBlock extends Block {
 	@Override
 	public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
 		super.entityInside(blockstate, world, pos, entity);
-		CreativeSpikeProcedureProcedure.execute(entity);
+		SpikeDamage.CREATIVE.apply(world, entity);
 	}
 
 	@Override
 	public void stepOn(Level world, BlockPos pos, BlockState blockstate, Entity entity) {
 		super.stepOn(world, pos, blockstate, entity);
-		CreativeSpikeProcedureProcedure.execute(entity);
+		SpikeDamage.CREATIVE.apply(world, entity);
 	}
 
 	@OnlyIn(Dist.CLIENT)

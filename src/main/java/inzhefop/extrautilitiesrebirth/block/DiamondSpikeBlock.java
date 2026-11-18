@@ -22,7 +22,6 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import java.util.List;
 import java.util.Collections;
 
-import inzhefop.extrautilitiesrebirth.procedures.SpikesProcedureProcedure;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 
 public class DiamondSpikeBlock extends Block {
@@ -52,13 +51,13 @@ public class DiamondSpikeBlock extends Block {
 	@Override
 	public void entityInside(BlockState blockstate, Level world, BlockPos pos, Entity entity) {
 		super.entityInside(blockstate, world, pos, entity);
-		SpikesProcedureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
+		SpikeDamage.DIAMOND.apply(world, entity);
 	}
 
 	@Override
 	public void stepOn(Level world, BlockPos pos, BlockState blockstate, Entity entity) {
 		super.stepOn(world, pos, blockstate, entity);
-		SpikesProcedureProcedure.execute(world, pos.getX(), pos.getY(), pos.getZ(), entity);
+		SpikeDamage.DIAMOND.apply(world, entity);
 	}
 
 	@OnlyIn(Dist.CLIENT)
