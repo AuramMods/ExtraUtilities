@@ -17,12 +17,32 @@ archivesBaseName = 'extrautilitiesrebirth'
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println "Java: ${System.getProperty 'java.version'}, JVM: ${System.getProperty 'java.vm.version'} (${System.getProperty 'java.vendor'}), Arch: ${System.getProperty 'os.arch'}"
+sourceSets {
+    gameTest {
+        compileClasspath += sourceSets.main.output + sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.output + sourceSets.main.runtimeClasspath
+    }
+}
+
 minecraft {
     mappings channel: 'official', version: '1.20.1'
 
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
+        gameTestServer {
+            workingDirectory project.file('build/forge-gametest')
+            property 'forge.enabledGameTestNamespaces', 'extrautilitiesrebirth'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${buildDir}/createSrgToMcp/output.srg"
+            jvmArgs '-Djava.awt.headless=true'
+            mods {
+                examplemod {
+                    source sourceSets.main
+                    source sourceSets.gameTest
+                }
+            }
+        }
         client {
             workingDirectory project.file('run')
 

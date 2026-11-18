@@ -99,11 +99,7 @@ public class EnderQuarryBlock extends Block
 	@Override
 	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
 		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		EnderQuarryUpdateTickProcedure.execute(world, x, y, z);
+		EnderQuarryUpdateTickProcedure.execute(world, pos);
 		world.scheduleTick(pos, this, 1);
 	}
 
@@ -146,6 +142,7 @@ public class EnderQuarryBlock extends Block
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof EnderQuarryBlockEntity be) {
 				Containers.dropContents(world, pos, be);
+				be.dropPendingOutput();
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
 			super.onRemove(state, world, pos, newState, isMoving);
