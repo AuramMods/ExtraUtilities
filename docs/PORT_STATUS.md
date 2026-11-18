@@ -27,7 +27,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [ ] | Ender Thermic Pump | Verify fluid output, use of FE, range, replacement behavior, and persistence. |
-| [ ] | Automation and production | Mechanical Miner, Mechanical User, Furnace, Sorting Machine, Enchanter, Resonator, and Inventory Interface. Verify ordinary inputs and outputs, sided automation, blocked destinations, controls, and recipes. |
+| [ ] | Automation and production | Mechanical Miner tests cover ordinary ore, separate named stacks, nearby items left in place, the ripe Ender Lily's two drops, blocked output, saved overflow, sided extraction, and the upgrade slot. Verify the Mechanical User, Furnace, Sorting Machine, Enchanter, Resonator, and Inventory Interface for inputs, outputs, automation, controls, and recipes. |
 | [ ] | Tools | Glass Cutter, Reinforced Glass Cutter, Wrench, Fire Axe, Kikoku, Healing Axe, Erosion Shovel, Precision Shears, Reversing Hoe, Etheric Sword, and Destruction Pickaxe. Verify tool actions, durability, drops, and client/server behavior. |
 | [ ] | Mob capture | Golden Lasso. GameTests cover animal and villager capture, stack splitting, serialization, blocked release, hostile rejection, and crafting safety. Verify real client interactions. |
 | [ ] | Player utilities | Division Sigil, Magical Apple, Golden Feather, Chicken Wing Ring, Advanced Chicken Wing Ring, Angel Ring, and Ring of the Flying Squid. Compare intended actions and progression to the workspace. Review the Angel Ring's external integration. |
@@ -52,7 +52,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 28 quarry, generator, and lasso tests passed in
+  optional development mods. The 31 quarry, generator, lasso, and mining tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. The packaged builds with the generator

@@ -25,7 +25,6 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.MenuProvider;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
@@ -33,18 +32,13 @@ import net.minecraft.world.Containers;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.ServerLevel;
 
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.core.Direction;
 import net.minecraft.core.BlockPos;
 
-import java.util.Random;
 import java.util.List;
 import java.util.Collections;
 
-import io.netty.buffer.Unpooled;
 
-import inzhefop.extrautilitiesrebirth.world.inventory.MechanicalMinerGUIMenu;
 import inzhefop.extrautilitiesrebirth.procedures.MechanicalMinerUpdateTickProcedure;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 import inzhefop.extrautilitiesrebirth.block.entity.MechanicalMinerBlockEntity;
@@ -100,31 +94,16 @@ public class MechanicalMinerBlock extends Block
 	@Override
 	public void tick(BlockState blockstate, ServerLevel world, BlockPos pos, RandomSource random) {
 		super.tick(blockstate, world, pos, random);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-
-		MechanicalMinerUpdateTickProcedure.execute(world, x, y, z);
+		MechanicalMinerUpdateTickProcedure.execute(world, pos, blockstate);
 		world.scheduleTick(pos, this, 1);
 	}
 
 	@Override
 	public InteractionResult use(BlockState blockstate, Level world, BlockPos pos, Player entity, InteractionHand hand, BlockHitResult hit) {
-		super.use(blockstate, world, pos, entity, hand, hit);
-		if (entity instanceof ServerPlayer player) {
-			NetworkHooks.openScreen(player, new MenuProvider() {
-				@Override
-				public Component getDisplayName() {
-					return Component.literal("Mechanical Miner");
-				}
-
-				@Override
-				public AbstractContainerMenu createMenu(int id, Inventory inventory, Player player) {
-					return new MechanicalMinerGUIMenu(id, inventory, new FriendlyByteBuf(Unpooled.buffer()).writeBlockPos(pos));
-				}
-			}, pos);
+		if (entity instanceof ServerPlayer player && world.getBlockEntity(pos) instanceof MechanicalMinerBlockEntity miner) {
+			NetworkHooks.openScreen(player, miner, pos);
 		}
-		return InteractionResult.SUCCESS;
+		return InteractionResult.sidedSuccess(world.isClientSide);
 	}
 
 	@Override
@@ -151,6 +130,7 @@ public class MechanicalMinerBlock extends Block
 			BlockEntity blockEntity = world.getBlockEntity(pos);
 			if (blockEntity instanceof MechanicalMinerBlockEntity be) {
 				Containers.dropContents(world, pos, be);
+				be.dropPendingOutput();
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
 			super.onRemove(state, world, pos, newState, isMoving);
