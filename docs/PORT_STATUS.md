@@ -47,6 +47,9 @@ Block items follow the entry for the block that registers them.
   A second muted client run confirmed the Mechanical Miner routed upgrades
   and ordinary items to the correct slots and displayed a full energy bar.
   The Mechanical User's button cycled through the three modes in order.
+  In the Sorter, items waited for a valid filter. Shift-clicking a Name Tag
+  renamed to `forge:ores` configured the filter and sent all three iron ores
+  and both dirt blocks to their respective chests.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
   A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
