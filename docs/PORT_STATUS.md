@@ -14,7 +14,7 @@ Block items follow the entry for the block that registers them.
 | [x] | Compressed materials | GameTests craft, unpack, place, and break all eight cobblestone tiers, four dirt tiers, two sand tiers, and two gravel tiers. Unpacking the first dirt tier returns nine ordinary dirt blocks. |
 | [x] | Building materials | GameTests exercise the bedrockium, decorative stone, and Magical Wood crafting paths, including the bedrockium conversions. They cover placement, applicable rotation, and drops for all fourteen building blocks. Processor tests cover Quartzburnt, Rainbow Stone, and Stoneburnt. Magical Wood supplies its enchantment bonus, and Ferrous Juniper uses a stone axe or better. |
 | [x] | Glass | GameTests cover light blocking, light emission, matching-face culling, and drops for all 17 variants. Ethereal, Dark Ethereal, and Ineffable Glass let a standing player pass through and stop mobs and sneaking players. Inverted Ineffable Glass reverses those rules. |
-| [ ] | Materials and components | Demon, enchanted and evil infused metal blocks, ender infused obsidian, ender core, machine block, diamond edged matrix, upgrade base, lunar reactive dust, red coal, enchanted ingot, bedrockium ingot, unstable ingot and nugget, evil infused iron ingot, demon ingot, eye of redstone, moon stone, redstone crystal, ender shard, and amazing opinium core. Trace crafting or acquisition through each consumer. |
+| [x] | Materials and components | All 155 bundled recipes were loaded and executed through the vanilla recipe manager, including the storage conversions, machine components, quarry parts, and stable ingots. Lava enclosed by Nether Brick converts dropped gold into Demon Ingots without losing stack count. Both redstone ores can drop crystals through normal loot with a suitable tool, including machine harvesting. Resonator and Enchanter tests cover their material outputs. The bundled Amazing Opinium Core remains registered and visible in the creative tab. It has no bundled recipe or consumer. |
 | [ ] | Placement and access | Angel Block, Chandelier, Chunk Loading Wand, Overworld Portal, and Portable Globe. Verify placement and activation in the intended dimensions, plus chunk and portal behavior after reload. |
 | [ ] | Spikes and Cursed Earth | Wood, stone, iron, gold, diamond, and creative spikes, Cursed Earth, and Drop of Evil. Verify damage, mob spawning, drops, conversion, and light behavior. |
 | [x] | Ender Lilies | The packaged dedicated server generated Ender Lily Endstone in new End chunks. GameTests cover seed drops from the ore, planting on End Stone or Ender Core, all eight stages, faster growth on Ender Core, and ripe contact damage. Picking the fruit yields one pearl and resets the plant. Breaking a ripe plant or its support yields one seed and one pearl. |
@@ -62,13 +62,14 @@ Block items follow the entry for the block that registers them.
   Chest kept them separate from the differently named books already stored.
 - [ ] Walk crafting progression through all gameplay systems. Check unresolved
   item tags, recipes, assets, and world generation data at startup and reload.
-  A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
+  GameTests resolved and ran all 155 crafting and smelting recipes in both
+  runtime profiles. A client resource reload resolved the missing Kikoku, Amazing Opinium Core,
   Portable Globe, and rainbow particle textures after correcting their paths.
 - [x] Restore Gradle 8.8 wrapper, align the jar and mod versions, and make
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. All 82 tests passed in both configurations.
+  optional development mods. All 85 tests passed in both configurations.
   Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. Packaged generator, processor, and

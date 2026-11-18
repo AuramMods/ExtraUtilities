@@ -2,7 +2,6 @@ package inzhefop.extrautilitiesrebirth.procedures;
 
 import inzhefop.extrautilitiesrebirth.block.MechanicalMinerBlock;
 import inzhefop.extrautilitiesrebirth.block.entity.MechanicalMinerBlockEntity;
-import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -64,9 +63,7 @@ public class MechanicalMinerUpdateTickProcedure {
                 return;
             }
 
-            List<ItemStack> drops = state.is(ExtrautilitiesrebirthModBlocks.ENDER_LILLY_STAGE_8.get())
-                    ? List.of(new ItemStack(ExtrautilitiesrebirthModBlocks.ENDER_LILLY_STAGE_1.get()), new ItemStack(Items.ENDER_PEARL))
-                    : Block.getDrops(state, level, target, level.getBlockEntity(target), actor, tool);
+            List<ItemStack> drops = Block.getDrops(state, level, target, level.getBlockEntity(target), actor, tool);
             if (!level.destroyBlock(target, false, actor)) {
                 return;
             }

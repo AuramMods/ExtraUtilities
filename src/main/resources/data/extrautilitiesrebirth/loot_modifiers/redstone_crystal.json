@@ -1,0 +1,13 @@
+{
+  "type": "extrautilitiesrebirth:redstone_crystal",
+  "conditions": [
+    {
+      "condition": "minecraft:any_of",
+      "terms": [
+        { "condition": "forge:loot_table_id", "loot_table_id": "minecraft:blocks/redstone_ore" },
+        { "condition": "forge:loot_table_id", "loot_table_id": "minecraft:blocks/deepslate_redstone_ore" }
+      ]
+    },
+    { "condition": "minecraft:random_chance", "chance": 0.15 }
+  ]
+}

@@ -14,6 +14,7 @@
 package inzhefop.extrautilitiesrebirth;
 
 import inzhefop.extrautilitiesrebirth.init.*;
+import inzhefop.extrautilitiesrebirth.world.loot.RedstoneCrystalLootModifier;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
@@ -66,6 +67,7 @@ public class ExtrautilitiesrebirthMod {
 		ExtrautilitiesrebirthModMenus.register(bus);
 		ExtrautilitiesrebirthModBlockEntities.REGISTRY.register(bus);
 		ExtrautilitiesrebirthModFeatures.REGISTRY.register(bus);
+		RedstoneCrystalLootModifier.REGISTRY.register(bus);
 		ExtrautilitiesrebirthModParticleTypes.REGISTRY.register(bus);
 		CREATIVE_TABS.register(bus);
 	}

@@ -75,6 +75,9 @@ Includes many generator types such as:
 - Golden Lasso
 - Angel Ring / Chicken Wing Ring upgrades
 - Speed upgrade tiers and machine upgrade items
+- Demon Ingots. Toss gold ingots into lava enclosed on all four sides by
+  Nether Bricks, Nether Brick Stairs, or Nether Brick Fences. You can recover
+  the resulting Demon Ingots from the lava.
 
 ### Worldgen
 
