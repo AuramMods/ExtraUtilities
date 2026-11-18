@@ -23,7 +23,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
 | [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. GameTests cover fuel and production for each generator, the TNT menu and six output sides, full storage, serialized Culinary and Magma burns, and bucket and bottle remainders. Magma also covers bucket and pipe filling, slot validation, and exact per-bucket yield with speed upgrades. Continue checking alternate fuel variants, the full yield at each speed tier, and linked Rainbow Generator operation. |
-| [ ] | Rainbow Generator | Core, top, and bottom. Verify assembly, linked generator activity, saved links, output, and power remaining after the multiblock stops. |
+| [ ] | Rainbow Generator | Core, top, and bottom. A GameTest verifies stored power still transfers while the core is idle and excess energy stays buffered. Verify the assembly recipe, wrench links, and generation from all 16 linked fuel generators. |
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover normal four-marker setup, adjacent Speed and Silk Touch, World Hole traversal, bounded mining, blocked output and resume, sided insertion, and multi-drop serialization. Verify chunk and server reload for an active marker quarry. |
 | [x] | Quantum Quarry placeholder | The bundled workspace marks the quarry and actuator as WIP. Preserve their existing IDs, assembly check, and menu. Mining and new recipes are outside this port's scope. |
 | [ ] | Ender Thermic Pump | Verify fluid output, use of FE, range, replacement behavior, and persistence. |
@@ -52,7 +52,7 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The 25 quarry, generator, and lasso tests passed in
+  optional development mods. The 26 quarry, generator, and lasso tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
   both the client and dedicated server. The packaged builds with the generator

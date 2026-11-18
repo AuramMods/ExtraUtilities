@@ -54,7 +54,7 @@ Includes many generator types such as:
 - Mechanical Miner
 - Mechanical User
 - Ender Quarry + upgrades (speed/silk/world-hole style upgrade blocks)
-- Quantum Quarry + actuator
+- Quantum Quarry and actuator (legacy WIP placeholders)
 - Ender Thermic Pump
 - Sorting Machine
 - Inventory Interface

@@ -213,6 +213,28 @@ public class GeneratorGameTests {
         });
     }
 
+    @GameTest(template = "machine_test")
+    public static void idleRainbowGeneratorExportsPreviouslyStoredEnergy(GameTestHelper test) {
+        test.setBlock(GENERATOR, ExtrautilitiesrebirthModBlocks.RAINBOW_GENERATOR.get());
+        var rainbow = test.getBlockEntity(GENERATOR);
+        var energy = energyOf(rainbow);
+        energy.receiveEnergy(200_000, false);
+        rainbow.load(rainbow.saveWithFullMetadata());
+        BlockPos receiver = GENERATOR.east();
+        test.setBlock(receiver, ExtrautilitiesrebirthModBlocks.ENDER_QUARRY.get());
+        var receiverEnergy = energyOf(test.getBlockEntity(receiver));
+        int capacity = receiverEnergy.getMaxEnergyStored();
+        receiverEnergy.receiveEnergy(capacity - 400, false);
+
+        test.runAfterDelay(5, () -> {
+            test.assertTrue(!rainbow.getPersistentData().getBoolean("rgb_running"),
+                    "Without linked fuel generators, the rainbow generator should be idle");
+            test.assertTrue(receiverEnergy.getEnergyStored() == capacity && energy.getEnergyStored() == 199_600,
+                    "The idle generator should deliver stored energy and keep any excess");
+            test.succeed();
+        });
+    }
+
     private record FuelCase(Block block, Item item, int rate) {
     }
 

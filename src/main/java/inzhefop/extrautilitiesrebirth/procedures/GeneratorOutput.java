@@ -49,7 +49,7 @@ final class GeneratorOutput {
             return;
         }
 
-        generator.getCapability(ForgeCapabilities.ENERGY).ifPresent(source -> transfer(level, pos, source));
+        transferStoredEnergy(level, generator, TRANSFER_LIMIT);
         CompoundTag data = generator.getPersistentData();
         long seconds = (long) Math.ceil(Math.max(0, data.getDouble("time")) / Math.max(1, speed) / 20);
         String production = "Output: " + generated + " FE/t";
@@ -63,9 +63,14 @@ final class GeneratorOutput {
         }
     }
 
-    private static void transfer(ServerLevel level, BlockPos pos, IEnergyStorage source) {
+    static void transferStoredEnergy(ServerLevel level, BlockEntity generator, int limit) {
+        generator.getCapability(ForgeCapabilities.ENERGY)
+                .ifPresent(source -> transfer(level, generator.getBlockPos(), source, limit));
+    }
+
+    private static void transfer(ServerLevel level, BlockPos pos, IEnergyStorage source, int limit) {
         for (Direction side : OUTPUT_SIDES) {
-            int available = source.extractEnergy(TRANSFER_LIMIT, true);
+            int available = source.extractEnergy(limit, true);
             if (available <= 0) {
                 return;
             }
