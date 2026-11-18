@@ -10,8 +10,10 @@ import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.gametest.GameTestHolder;
@@ -108,6 +110,36 @@ public class GeneratorGameTests {
                 });
             });
         });
+    }
+
+    @GameTest(template = "machine_test")
+    public static void specialtyGeneratorsUseTheirFuelTags(GameTestHelper test) {
+        Block frosty = ExtrautilitiesrebirthModBlocks.FROSTY_GENERATOR_1.get();
+        Block pink = ExtrautilitiesrebirthModBlocks.PINK_GENERATOR.get();
+        var ice = placeWithFuel(test, new BlockPos(1, 2, 1), frosty, new ItemStack(Items.ICE, 2));
+        var snowball = placeWithFuel(test, new BlockPos(4, 2, 1), frosty, new ItemStack(Items.SNOWBALL, 2));
+        var wool = placeWithFuel(test, new BlockPos(1, 2, 4), pink, new ItemStack(Items.PINK_WOOL, 2));
+        var untagged = placeWithFuel(test, new BlockPos(4, 2, 4), pink, new ItemStack(Items.WHITE_WOOL, 2));
+
+        test.runAfterDelay(5, () -> {
+            test.assertTrue(ice.getItem(0).getCount() == 1 && energyOf(ice).getEnergyStored() > 0,
+                    "Frosty Generator should burn ice from its fuel tag");
+            test.assertTrue(snowball.getItem(0).getCount() == 1 && energyOf(snowball).getEnergyStored() > 0,
+                    "Frosty Generator should keep accepting snowballs");
+            test.assertTrue(wool.getItem(0).getCount() == 1 && energyOf(wool).getEnergyStored() > 0,
+                    "Pink Generator should burn pink wool from its fuel tag");
+            test.assertTrue(untagged.getItem(0).getCount() == 2 && energyOf(untagged).getEnergyStored() == 0,
+                    "Pink Generator must leave untagged wool intact");
+            test.succeed();
+        });
+    }
+
+    private static RandomizableContainerBlockEntity placeWithFuel(GameTestHelper test, BlockPos pos,
+                                                                  Block block, ItemStack fuel) {
+        test.setBlock(pos, block);
+        var generator = (RandomizableContainerBlockEntity) test.getBlockEntity(pos);
+        generator.setItem(0, fuel);
+        return generator;
     }
 
     private static TNTGeneratorBlockEntity placeTntGenerator(GameTestHelper test) {

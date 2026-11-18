@@ -7,7 +7,10 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Item;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.core.BlockPos;
 
@@ -17,6 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 import inzhefop.extrautilitiesrebirth.init.ExtrautilitiesrebirthModItems;
 
 public class FrostyGeneratorProcedure {
+	private static final TagKey<Item> FUEL = ItemTags.create(new ResourceLocation("forge", "frosty_gen_tag"));
+
 	public static void execute(LevelAccessor world, double x, double y, double z) {
 		boolean itemvalid = false;
 		double multiplier = 0;
@@ -39,16 +44,9 @@ public class FrostyGeneratorProcedure {
 			}
 		}.getValue(world, BlockPos.containing(x,y,z), "redinv"))
 				&& (world instanceof Level _lvl_isPow ? _lvl_isPow.hasNeighborSignal(BlockPos.containing(x,y,z)) : false)) {
-			itemvalid = (new Object() {
-				public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {
-					AtomicReference<ItemStack> _retval = new AtomicReference<>(ItemStack.EMPTY);
-					BlockEntity _ent = world.getBlockEntity(pos);
-					if (_ent != null)
-						_ent.getCapability(ForgeCapabilities.ITEM_HANDLER, null)
-								.ifPresent(capability -> _retval.set(capability.getStackInSlot(slotid).copy()));
-					return _retval.get();
-				}
-			}.getItemStack(world, BlockPos.containing(x,y,z), 0)).getItem() == Items.SNOWBALL;
+			BlockEntity generator = world.getBlockEntity(BlockPos.containing(x, y, z));
+			itemvalid = generator != null && generator.getCapability(ForgeCapabilities.ITEM_HANDLER)
+					.map(items -> items.getStackInSlot(0).is(FUEL)).orElse(false);
 			multiplier = 1;
 			if (ExtrautilitiesrebirthModItems.SPEED_UPGRADE.get() == (new Object() {
 				public ItemStack getItemStack(LevelAccessor world, BlockPos pos, int slotid) {

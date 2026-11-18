@@ -2,7 +2,9 @@
 
 Use the active Java and resource registries for the scope of this port. The
 bundled 1.18.2 workspace and the MCreator elements give context for feature
-behavior. A checked box requires gameplay or test evidence for the whole entry.
+behavior. Consult [RWTema’s Extra Utilities 2 source](https://github.com/rwtema/Extra-Utilities-2-Source)
+for feature intent where the bundled workspace is incomplete. A checked box
+requires gameplay or test evidence for the whole entry.
 Block items follow the entry for the block that registers them.
 
 ## Gameplay
@@ -20,7 +22,7 @@ Block items follow the entry for the block that registers them.
 | [ ] | Disposal and creative utilities | Item, energy, and fluid Trash Cans, Creative Energy Storage, Creative Harvest, and Creative Inventory Sample. Verify filters, limits, and creative access. |
 | [ ] | Energy distribution | Solar Panel, Lunar Panel, Wireless FE Battery, FE Transmitter, and Wireless RF Heating Coil. Verify generation windows, connection persistence, transfer and receiver behavior, and wire or wireless interoperability. |
 | [ ] | Redstone Clock | Both states. Verify placement, pulse timing, redstone and comparator updates, and chunk and server reload. |
-| [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, a full receiver, and redstone control through the menu action. Still verify fuel tables, remainders, upgrade rates, and full burn behavior and effects across the family. |
+| [ ] | Fuel generators | Culinary, Death, Disenchantment, Ender, TNT, Frosty, Furnace, Halitosis, Netherstar, Overclocked, Pink, Potion, Slimey, Survival, Redstone, and Magma, plus the three speed upgrades. TNT GameTests cover generation, status, all six output sides, a full receiver, and redstone control through the menu action. The Pink and Frosty fuel tags load and are covered by GameTests. Still verify the other fuel tables, remainders, upgrade rates, and full burn behavior and effects across the family. |
 | [ ] | Rainbow Generator | Core, top, and bottom. Verify assembly, linked generator activity, saved links, output, and power remaining after the multiblock stops. |
 | [ ] | Ender Quarry | Quarry, marker, base upgrade, speed upgrade, world hole upgrade, and each Silk Touch tier. GameTests cover blocked output/resume, tags, sided insertion, multi-drop serialization, and dirt replacement. Verify normal marker setup, traversal, upgrades, and chunk and server reload. |
 | [ ] | Quantum Quarry | Quarry and actuators. Assembly and menu exist. Implement and verify normal mining, upgrade inputs, storage, and power consumption. |
@@ -43,10 +45,13 @@ Block items follow the entry for the block that registers them.
   modpack deployment explicit. Built 1.7.3 with Java 17. The explicit deploy
   copy matched the jar when pointed at a temporary destination.
 - [x] Run the current GameTest suite on Forge 47.4.10 with and without the
-  optional development mods. The nine quarry and generator tests passed in
+  optional development mods. The ten quarry and generator tests passed in
   both configurations. Rerun as coverage grows.
 - [ ] Build the final jar from a clean checkout and load that packaged jar in
-  both the client and dedicated server.
+  both the client and dedicated server. The packaged build at `697949b` started
+  on a fresh Forge 47.4.10 dedicated server installation.
 - [ ] Upgrade an isolated copy of a representative 1.20.1 save. Check registry
   IDs, inventory contents, FE buffers, fuel and machine state, then restart and
-  check again.
+  check again. The packaged build at `697949b` preserved sampled Gold Chest
+  slots, TNT fuel and FE, redstone mode, and named item data across upgrade and
+  restart. The previously idle east receiver was powered after the upgrade.
