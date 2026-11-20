@@ -1,0 +1,43 @@
+{
+  "name": "Utility Glass",
+  "category": "extrautilitiesrebirth:building",
+  "icon": "extrautilitiesrebirth:dark_glass",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dark Glass, Reinforced Dark Glass, and Sandy Glass block light. Reinforced Dark Glass also offers high blast resistance. Obsidian Glass blocks four light levels. Glowstone Glass emits light level 15."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:dark_glass_rcp",
+      "recipe2": "extrautilitiesrebirth:reinforced_dark_glass_rcp",
+      "title": "Dark and Reinforced"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:obsidian_glass_rcp",
+      "recipe2": "extrautilitiesrebirth:glow_stone_glass_rcp",
+      "title": "Dim and Glowing"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:sandy_glass_rcp",
+      "text": "Sandy Glass has light opacity even though you can see through it."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:building/selective_glass",
+        "extrautilitiesrebirth:building/decorative_glass"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:dark_glass": 0,
+    "extrautilitiesrebirth:reinforced_dark_glass": 0,
+    "extrautilitiesrebirth:obsidian_glass": 0,
+    "extrautilitiesrebirth:glowstone_glass": 0,
+    "extrautilitiesrebirth:sandy_glass": 0
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "name": "Demon Metal",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:demon_ingot",
+  "sortnum": 80,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:demon_ingot",
+      "text": "Drop gold ingots into lava surrounded on the four horizontal sides by Nether Bricks, Nether Brick Stairs, or Nether Brick Fences. The stack turns into the same number of fire-resistant Demon Ingots."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Lava Conversion Pool",
+      "multiblock": {
+        "pattern": [
+          [
+            "_N_",
+            "N0N",
+            "_N_"
+          ],
+          [
+            "___",
+            "_N_",
+            "___"
+          ]
+        ],
+        "mapping": {
+          "0": "minecraft:lava",
+          "N": "minecraft:nether_bricks"
+        }
+      },
+      "text": "Toss gold through the top. The four side walls are checked. The bottom block holds the lava."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:demon_metal_rcp",
+      "recipe2": "extrautilitiesrebirth:deom_block_reverse_rcp",
+      "title": "Store Demon Ingots"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:demon_ingot": 0,
+    "extrautilitiesrebirth:block_of_demon_metal": 2
+  }
+}

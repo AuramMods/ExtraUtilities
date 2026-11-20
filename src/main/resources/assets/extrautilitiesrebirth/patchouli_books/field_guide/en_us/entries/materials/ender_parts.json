@@ -1,0 +1,47 @@
+{
+  "name": "Ender Components",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:ender_shard",
+  "sortnum": 50,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Cut an Ender Pearl to make Ender Shards. A Glass Cutter gives six. A Reinforced Glass Cutter gives eight. The ordinary cutter returns with one point of wear. The reinforced cutter is consumed in this recipe."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_shard_rcp",
+      "recipe2": "extrautilitiesrebirth:ender_shard_2_rcp",
+      "title": "Cut an Ender Pearl"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_infused_obsidian_rcp",
+      "recipe2": "extrautilitiesrebirth:ender_core_rcp",
+      "title": "Obsidian and Ender Core"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Put Them to Work",
+      "text": "Ender Infused Obsidian is used in quarry equipment. Ender Core adds five enchanting power when placed like a bookshelf. It is also the faster soil for $(l:extrautilitiesrebirth:mining/ender_lilies)Ender Lilies$(/l).$(br2)The Diamond Edged Computational Matrix is a component for the Ender Quarry."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:decmrcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:mining/ender_quarry",
+        "extrautilitiesrebirth:mining/ender_thermic_pump",
+        "extrautilitiesrebirth:machines/resonator"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_shard": 0,
+    "extrautilitiesrebirth:ender_infused_obsidian": 2,
+    "extrautilitiesrebirth:ender_core": 3,
+    "extrautilitiesrebirth:diamond_edged_computational_matrix": 4
+  }
+}

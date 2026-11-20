@@ -1,0 +1,30 @@
+{
+  "name": "Magical & Ferrous Wood",
+  "category": "extrautilitiesrebirth:building",
+  "icon": "extrautilitiesrebirth:magical_wood",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Magical Wood boosts an enchanting table when placed in a valid bookshelf position. It gives 2.5 enchanting power per effective block. Craft it from a bookshelf, gold, and a Bottle o’ Enchanting, or make it in the $(l:extrautilitiesrebirth:machines/enchanter)Enchanter$(/l)."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:magical_wood_rcp",
+      "recipe2": "extrautilitiesrebirth:magical_planks_rcp",
+      "title": "Magical Wood and Planks"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:ferrous_juniper_log",
+      "title": "Ferrous Juniper",
+      "text": "Ferrous Juniper Log and Planks are decorative blocks available in Creative. Use a stone axe or better to collect them. No trees or recipes produce these blocks in the bundled survival progression."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:magical_wood": 0,
+    "extrautilitiesrebirth:magical_planks": 1,
+    "extrautilitiesrebirth:ferrous_juniper_log": 2,
+    "extrautilitiesrebirth:ferrous_juniper_planks": 2
+  }
+}

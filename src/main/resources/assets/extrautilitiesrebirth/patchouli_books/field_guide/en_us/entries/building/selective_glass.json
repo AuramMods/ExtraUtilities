@@ -1,0 +1,35 @@
+{
+  "name": "Selective Glass",
+  "category": "extrautilitiesrebirth:building",
+  "icon": "extrautilitiesrebirth:ineffable_glass",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Ethereal, Dark Ethereal, and Ineffable Glass let players walk through upright. They block mobs and sneaking players. Inverted Ineffable Glass reverses that passage rule: stand to stay on it, sneak to pass through."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ethereal_glass_rcp",
+      "recipe2": "extrautilitiesrebirth:dark_ethetreal_glass",
+      "title": "Ethereal Glass"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Light and Passage",
+      "text": "Use Dark Ethereal Glass where you want to block light while allowing upright players through. Ordinary Ethereal and both Ineffable variants let light through.$(br2)Pair them with normal glass to set boundaries and access points."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ineffable_glass_rcp",
+      "recipe2": "extrautilitiesrebirth:ineffable_inverted_glass_rcp",
+      "title": "Ineffable Glass"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ethereal_glass": 0,
+    "extrautilitiesrebirth:dark_ethereal_glass": 2,
+    "extrautilitiesrebirth:ineffable_glass": 0,
+    "extrautilitiesrebirth:ineffable_inverted_glass": 0
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "Enchanted & Evil Metals",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:enchanted_ingot",
+  "sortnum": 70,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Use an $(l:extrautilitiesrebirth:machines/enchanter)Enchanter$(/l) to combine gold and lapis into Enchanted Ingots or Blocks of Enchanted Metal. The block operation uses a gold block and nine lapis. Pack nine ingots into a block or unpack a block as needed."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:block_of_enchanted_metal_rcp",
+      "recipe2": "extrautilitiesrebirth:block_of_enchanted_metal_reverse_rcp",
+      "title": "Enchanted Metal"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Evil Infused Iron",
+      "text": "Use iron and Nether Stars in the Enchanter to make Evil Infused Iron. Supply eight iron ingots and one Nether Star for eight ingots. The block batch uses eight iron blocks and nine Nether Stars."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:evil_iron_rcp",
+      "recipe2": "extrautilitiesrebirth:evil_block_reverse_rcp",
+      "title": "Evil Infused Iron"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:machines/enchanter"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:enchanted_ingot": 0,
+    "extrautilitiesrebirth:block_of_enchaned_metal": 1,
+    "extrautilitiesrebirth:evil_infused_iron_ingot": 2,
+    "extrautilitiesrebirth:block_of_evil_infused_iron": 3
+  }
+}

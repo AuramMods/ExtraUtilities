@@ -1,0 +1,47 @@
+{
+  "name": "Compressed Dirt",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:compressed_dirt",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dirt has four compression tiers. Keep piles of ordinary dirt in compact blocks and unpack one tier at a time. A Quadruple Compressed Dirt block stores 6,561 dirt."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Building Each Tier",
+      "text": "Fill a crafting grid with nine blocks of the previous tier to make one of the next. Put one compressed block into a grid by itself to recover nine blocks of the previous tier."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_dirt_1_rcp",
+      "recipe2": "extrautilitiesrebirth:com_dirt_1rev_rcp",
+      "title": "Dirt I"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_dirt_2_rcp",
+      "recipe2": "extrautilitiesrebirth:com_dirt_2rev_rcp",
+      "title": "Dirt II"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_dirt_3_rcp",
+      "recipe2": "extrautilitiesrebirth:com_dirt_3rev_rcp",
+      "title": "Dirt III"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_dirt_4_rcp",
+      "recipe2": "extrautilitiesrebirth:com_dirt_4rev_rcp",
+      "title": "Dirt IV"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:compressed_dirt": 2,
+    "extrautilitiesrebirth:double_compressed_dirt": 3,
+    "extrautilitiesrebirth:triple_compressed_dirt": 4,
+    "extrautilitiesrebirth:quadruple_compressed_dirt": 5
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "Stonework",
+  "category": "extrautilitiesrebirth:building",
+  "icon": "extrautilitiesrebirth:border_stone",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Polished Stone is a building block and the starting material for Stoneburnt. Border Stone, Chiseled Stone Bricks, and Edged Stone Bricks give you different faces for patterned walls or floors."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:polished_stone_rcp",
+      "recipe2": "extrautilitiesrebirth:border_stone_rcp",
+      "title": "Polished and Border Stone"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:chisled_stone_rcp",
+      "recipe2": "extrautilitiesrebirth:edged_stone_bricks_rcp",
+      "title": "Carved Stone Bricks"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Resonated Stone",
+      "text": "Process Polished Stone or Smooth Quartz in the $(l:extrautilitiesrebirth:machines/resonator)Resonator$(/l) to get Stoneburnt or Quartzburnt. Process Stoneburnt again to get Rainbow Stone. These blocks can also be placed as building materials."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:machines/resonator",
+        "extrautilitiesrebirth:materials/bedrockium"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:polished_stone": 1,
+    "extrautilitiesrebirth:border_stone": 1,
+    "extrautilitiesrebirth:chisled_stone_bricks": 2,
+    "extrautilitiesrebirth:edged_stone_bricks": 2,
+    "extrautilitiesrebirth:quartzburnt": 3,
+    "extrautilitiesrebirth:rainbow_stone": 3,
+    "extrautilitiesrebirth:stoneburnt": 3
+  }
+}

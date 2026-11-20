@@ -1,0 +1,33 @@
+{
+  "name": "Compressed Gravel",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:compressed_gravel",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "There are two tiers of compressed gravel. One double compressed block stores 81 gravel. Craft the blocks back down to retrieve loose gravel for building."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Building Each Tier",
+      "text": "Fill a crafting grid with nine blocks of the previous tier to make one of the next. Put one compressed block into a grid by itself to recover nine blocks of the previous tier."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:comgravel_1_rcp",
+      "recipe2": "extrautilitiesrebirth:comgravel_1rev_rcp",
+      "title": "Gravel I"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:comgravel_2_rcp",
+      "recipe2": "extrautilitiesrebirth:comgravel_2rev_rcp",
+      "title": "Gravel II"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:compressed_gravel": 2,
+    "extrautilitiesrebirth:double_compressed_gravel": 3
+  }
+}

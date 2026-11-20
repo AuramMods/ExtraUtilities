@@ -1,0 +1,16 @@
+{
+  "name": "Amazing Opinium Core",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:opinium_core_amazing",
+  "sortnum": 100,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:opinium_core_amazing",
+      "text": "This legacy core is available in the Extra Utilities creative tab. It has no bundled crafting recipe or machine use in this port."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:opinium_core_amazing": 0
+  }
+}

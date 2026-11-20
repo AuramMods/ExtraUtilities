@@ -1,0 +1,75 @@
+{
+  "name": "Compressed Cobblestone",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:compressed_cobblestone",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Compress cobblestone through eight tiers to save storage space. Triple and Quadruple Compressed Cobblestone are also used to make $(l:extrautilitiesrebirth:materials/bedrockium)Bedrockium$(/l). A single octuple block packs more than 43 million cobblestone."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Building Each Tier",
+      "text": "Fill a crafting grid with nine blocks of the previous tier to make one of the next. Put one compressed block into a grid by itself to recover nine blocks of the previous tier."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_1_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_1_rev_rcp",
+      "title": "Cobblestone I"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_2_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_2_rev_rcp",
+      "title": "Cobblestone II"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_3_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_3_rev_rcp",
+      "title": "Cobblestone III"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_4_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_4_rev_rcp",
+      "title": "Cobblestone IV"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_5_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_5_rev_rcp",
+      "title": "Cobblestone V"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_6_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_6_rev_rcp",
+      "title": "Cobblestone VI"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_7_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_7_rev_rcp",
+      "title": "Cobblestone VII"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:com_cob_8_rcp",
+      "recipe2": "extrautilitiesrebirth:com_cob_8_rev_rcp",
+      "title": "Cobblestone VIII"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:compressed_cobblestone": 2,
+    "extrautilitiesrebirth:double_compressed_cobblestone": 3,
+    "extrautilitiesrebirth:triple_compressed_cobblestone": 4,
+    "extrautilitiesrebirth:quadruple_compressed_cobblestone": 5,
+    "extrautilitiesrebirth:quintuple_compressed_cobblestone": 6,
+    "extrautilitiesrebirth:sextuple_compressed_cobblestone": 7,
+    "extrautilitiesrebirth:septuple_compressed_cobblestone": 8,
+    "extrautilitiesrebirth:octuple_compressed_cobblestone": 9
+  }
+}

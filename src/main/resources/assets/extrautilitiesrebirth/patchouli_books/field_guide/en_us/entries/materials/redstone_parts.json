@@ -1,0 +1,34 @@
+{
+  "name": "Redstone Components",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:redstone_crystal",
+  "sortnum": 60,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:redstone_crystal",
+      "title": "Redstone Crystal",
+      "text": "Mine regular or deepslate redstone ore with a suitable tool. With a normal loot drop, each ore has a 15% chance to add a crystal. You can also craft a crystal with redstone dust and an Ender Shard."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:resonating_redstone_crystal_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Eyes and Moon Stone",
+      "text": "The Eye of Redstone is a crafted redstone component. The Moon Stone uses Lunar Reactive Dust made by the $(l:extrautilitiesrebirth:machines/resonator)Resonator$(/l). Use Moon Stone to craft Ethereal Glass."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:eyeof_redstone_rcp",
+      "recipe2": "extrautilitiesrebirth:moon_stone_rcp",
+      "title": "Redstone and Lunar Parts"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:redstone_crystal": 0,
+    "extrautilitiesrebirth:eye_of_redstone": 3,
+    "extrautilitiesrebirth:moon_stone": 3
+  }
+}

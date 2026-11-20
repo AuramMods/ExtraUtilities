@@ -1,0 +1,35 @@
+{
+  "name": "Division Sigil & Unstable Metal",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:devision_sigil",
+  "sortnum": 90,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:devision_sigil",
+      "text": "The Wither and Ender Dragon drop a stable Division Sigil when mob loot is enabled. The sigil returns from crafting with one point of wear and has 256 uses. It is already active."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:unstable_ingot_rcp",
+      "recipe2": "extrautilitiesrebirth:unstable_nugget_rcp",
+      "title": "Craft With the Sigil"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Unstable Metal",
+      "text": "This port’s Unstable Ingots and Nuggets are stable crafting materials. The ingot recipe takes iron, while the nugget recipe takes a gold nugget. Both use a diamond and the sigil.$(br2)Use the ingots in equipment recipes."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:unstable_ingot_2_rcp",
+      "recipe2": "extrautilitiesrebirth:unstable_nugget_rcp_2",
+      "title": "Pack or Unpack"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:devision_sigil": 0,
+    "extrautilitiesrebirth:unstable_ingot": 1,
+    "extrautilitiesrebirth:unstable_nugget": 1
+  }
+}

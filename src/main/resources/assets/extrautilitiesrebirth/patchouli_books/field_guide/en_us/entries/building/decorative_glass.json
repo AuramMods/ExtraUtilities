@@ -1,0 +1,56 @@
+{
+  "name": "Decorative Glass",
+  "category": "extrautilitiesrebirth:building",
+  "icon": "extrautilitiesrebirth:edged_glass",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "These designs let light through and hide the shared face where two matching blocks meet. Smelt vanilla glass to get Clear Glass. For frames or patterns, use one of the crafted variants on the later pages."
+    },
+    {
+      "type": "patchouli:smelting",
+      "recipe": "extrautilitiesrebirth:clear_glass_rcp",
+      "text": "Smelt regular glass in a vanilla furnace or the powered Furnace."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:edged_glass_rcp",
+      "recipe2": "extrautilitiesrebirth:golden_edged_glass_rcp",
+      "title": "Glass Frames"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:glass_bricks_rcp",
+      "recipe2": "extrautilitiesrebirth:square_glass_rcp",
+      "title": "Brick and Square Patterns"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:heart_glass_rcp",
+      "recipe2": "extrautilitiesrebirth:creeper_glass_rcp",
+      "title": "Heart and Creeper"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:swirling_glass_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:building/selective_glass",
+        "extrautilitiesrebirth:building/utility_glass"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:clean_glass": 1,
+    "extrautilitiesrebirth:edged_glass": 2,
+    "extrautilitiesrebirth:golden_edged_glass": 2,
+    "extrautilitiesrebirth:glass_bricks": 3,
+    "extrautilitiesrebirth:square_glass": 3,
+    "extrautilitiesrebirth:heart_glass": 4,
+    "extrautilitiesrebirth:creeper_glass": 4,
+    "extrautilitiesrebirth:swirling_glass": 5
+  }
+}

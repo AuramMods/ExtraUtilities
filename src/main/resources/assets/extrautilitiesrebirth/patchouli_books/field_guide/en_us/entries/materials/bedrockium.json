@@ -1,0 +1,55 @@
+{
+  "name": "Bedrockium",
+  "category": "extrautilitiesrebirth:materials",
+  "icon": "extrautilitiesrebirth:bedrockium_ingot",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Start with $(l:extrautilitiesrebirth:materials/cobblestone_compression)compressed cobblestone$(/l). Craft the ingot with four triple compressed blocks, four quadruple compressed blocks, and a diamond block. The modern recipes use a crafting table."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:bedrockium_ingot_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Building Blocks",
+      "text": "Pack nine ingots into Bedrockium Cobblestone, shape it into Bricks, then turn those into Slabs. All three are hard, blast-resistant building blocks. Each can be unpacked into nine ingots."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:bedrock_rcp",
+      "recipe2": "extrautilitiesrebirth:bedrock_bricks_rcp",
+      "title": "Cobblestone and Bricks"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:bedrock_polished_rcp"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:bedingot_1_rcp",
+      "recipe2": "extrautilitiesrebirth:bedingot_2_rcp",
+      "title": "Unpack Bricks or Cobble"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:bedingot_3_rcp",
+      "text": "Unpack the Bedrockium Slabs back into nine ingots."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/drums",
+        "extrautilitiesrebirth:power/generator_upgrades"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:bedrockium_ingot": 0,
+    "extrautilitiesrebirth:bedrock_cobblestone": 3,
+    "extrautilitiesrebirth:bedrock_bricks": 3,
+    "extrautilitiesrebirth:bedrock_slabs": 4
+  }
+}
