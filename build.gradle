@@ -10,7 +10,7 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 
-version = '1.7.4'
+version = '1.7.5'
 group = 'art.arcane.extrautilitiesrebirth'
 archivesBaseName = 'extrautilitiesrebirth'
 
