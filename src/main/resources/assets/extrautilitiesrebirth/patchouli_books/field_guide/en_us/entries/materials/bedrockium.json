@@ -21,7 +21,7 @@
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:bedrock_rcp",
       "recipe2": "extrautilitiesrebirth:bedrock_bricks_rcp",
-      "title": "Cobblestone and Bricks"
+      "title": "Cobble & Bricks"
     },
     {
       "type": "patchouli:crafting",
@@ -31,7 +31,7 @@
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:bedingot_1_rcp",
       "recipe2": "extrautilitiesrebirth:bedingot_2_rcp",
-      "title": "Unpack Bricks or Cobble"
+      "title": "Unpack Bedrockium"
     },
     {
       "type": "patchouli:crafting",

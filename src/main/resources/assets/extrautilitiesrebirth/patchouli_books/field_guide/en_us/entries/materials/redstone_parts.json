@@ -23,7 +23,7 @@
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:eyeof_redstone_rcp",
       "recipe2": "extrautilitiesrebirth:moon_stone_rcp",
-      "title": "Redstone and Lunar Parts"
+      "title": "Redstone & Lunar"
     }
   ],
   "extra_recipe_mappings": {

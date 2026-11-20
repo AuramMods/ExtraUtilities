@@ -22,6 +22,31 @@ RECIPE_PAGE_TYPES = {
                           "patchouli:shapeless_book_recipe"},
     "patchouli:smelting": {"minecraft:smelting"},
 }
+MECHANIC_ENTRIES = (
+    ("Generator burn rates, remainders, and tag fuels", "power/first_power", "power/frosty_generator_1",
+     "power/pink_generator", "power/death_generator"),
+    ("Panel output, wireless links, and Rainbow requirements", "power/sky_panels", "power/wireless",
+     "power/rainbow_generator"),
+    ("Machine recipes and automation", "machines/resonator", "machines/enchanter", "machines/furnace",
+     "machines/mechanical_miner", "machines/mechanical_user", "machines/sorter"),
+    ("Item storage, fluid capacities, and disposal", "storage/gold_chest", "storage/golden_bag", "storage/drums",
+     "storage/inventory_interface", "storage/trash_cans"),
+    ("Quarry operation, upgrades, pump, and WIP assembly", "mining/ender_markers", "mining/ender_quarry",
+     "mining/quarry_upgrades", "mining/ender_thermic_pump", "mining/quantum_quarry"),
+    ("End ore placement and lily growth", "mining/ender_lilies"),
+    ("Redstone ore loot and Demon Metal conversion", "materials/redstone_parts", "materials/demon_metal"),
+    ("Boss drops and sigil crafting wear", "materials/unstable_metals"),
+    ("Light, collision, and enchanting blocks", "building/selective_glass", "building/utility_glass",
+     "building/timber", "materials/ender_parts"),
+    ("Mob capture, wing effects, and optional flight", "equipment/golden_lasso", "equipment/wing_rings",
+     "equipment/legacy_rings"),
+    ("Mob spawning, spike loot, and light controls", "utilities/cursed_earth", "utilities/spikes",
+     "utilities/chandelier"),
+    ("Return travel, redstone pulses, and chunk tickets", "utilities/return_travel", "utilities/redstone_clock",
+     "utilities/chunk_loading"),
+    ("Creative and legacy content", "storage/creative_chest", "storage/drums", "power/creative_energy",
+     "utilities/creative_blocks", "materials/opinium_core"),
+)
 
 
 def namespaced(name):
@@ -62,13 +87,26 @@ def write_checklist(path, items, recipes, entries, item_pages, recipe_pages, lan
         "Block items use the same row as the placeable block. Machine recipes,",
         "fuel rules, drops, world generation, and rituals are described in their",
         "respective entries. Those acquisition paths are separate from the",
-        "datapack recipe IDs in the second table.",
+        "datapack recipe IDs listed below.",
+        "",
+        "## Gameplay and acquisition",
+        "",
+        "Use these entries when checking the guide against machine definitions,",
+        "fuel tags, loot modifiers, world generation, and player interactions.",
+        "",
+        "| Mechanic | Guide entries |",
+        "| --- | --- |",
+    ]
+    for mechanic, *references in MECHANIC_ENTRIES:
+        titles = [entries.get(namespaced(entry), {}).get("name", f"Open ({entry})") for entry in references]
+        lines.append(f"| {mechanic} | {', '.join(titles)} |")
+    lines.extend([
         "",
         f"## Registered content ({len(item_pages)}/{len(items)})",
         "",
         "| Status | Item or block | Registry ID | Guide |",
         "| --- | --- | --- | --- |",
-    ]
+    ])
     for item in sorted(items):
         key = item.split(":")[1]
         name = lang.get(f"block.{NAMESPACE}.{key}", lang.get(f"item.{NAMESPACE}.{key}", key))
@@ -137,6 +175,14 @@ def main():
 
     for key in ("book_texture", "crafting_texture", "filler_texture"):
         check_asset(book[key], "book.json")
+    namespace, model = namespaced(book["model"]).split(":", 1)
+    if namespace == NAMESPACE:
+        model_path = ASSETS / f"models/item/{model}.json"
+        require(model_path.is_file(), "book.json", f"missing book model {book['model']}")
+        if model_path.is_file():
+            for texture in read_json(model_path)["textures"].values():
+                texture_namespace, texture_path = namespaced(texture).split(":", 1)
+                check_asset(f"{texture_namespace}:textures/{texture_path}.png", "book item model")
     for key in ("name", "landing_text"):
         require(book[key] in lang, "book.json", f"missing translation {book[key]}")
         check_text(lang.get(book[key], ""), "book.json")
@@ -164,10 +210,20 @@ def main():
                 check_asset(image, source)
             if isinstance(page.get("item"), str):
                 check_stack(page["item"], source)
-            for predicate in page.get("multiblock", {}).get("mapping", {}).values():
-                block = predicate.split("[", 1)[0]
-                if block.startswith(ITEM_PREFIX):
-                    require(block in blocks, source, f"unknown multiblock block {block}")
+            if "multiblock" in page:
+                multiblock = page["multiblock"]
+                mapping = multiblock["mapping"]
+                for predicate in mapping.values():
+                    block = predicate.split("[", 1)[0]
+                    if block.startswith(ITEM_PREFIX):
+                        require(block in blocks, source, f"unknown multiblock block {block}")
+                layers = multiblock["pattern"]
+                rows = [row for layer in layers for row in layer]
+                require(bool(rows) and len({len(row) for row in rows}) == 1
+                        and len({len(layer) for layer in layers}) == 1, source, "uneven multiblock dimensions")
+                cells = Counter("".join(rows))
+                require(cells["0"] == 1, source, "multiblock needs one origin")
+                require(not cells.keys() - mapping.keys() - {"0", " ", "_"}, source, "unmapped multiblock cell")
 
             page_type = page["type"]
             if page_type in RECIPE_PAGE_TYPES:
@@ -186,9 +242,12 @@ def main():
                     recipe_pages[recipe_id].append((entry, number))
 
         for item, page in content.get("extra_recipe_mappings", {}).items():
-            require(item in blocks | items, entry, f"lookup references unknown item {item}")
-            require(isinstance(page, int) and 0 <= page < len(pages), entry, f"invalid page for {item}")
-            item_pages[item].append((entry, page))
+            valid_item = item in blocks | items
+            valid_page = isinstance(page, int) and 0 <= page < len(pages)
+            require(valid_item, entry, f"lookup references unknown item {item}")
+            require(valid_page, entry, f"invalid page for {item}")
+            if valid_item and valid_page:
+                item_pages[item].append((entry, page))
 
     for category in categories.keys() - used_categories.keys():
         errors.append(f"{category}: empty category")
@@ -200,6 +259,9 @@ def main():
     if args.report:
         write_checklist(args.report, blocks | items, recipes, entries, item_pages, recipe_pages, lang)
     if not args.allow_incomplete:
+        for mechanic, *references in MECHANIC_ENTRIES:
+            for reference in references:
+                check_link(reference, mechanic)
         errors.extend(f"Uncovered item or block: {item}" for item in sorted(missing_items))
         errors.extend(f"Uncovered recipe: {recipe}" for recipe in sorted(missing_recipes))
     for error in errors:

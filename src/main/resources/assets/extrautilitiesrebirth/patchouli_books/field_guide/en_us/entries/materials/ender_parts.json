@@ -18,7 +18,7 @@
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:ender_infused_obsidian_rcp",
       "recipe2": "extrautilitiesrebirth:ender_core_rcp",
-      "title": "Obsidian and Ender Core"
+      "title": "Ender Blocks"
     },
     {
       "type": "patchouli:text",
@@ -27,7 +27,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "extrautilitiesrebirth:decmrcp"
+      "recipe": "extrautilitiesrebirth:decmrcp",
+      "title": "Computational Matrix"
     },
     {
       "type": "patchouli:relations",

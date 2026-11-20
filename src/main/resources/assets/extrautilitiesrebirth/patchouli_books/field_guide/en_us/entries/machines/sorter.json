@@ -33,7 +33,7 @@
     },
     {
       "type": "patchouli:text",
-      "title": "Keep Both Outputs Open",
+      "title": "Clear Both Outputs",
       "text": "The sorter waits for a valid filter and keeps items when the appropriate receiver will not accept them. Match and non-match chests are separate. It routes without Forge Energy.$(br2)Speed upgrades shorten the delay between transfers."
     },
     {

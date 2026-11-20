@@ -26,7 +26,7 @@
     },
     {
       "type": "patchouli:text",
-      "title": "Experience and Mob Loot",
+      "title": "Experience & Loot",
       "text": "Gold Spikes cause eligible mobs to drop experience. Diamond Spikes count as a player kill for special mob loot and suppress experience. Select the tier by what you want to collect."
     },
     {

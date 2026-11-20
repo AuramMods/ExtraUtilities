@@ -1,5 +1,5 @@
 {
-  "name": "Disenchantment Generator",
+  "name": "Disenchantment",
   "category": "extrautilitiesrebirth:power",
   "icon": "extrautilitiesrebirth:disenchantment_generator",
   "sortnum": 44,
@@ -10,7 +10,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "extrautilitiesrebirth:disenchantment_generator_rcp"
+      "recipe": "extrautilitiesrebirth:disenchantment_generator_rcp",
+      "title": "Disenchantment"
     }
   ],
   "extra_recipe_mappings": {

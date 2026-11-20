@@ -1,5 +1,5 @@
 {
-  "name": "Generator Speed Upgrades",
+  "name": "Generator Upgrades",
   "category": "extrautilitiesrebirth:power",
   "icon": "extrautilitiesrebirth:speed_upgrade",
   "sortnum": 10,
@@ -16,7 +16,8 @@
     {
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:upgrade_speed_magic_rcp",
-      "text": "Enchanted Speed Upgrade uses 1.10× the stack size."
+      "text": "Enchanted Speed Upgrade uses 1.10× the stack size.",
+      "title": "Enchanted Upgrade"
     },
     {
       "type": "patchouli:crafting",

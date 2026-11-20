@@ -12,7 +12,7 @@
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:glass_cutter_rcp",
       "recipe2": "extrautilitiesrebirth:reinforced_glass_cutter_rcp",
-      "title": "Ordinary and Reinforced"
+      "title": "Both Cutters"
     },
     {
       "type": "patchouli:text",

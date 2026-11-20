@@ -25,7 +25,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "extrautilitiesrebirth:wireless_rf_heating_coil",
-      "title": "Wireless RF Heating Coil",
+      "title": "RF Heating Coil",
       "text": "This component is made from iron bars in the Resonator. The coil is available as an item. For this port’s working wireless FE network, use a Wireless FE Battery and Wrench."
     },
     {

@@ -24,7 +24,7 @@
     },
     {
       "type": "patchouli:text",
-      "title": "Quarry Upgrade Recipes",
+      "title": "Quarry Upgrades",
       "text": "$(li)Quarry Upgrade Base + Silk Touch I reagent → Silk Touch Upgrade.$(li)Speed I + Efficiency III reagent → Speed II.$(li)Speed II + Efficiency V reagent → Speed III.",
       "anchor": "quarry_upgrades"
     },

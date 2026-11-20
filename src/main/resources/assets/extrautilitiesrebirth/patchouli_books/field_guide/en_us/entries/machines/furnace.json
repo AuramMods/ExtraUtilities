@@ -14,7 +14,7 @@
     },
     {
       "type": "patchouli:text",
-      "title": "Upgrades and Automation",
+      "title": "Furnace Upgrades",
       "text": "Connect item automation to feed input and extract output. A dedicated slot takes speed upgrades. For each upgrade in the stack the energy cost rises by 1,000 FE.$(br2)Make sure the result fits and enough FE is buffered before starting a batch."
     },
     {

@@ -6,7 +6,7 @@
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The Redstone Clock alternates between its two block states every 18 game ticks. Place a comparator against it to read the pulse at signal strength 15 or 0. It saves its current phase."
+      "text": "The Redstone Clock switches states every 18 game ticks and pulses adjacent redstone. Place a comparator against it to read signal strength 15 or 0. The clock saves its current phase."
     },
     {
       "type": "patchouli:crafting",
@@ -19,11 +19,15 @@
         "pattern": [
           [
             "0C"
+          ],
+          [
+            "SS"
           ]
         ],
         "mapping": {
           "0": "extrautilitiesrebirth:redstone_clock",
-          "C": "minecraft:comparator[facing=north]"
+          "C": "minecraft:comparator[facing=north]",
+          "S": "minecraft:stone"
         }
       },
       "text": "Point the comparator so its rear touches the clock. Run redstone dust from the output."

@@ -23,7 +23,8 @@
     {
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:world_hole_upgrade_rcp",
-      "text": "Leaves the excavation open. It also doubles the power draw and reduces the speed setting."
+      "text": "Leaves the excavation open. It also doubles the power draw and reduces the speed setting.",
+      "title": "World Hole Upgrade"
     },
     {
       "type": "patchouli:spotlight",

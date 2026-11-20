@@ -12,7 +12,7 @@
     {
       "type": "patchouli:spotlight",
       "item": "extrautilitiesrebirth:quantum_quarry_actuator",
-      "title": "Quantum Quarry Actuator",
+      "title": "Quarry Actuator",
       "text": "The Quantum Quarry Actuator is the companion Creative block. The assembly check expects an actuator against each of the six faces. This assembly has no production recipe or mining output."
     }
   ],

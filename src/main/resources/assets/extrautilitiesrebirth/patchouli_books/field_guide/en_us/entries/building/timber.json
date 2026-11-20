@@ -1,5 +1,5 @@
 {
-  "name": "Magical & Ferrous Wood",
+  "name": "Magical Timber",
   "category": "extrautilitiesrebirth:building",
   "icon": "extrautilitiesrebirth:magical_wood",
   "sortnum": 10,
@@ -12,7 +12,7 @@
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:magical_wood_rcp",
       "recipe2": "extrautilitiesrebirth:magical_planks_rcp",
-      "title": "Magical Wood and Planks"
+      "title": "Wood & Planks"
     },
     {
       "type": "patchouli:spotlight",

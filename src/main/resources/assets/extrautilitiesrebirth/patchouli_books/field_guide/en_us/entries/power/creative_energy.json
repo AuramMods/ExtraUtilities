@@ -7,7 +7,8 @@
     {
       "type": "patchouli:spotlight",
       "item": "extrautilitiesrebirth:creative_energy_storage",
-      "text": "This Creative-only block supplies unlimited Forge Energy. Place a receiver next to any of its six faces. It is useful for testing setups without depending on a fuel supply."
+      "text": "This Creative-only block supplies unlimited Forge Energy. Place a receiver next to any of its six faces. It is useful for testing setups without depending on a fuel supply.",
+      "title": "Creative Power"
     },
     {
       "type": "patchouli:relations",

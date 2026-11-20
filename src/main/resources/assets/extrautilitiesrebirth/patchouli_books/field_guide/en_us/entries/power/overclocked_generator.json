@@ -1,5 +1,5 @@
 {
-  "name": "Overclocked Generator",
+  "name": "Overclocked",
   "category": "extrautilitiesrebirth:power",
   "icon": "extrautilitiesrebirth:overclocked_generator",
   "sortnum": 38,
@@ -10,7 +10,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "extrautilitiesrebirth:overclocked_generator_rcp"
+      "recipe": "extrautilitiesrebirth:overclocked_generator_rcp",
+      "title": "Overclocked"
     }
   ],
   "extra_recipe_mappings": {

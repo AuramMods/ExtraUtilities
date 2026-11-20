@@ -19,7 +19,8 @@
     },
     {
       "type": "patchouli:crafting",
-      "recipe": "extrautilitiesrebirth:advanced_chicken_wing_ring_rcp"
+      "recipe": "extrautilitiesrebirth:advanced_chicken_wing_ring_rcp",
+      "title": "Advanced Wing Ring"
     },
     {
       "type": "patchouli:relations",
