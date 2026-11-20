@@ -9,7 +9,7 @@ fuel rules, drops, world generation, and rituals are described in their
 respective entries. Those acquisition paths are separate from the
 datapack recipe IDs in the second table.
 
-## Registered content (60/170)
+## Registered content (71/170)
 
 | Status | Item or block | Registry ID | Guide |
 | --- | --- | --- | --- |
@@ -61,7 +61,7 @@ datapack recipe IDs in the second table.
 | Open | Edged Stone Bricks | `edged_stone_bricks` |  |
 | Open | Enchanted Ingot | `enchanted_ingot` |  |
 | ✓ | Enchanted Speed Upgrade | `enchanted_speed_upgrade` | Generator Speed Upgrades (p. 3) |
-| Open | Enchanter | `enchanter` |  |
+| ✓ | Enchanter | `enchanter` | Enchanter (p. 1) |
 | Open | Ender Core | `ender_core` |  |
 | ✓ | Ender Generator | `ender_generator` | Ender Generator (p. 1) |
 | Open | Ender Infused Obsidian | `ender_infused_obsidian` |  |
@@ -94,7 +94,7 @@ datapack recipe IDs in the second table.
 | Open | Ferrous Juniper Planks | `ferrous_juniper_planks` |  |
 | Open | Fire Axe | `fire_axe` |  |
 | ✓ | Frosty Generator | `frosty_generator_1` | Frosty Generator (p. 1) |
-| Open | Furnace | `furnace` |  |
+| ✓ | Furnace | `furnace` | Powered Furnace (p. 1) |
 | ✓ | Furnace Generator | `furnace_generator` | Furnace Generator (p. 1) |
 | Open | Glass Bricks | `glass_bricks` |  |
 | Open | Glass Cutter | `glass_cutter` |  |
@@ -115,14 +115,14 @@ datapack recipe IDs in the second table.
 | Open | Iron Spike | `iron_spike` |  |
 | Open | Kikoku | `kikoku` |  |
 | ✓ | Lunar Panel | `lunar_panel` | Solar and Lunar Panels (p. 1) |
-| Open | Lunar Reactive Dust | `lunar_reactive_dust` |  |
-| Open | Machine Block | `machine_block` |  |
+| ✓ | Lunar Reactive Dust | `lunar_reactive_dust` | Resonator (p. 4) |
+| ✓ | Machine Block | `machine_block` | Machine Block (p. 1) |
 | Open | Magical Apple | `magical_apple` |  |
 | Open | Magical Planks | `magical_planks` |  |
 | Open | Magical Wood | `magical_wood` |  |
 | ✓ | Magma Generator | `magma_generator` | Magma Generator (p. 1) |
-| Open | Mechanical Miner | `mechanical_miner` |  |
-| Open | Mechanical User | `mechanical_user` |  |
+| ✓ | Mechanical Miner | `mechanical_miner` | Mechanical Miner (p. 1) |
+| ✓ | Mechanical User | `mechanical_user` | Mechanical User (p. 1) |
 | Open | Moon Stone | `moon_stone` |  |
 | ✓ | Netherstar Generator | `netherstar_generator` | Netherstar Generator (p. 1) |
 | Open | Obsidian Glass | `obsidian_glass` |  |
@@ -145,7 +145,7 @@ datapack recipe IDs in the second table.
 | ✓ | Rainbow Generator (bottom half) | `rainbow_generator_bottom` | Rainbow Generator (p. 2) |
 | Open | Rainbow Stone | `rainbow_stone` |  |
 | ✓ | Rainbow Generator (top half) | `rainmbow_generator_top` | Rainbow Generator (p. 2) |
-| Open | Red Coal | `red_coal` |  |
+| ✓ | Red Coal | `red_coal` | Resonator (p. 4) |
 | Open | Redstone Clock | `redstone_clock` |  |
 | Open | Redstone Clock | `redstone_clock_off` |  |
 | Open | Redstone Crystal | `redstone_crystal` |  |
@@ -153,7 +153,7 @@ datapack recipe IDs in the second table.
 | Open | Reinforced Dark Glass | `reinforced_dark_glass` |  |
 | ✓ | Reinforced Drum | `reinforced_drum` | Fluid Drums (p. 2) |
 | Open | Reinforced Glass Cutter | `reinforced_glass_cutter` |  |
-| Open | Resonator | `resonator` |  |
+| ✓ | Resonator | `resonator` | Resonator (p. 1) |
 | Open | Reversing Hoe | `reversing_hoe` |  |
 | Open | Ring Of The Flying Squid | `ring_of_the_flying_squid` |  |
 | Open | Sandy Glass | `sandy_glass` |  |
@@ -161,7 +161,7 @@ datapack recipe IDs in the second table.
 | Open | Sextuple Compressed Cobblestone | `sextuple_compressed_cobblestone` |  |
 | ✓ | Slimey Generator | `slimey_generator` | Slimey Generator (p. 1) |
 | ✓ | Solar Panel | `solar_panel` | Solar and Lunar Panels (p. 1) |
-| Open | Sorting Machine | `sorting_machine` |  |
+| ✓ | Sorting Machine | `sorting_machine` | Sorting Machine (p. 1) |
 | ✓ | Speed Upgrade | `speed_upgrade` | Generator Speed Upgrades (p. 2) |
 | Open | Square Glass | `square_glass` |  |
 | ✓ | Stone Drum | `stone_drum` | Fluid Drums (p. 2) |
@@ -178,13 +178,13 @@ datapack recipe IDs in the second table.
 | Open | Triple Compressed Dirt | `triple_compressed_dirt` |  |
 | Open | Unstable Ingot | `unstable_ingot` |  |
 | Open | Unstable Nugget | `unstable_nugget` |  |
-| Open | Upgrade Base | `upgrade_base` |  |
+| ✓ | Upgrade Base | `upgrade_base` | Resonator (p. 4) |
 | ✓ | Wireless FE Battery | `wireless_fe_battery` | Wireless FE Battery (p. 1) |
-| Open | Wireless RF Heating Coil | `wireless_rf_heating_coil` |  |
+| ✓ | Wireless RF Heating Coil | `wireless_rf_heating_coil` | Resonator (p. 5) |
 | Open | Wood Spike | `wood_spike` |  |
 | ✓ | Wrench | `wrench` | Wrench (p. 1) |
 
-## Datapack recipes (42/156)
+## Datapack recipes (49/156)
 
 | Status | Recipe ID | Guide |
 | --- | --- | --- |
@@ -251,7 +251,7 @@ datapack recipe IDs in the second table.
 | ✓ | `disenchantment_generator_rcp` | Disenchantment Generator (p. 2) |
 | Open | `edged_glass_rcp` |  |
 | Open | `edged_stone_bricks_rcp` |  |
-| Open | `enchanter_rcp` |  |
+| ✓ | `enchanter_rcp` | Enchanter (p. 2) |
 | Open | `ender_core_rcp` |  |
 | ✓ | `ender_generator_rcp` | Ender Generator (p. 2) |
 | Open | `ender_infused_obsidian_rcp` |  |
@@ -274,7 +274,7 @@ datapack recipe IDs in the second table.
 | ✓ | `fluid_trash_rcp` | Trash Cans (p. 4) |
 | ✓ | `frosty_generator_rcp` | Frosty Generator (p. 2) |
 | ✓ | `furnace_generator_rcp` | Furnace Generator (p. 2) |
-| Open | `furnace_rcp` |  |
+| ✓ | `furnace_rcp` | Powered Furnace (p. 2) |
 | Open | `glass_bricks_rcp` |  |
 | Open | `glass_cutter_rcp` |  |
 | Open | `glow_stone_glass_rcp` |  |
@@ -294,13 +294,13 @@ datapack recipe IDs in the second table.
 | Open | `iron_spike_rcp` |  |
 | Open | `kikoku_rcp` |  |
 | ✓ | `lunar_panel_rcp` | Solar and Lunar Panels (p. 2) |
-| Open | `machine_block_rcp` |  |
+| ✓ | `machine_block_rcp` | Machine Block (p. 2) |
 | Open | `magical_apple_rcp` |  |
 | Open | `magical_planks_rcp` |  |
 | Open | `magical_wood_rcp` |  |
 | ✓ | `magma_generator_rcp` | Magma Generator (p. 2) |
-| Open | `mech_miner_rcp` |  |
-| Open | `mechanical_user_rcp` |  |
+| ✓ | `mech_miner_rcp` | Mechanical Miner (p. 2) |
+| ✓ | `mechanical_user_rcp` | Mechanical User (p. 2) |
 | Open | `moon_stone_rcp` |  |
 | ✓ | `netherstar_generator_rcp` | Netherstar Generator (p. 2) |
 | Open | `obsidian_glass_rcp` |  |
@@ -319,12 +319,12 @@ datapack recipe IDs in the second table.
 | ✓ | `reinforced_drum_rcp` | Fluid Drums (p. 4) |
 | Open | `reinforced_glass_cutter_rcp` |  |
 | Open | `resonating_redstone_crystal_rcp` |  |
-| Open | `resonator_rcp` |  |
+| ✓ | `resonator_rcp` | Resonator (p. 2) |
 | Open | `reversing_hoe_rcp` |  |
 | Open | `sandy_glass_rcp` |  |
 | ✓ | `slimey_generator_rcp` | Slimey Generator (p. 2) |
 | ✓ | `solar_panel_rcp` | Solar and Lunar Panels (p. 2) |
-| Open | `sorter_rcp` |  |
+| ✓ | `sorter_rcp` | Sorting Machine (p. 2) |
 | ✓ | `speed_ultimate_rcp` | Generator Speed Upgrades (p. 4) |
 | ✓ | `speed_upgrade_rcp` | Generator Speed Upgrades (p. 2) |
 | Open | `square_glass_rcp` |  |

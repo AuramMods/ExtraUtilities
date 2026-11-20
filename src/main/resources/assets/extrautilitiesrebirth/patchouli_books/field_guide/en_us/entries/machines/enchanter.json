@@ -1,0 +1,53 @@
+{
+  "name": "Enchanter",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:enchanter",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Enchanter converts materials using a reagent and Forge Energy. Put the base material in the main input and the matching reagent in the second slot. The machine stores 250,000 FE and uses the reagent when it finishes."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:enchanter_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Enchanting with Lapis",
+      "text": "$(li)Bookshelf + 1 Lapis → Magical Wood · 64,000 FE, 80 s.$(li)Gold Ingot + 1 Lapis → Enchanted Ingot · 8,000 FE, 10 s.$(li)Gold Block + 9 Lapis → Block of Enchanted Metal · 24,000 FE, 30 s."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Batch Recipes",
+      "text": "$(li)16 Apples + 4 Lapis → 16 Magical Apples · 16,000 FE, 20 s.$(li)8 Iron Ingots + 1 Nether Star → 8 Evil Infused Iron Ingots · 24,000 FE, 80 s.$(li)8 Iron Blocks + 9 Nether Stars → 8 Evil Infused Iron Blocks · 192,000 FE, 240 s."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Quarry Upgrade Recipes",
+      "text": "$(li)Quarry Upgrade Base + Silk Touch I reagent → Silk Touch Upgrade.$(li)Speed I + Efficiency III reagent → Speed II.$(li)Speed II + Efficiency V reagent → Speed III.",
+      "anchor": "quarry_upgrades"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Upgrade Reagents",
+      "text": "Each quarry upgrade takes 64,000 FE and 120 seconds at base speed. Supply one input block and one item carrying the required enchantment at that level or higher. An enchanted book works too. The reagent is consumed."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Running Batches",
+      "text": "Times and energy here are for no upgrades at 20 ticks per second. Speed upgrades shorten jobs and can change their FE costs. Leave the result slot empty or compatible and give each batch room to fit."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:mining/quarry_upgrades",
+        "extrautilitiesrebirth:machines/resonator",
+        "extrautilitiesrebirth:machines/furnace"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:enchanter": 0
+  }
+}

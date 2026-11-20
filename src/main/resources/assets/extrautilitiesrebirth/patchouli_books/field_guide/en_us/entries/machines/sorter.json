@@ -1,0 +1,50 @@
+{
+  "name": "Sorting Machine",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:sorting_machine",
+  "sortnum": 60,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Sorting Machine separates items by an item tag. Rename a vanilla Name Tag in an anvil to a tag ID, such as $(thing)forge:ores$(). Put that Name Tag into the filter slot. Then feed items into the main inventory."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:sorter_rcp"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Two Output Chests",
+      "multiblock": {
+        "pattern": [
+          [
+            "M",
+            "0",
+            "O"
+          ]
+        ],
+        "mapping": {
+          "M": "minecraft:chest",
+          "0": "extrautilitiesrebirth:sorting_machine[facing=south]",
+          "O": "minecraft:chest"
+        }
+      },
+      "text": "Stand in front of the sorter. Matching items go to your right. Other items go left."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Keep Both Outputs Open",
+      "text": "The sorter waits for a valid filter and keeps items when the appropriate receiver will not accept them. Match and non-match chests are separate. It routes without Forge Energy.$(br2)Speed upgrades shorten the delay between transfers."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/inventory_interface",
+        "extrautilitiesrebirth:storage/gold_chest"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:sorting_machine": 0
+  }
+}

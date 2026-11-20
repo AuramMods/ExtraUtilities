@@ -1,0 +1,52 @@
+{
+  "name": "Resonator",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:resonator",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place an ingredient in the input, connect Forge Energy, and leave the result slot free. The Resonator stores 100,000 FE. Most recipes take five seconds at base speed and convert one input into one output."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:resonator_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Stone Recipes",
+      "text": "$(li)Polished Stone → Stoneburnt · 8,000 FE.$(li)Smooth Quartz → Quartzburnt · 8,000 FE.$(li)Stoneburnt → Rainbow Stone · 64,000 FE."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Component Recipes",
+      "text": "$(li)Lapis Lazuli → Lunar Reactive Dust · 16,000 FE.$(li)Coal → Red Coal · 16,000 FE.$(li)Light Weighted Pressure Plate → Upgrade Base · 8,000 FE.$(li)Iron Bars → Wireless RF Heating Coil · 16,000 FE."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:wireless_rf_heating_coil",
+      "title": "Wireless RF Heating Coil",
+      "text": "This component is made from iron bars in the Resonator. The coil is available as an item. For this port’s working wireless FE network, use a Wireless FE Battery and Wrench."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Automate Processing",
+      "text": "Use a $(l:extrautilitiesrebirth:power/generator_upgrades)Speed Upgrade$(/l) in the upgrade slot to shorten processing. The energy cost remains the same.$(br2)Connect item automation for ingredients and output. A missing input, blocked output, or insufficient stored FE stops progress."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/wireless",
+        "extrautilitiesrebirth:machines/enchanter",
+        "extrautilitiesrebirth:machines/furnace"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:resonator": 0,
+    "extrautilitiesrebirth:lunar_reactive_dust": 3,
+    "extrautilitiesrebirth:red_coal": 3,
+    "extrautilitiesrebirth:upgrade_base": 3,
+    "extrautilitiesrebirth:wireless_rf_heating_coil": 4
+  }
+}

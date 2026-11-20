@@ -1,0 +1,28 @@
+{
+  "name": "Machine Block",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:machine_block",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Machine Block is a crafting component for generators and processing machines. The placeable block is inert on its own. Turn it into a generator for FE or a powered machine to process materials."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:machine_block_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:machines/resonator",
+        "extrautilitiesrebirth:machines/enchanter",
+        "extrautilitiesrebirth:machines/furnace"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:machine_block": 0
+  }
+}

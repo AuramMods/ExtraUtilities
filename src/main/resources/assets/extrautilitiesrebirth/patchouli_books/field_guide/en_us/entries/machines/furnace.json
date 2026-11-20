@@ -1,0 +1,31 @@
+{
+  "name": "Powered Furnace",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:furnace",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "This Furnace uses Forge Energy instead of fuel. It accepts the same smelting recipes as a vanilla furnace and respects the recipe’s output amount. It stores 1 million FE and a base job takes 1,000 FE and five seconds."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:furnace_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Upgrades and Automation",
+      "text": "Connect item automation to feed input and extract output. A dedicated slot takes speed upgrades. For each upgrade in the stack the energy cost rises by 1,000 FE.$(br2)Make sure the result fits and enough FE is buffered before starting a batch."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:machines/resonator"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:furnace": 0
+  }
+}

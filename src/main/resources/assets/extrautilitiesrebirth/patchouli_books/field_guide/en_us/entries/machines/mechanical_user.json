@@ -1,0 +1,36 @@
+{
+  "name": "Mechanical User",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:mechanical_user",
+  "sortnum": 50,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The working face points toward you at placement and can face up or down. Put supplies in the eight item slots, add FE, then use the mode button to choose what the machine does."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:mechanical_user_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Choose a Mode",
+      "text": "$(li)Place Block: supplies one block to the empty space in front.$(li)Drop Item: drops one item into that empty space.$(li)Attack: supply a sword to damage nearby mobs in front. The sword loses durability on successful hits."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Power and Speed",
+      "text": "The user holds 25,000 FE. An action at base speed takes five seconds of work at 16 FE/t. The speed slot takes the same upgrades as the Mechanical Miner.$(br2)If nothing happens, check the facing, mode, supplies, and clear space."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:machines/mechanical_miner",
+        "extrautilitiesrebirth:power/generator_upgrades"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:mechanical_user": 0
+  }
+}

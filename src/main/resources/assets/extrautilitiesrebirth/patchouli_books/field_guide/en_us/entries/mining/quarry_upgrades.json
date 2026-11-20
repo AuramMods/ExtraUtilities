@@ -18,7 +18,7 @@
       "type": "patchouli:spotlight",
       "item": "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade",
       "title": "Silk Touch",
-      "text": "Silk Touch uses the block’s Silk Touch loot rules so eligible ores and blocks can be collected intact. It multiplies the quarry’s power draw by five. This variant is available in Creative."
+      "text": "The Silk Touch Upgrade preserves eligible blocks and multiplies quarry power draw by five.$(br2)Make it in the $(l:extrautilitiesrebirth:machines/enchanter#quarry_upgrades)Enchanter$(/l) from a Quarry Upgrade Base and a Silk Touch reagent."
     },
     {
       "type": "patchouli:crafting",
@@ -29,13 +29,13 @@
       "type": "patchouli:spotlight",
       "item": "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade_2",
       "title": "Speed II",
-      "text": "Speed II raises the speed setting by four and triples the base power draw. It is available in Creative."
+      "text": "Speed II adds four to the speed setting and triples the base power draw.$(br2)Make it in the $(l:extrautilitiesrebirth:machines/enchanter#quarry_upgrades)Enchanter$(/l) from Speed I and an Efficiency III or higher reagent."
     },
     {
       "type": "patchouli:spotlight",
       "item": "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade_3",
       "title": "Speed III",
-      "text": "Speed III raises the speed setting by eight and increases the base power draw fivefold. It is available in Creative."
+      "text": "Speed III adds eight to the speed setting and multiplies the base power draw by five.$(br2)Make it in the $(l:extrautilitiesrebirth:machines/enchanter#quarry_upgrades)Enchanter$(/l) from Speed II and an Efficiency V reagent."
     },
     {
       "type": "patchouli:text",

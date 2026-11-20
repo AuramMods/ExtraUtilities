@@ -1,0 +1,37 @@
+{
+  "name": "Mechanical Miner",
+  "category": "extrautilitiesrebirth:machines",
+  "icon": "extrautilitiesrebirth:mechanical_miner",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The miner breaks the block directly in front of it. The working face points toward you at placement and can face up or down. Give it FE and supply blocks in front, such as cobblestone from a generator."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:mech_miner_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Harvest and Output",
+      "text": "The miner harvests with diamond-pickaxe rules, respects protection, and leaves immature Ender Lilies alone. Its nine output slots accept mined drops, and extra drops wait in a buffer. Use a hopper or item pipe to keep room free."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Power and Speed",
+      "text": "The miner holds 25,000 FE. At base speed it takes five seconds of work at 16 FE/t per block. $(l:extrautilitiesrebirth:power/generator_upgrades)Speed upgrades$(/l) can shorten this interval at a higher energy cost.$(br2)Use the Ender Quarry for an area rather than one position."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:machines/mechanical_user",
+        "extrautilitiesrebirth:mining/ender_quarry",
+        "extrautilitiesrebirth:mining/ender_lilies"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:mechanical_miner": 0
+  }
+}
