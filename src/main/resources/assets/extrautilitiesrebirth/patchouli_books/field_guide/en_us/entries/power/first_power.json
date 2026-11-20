@@ -1,0 +1,37 @@
+{
+  "name": "First Forge Energy",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:furnace_generator",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Forge Energy is measured in FE. FE/t is the amount made each game tick. Start with a $(l:extrautilitiesrebirth:power/furnace_generator)Furnace Generator$(/l) and coal. Connect a machine or battery to an adjacent face so it can receive the energy."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Read the Generator",
+      "text": "Place fuel beside the burn indicator and optional speed upgrades in the far-left slot. The energy bar shows what is buffered. The output readout shows current generation, and the burn bar tracks remaining fuel.$(br2)Each fuel generator buffers 100,000 FE."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Control and Output",
+      "text": "$(thing)Ignore$() runs without checking redstone. $(thing)Signal$() runs only while powered. Stored FE still exports when generation is idle.$(br2)The sided FE ports send energy on all six faces. A full buffer pauses burning until a receiver takes some of it."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "When Power Stops",
+      "text": "Hoppers and item pipes use the fuel and upgrade slots, subject to the slot rules. Empty containers may stay in the fuel slot or drop at the generator if the slot is occupied.$(br2)If output is zero, check fuel, redstone mode, and the receiver’s capacity."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/generator_upgrades",
+        "extrautilitiesrebirth:power/sky_panels",
+        "extrautilitiesrebirth:power/wireless",
+        "extrautilitiesrebirth:power/rainbow_generator"
+      ],
+      "title": "Build a Power Network"
+    }
+  ]
+}

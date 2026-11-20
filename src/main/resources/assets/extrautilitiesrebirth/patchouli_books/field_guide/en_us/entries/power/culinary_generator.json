@@ -1,0 +1,19 @@
+{
+  "name": "Culinary Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:culinary_generator",
+  "sortnum": 32,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A food item with positive nutrition burns for 600 ticks. Output is 6 FE/t per point of nutrition. For example, an apple feeds four hunger points and produces 24 FE/t for 600 ticks."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:culinary_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:culinary_generator": 0
+  }
+}

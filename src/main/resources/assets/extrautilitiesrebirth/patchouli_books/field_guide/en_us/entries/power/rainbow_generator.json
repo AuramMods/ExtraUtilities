@@ -1,0 +1,50 @@
+{
+  "name": "Rainbow Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:rainbow_generator",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Rainbow Generator needs all 16 different fuel generators to be producing at once. The Magma Generator counts. Solar and Lunar Panels do not.$(br2)Craft the top and bottom halves, then combine them into the working generator."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:rainbow_top_rcp",
+      "recipe2": "extrautilitiesrebirth:rainbow_bot_rcp",
+      "title": "Both Halves"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:rainbow_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Link the Generators",
+      "text": "$(li)Sneak-right-click the Rainbow Generator with a Wrench to select it.$(li)Right-click each fuel generator with the same Wrench to link it.$(li)Feed all 16 and give each an adjacent energy destination so its output can keep flowing."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Keep All 16 Running",
+      "text": "Right-click the Rainbow Generator to see the running count. A type only counts while it actually makes power. If the count falls, check the missing generator’s fuel, FE buffer, redstone mode, or linkage."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Handle the Output",
+      "text": "When all 16 are active, the Rainbow Generator makes up to 25 million FE/t and buffers up to 100 million FE. Stored FE still exports while the generator is idle. Use a receiver that can handle the burst."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/wrench",
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:power/wireless"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:rainbow_generator": 3,
+    "extrautilitiesrebirth:rainmbow_generator_top": 1,
+    "extrautilitiesrebirth:rainbow_generator_bottom": 1
+  }
+}

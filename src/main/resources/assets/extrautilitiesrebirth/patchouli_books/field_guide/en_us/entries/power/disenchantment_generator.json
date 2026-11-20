@@ -1,0 +1,19 @@
+{
+  "name": "Disenchantment Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:disenchantment_generator",
+  "sortnum": 44,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An enchanted book burns for 600 ticks at 125 FE/t. The generator consumes the book itself. The number and levels of the enchantments do not change its output."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:disenchantment_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:disenchantment_generator": 0
+  }
+}

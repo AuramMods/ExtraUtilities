@@ -1,0 +1,31 @@
+{
+  "name": "Magma Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:magma_generator",
+  "sortnum": 51,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Magma Generator consumes lava as a fluid. Right-click it with a lava bucket to pour in the fuel, or connect a fluid pipe. The internal tank holds eight buckets. Right-click without a lava bucket to open the controls."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:magma_generator_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Lava and Output",
+      "text": "One bucket burns for 100 ticks at 20 FE/t, producing 2,000 FE. Generator upgrades shorten the burn without changing that yield.$(br2)Use a $(l:extrautilitiesrebirth:mining/ender_thermic_pump)Thermic Pump$(/l) and fluid transport to automate lava supply."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:power/generator_upgrades"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:magma_generator": 0
+  }
+}

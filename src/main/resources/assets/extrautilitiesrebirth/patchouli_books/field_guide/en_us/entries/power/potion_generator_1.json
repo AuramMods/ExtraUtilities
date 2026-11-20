@@ -1,0 +1,19 @@
+{
+  "name": "Potion Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:potion_generator_1",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Uses regular, splash, or lingering potions. Each burns for 600 ticks at 40 FE/t and returns an empty glass bottle. The potion’s effects do not change the yield."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:potion_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:potion_generator_1": 0
+  }
+}

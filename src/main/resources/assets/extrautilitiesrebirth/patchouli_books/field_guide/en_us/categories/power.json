@@ -1,0 +1,6 @@
+{
+  "name": "Power & Generators",
+  "description": "Choose fuel, tune your generators, and move Forge Energy.",
+  "icon": "extrautilitiesrebirth:survival_generator",
+  "sortnum": 10
+}

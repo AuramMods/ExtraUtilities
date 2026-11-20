@@ -1,0 +1,44 @@
+{
+  "name": "Generator Speed Upgrades",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:speed_upgrade",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place one kind of speed upgrade in the generator’s upgrade slot. A stack sets the speed to the stack size multiplied by the tier bonus. Faster burns make more FE per tick without changing the total energy in the fuel."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:speed_upgrade_rcp",
+      "text": "Speed Upgrade uses 1.05× the stack size as its burn speed."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:upgrade_speed_magic_rcp",
+      "text": "Enchanted Speed Upgrade uses 1.10× the stack size."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:speed_ultimate_rcp",
+      "text": "Super Speed Upgrade uses 1.20× the stack size."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Sizing the Output",
+      "text": "The generator can only start or continue a burn step when the buffer can fit that step. A stronger upgrade can make an undersized receiver easier to notice.$(br2)Quarry upgrades are adjacent blocks with their own rules."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:mining/quarry_upgrades"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:speed_upgrade": 1,
+    "extrautilitiesrebirth:enchanted_speed_upgrade": 2,
+    "extrautilitiesrebirth:super_speed_upgrade": 3
+  }
+}

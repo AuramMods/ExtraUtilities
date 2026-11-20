@@ -1,0 +1,19 @@
+{
+  "name": "Halitosis Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:halitosis_generator",
+  "sortnum": 36,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Dragon’s Breath burns for 12,000 ticks at 35 FE/t. Collect the dragon’s purple breath with glass bottles. The generator returns an empty bottle when it consumes the fuel."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:halitosis_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:halitosis_generator": 0
+  }
+}

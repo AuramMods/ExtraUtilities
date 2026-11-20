@@ -1,0 +1,25 @@
+{
+  "name": "Golden Bag of Holding",
+  "category": "extrautilitiesrebirth:storage",
+  "icon": "extrautilitiesrebirth:golden_bag_of_holding",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Right-click while holding the bag to open 54 portable slots. Its contents follow the bag and the item is fire-resistant.$(br2)A bag cannot hold another Golden Bag of Holding. The bag in your hand stays locked in place while its screen is open."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:golden_bag_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/gold_chest"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:golden_bag_of_holding": 0
+  }
+}

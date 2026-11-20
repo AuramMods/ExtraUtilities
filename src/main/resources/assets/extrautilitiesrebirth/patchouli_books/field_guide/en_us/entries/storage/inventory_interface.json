@@ -1,0 +1,48 @@
+{
+  "name": "Inventory Interface",
+  "category": "extrautilitiesrebirth:storage",
+  "icon": "extrautilitiesrebirth:inventory_interface",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:inventory_interface",
+      "text": "The Inventory Interface is a ten-slot buffer available in Creative. Use hoppers or item pipes to put items in and take them out. Its comparator signal reflects stored items. Mine it with an iron pickaxe or better. It has no player inventory screen."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Hopper Buffer",
+      "multiblock": {
+        "pattern": [
+          [
+            "H"
+          ],
+          [
+            "0"
+          ],
+          [
+            "H"
+          ],
+          [
+            "C"
+          ]
+        ],
+        "mapping": {
+          "H": "minecraft:hopper",
+          "0": "extrautilitiesrebirth:inventory_interface",
+          "C": "minecraft:chest"
+        }
+      },
+      "text": "A hopper inserts from above. Another extracts into a chest below."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/gold_chest"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:inventory_interface": 0
+  }
+}

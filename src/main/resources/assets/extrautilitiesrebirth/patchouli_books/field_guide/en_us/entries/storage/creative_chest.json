@@ -1,0 +1,28 @@
+{
+  "name": "Creative Chest",
+  "category": "extrautilitiesrebirth:storage",
+  "icon": "extrautilitiesrebirth:creative_chest",
+  "sortnum": 90,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:creative_chest",
+      "text": "Supply an item in the template slot. The output refills with copies, retaining names, damage, and other item data up to that item’s normal stack limit. This block is obtained in Creative."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Copy and Extract",
+      "text": "The template stays in place when you take the output. Change or remove the template in the menu to change the copied item.$(br2)Connected item automation can insert a sample and extract copies without pulling out the template."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/gold_chest",
+        "extrautilitiesrebirth:power/creative_energy"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:creative_chest": 0
+  }
+}

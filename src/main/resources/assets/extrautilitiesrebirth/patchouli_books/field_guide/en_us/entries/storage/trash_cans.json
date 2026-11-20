@@ -1,0 +1,39 @@
+{
+  "name": "Trash Cans",
+  "category": "extrautilitiesrebirth:storage",
+  "icon": "extrautilitiesrebirth:trash_can",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Use an Item Trash Can to destroy unwanted items. Open its inventory and deposit stacks, or insert with a hopper or item pipe. The contents are deleted on the next server tick."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:trash_can_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Fluid and Energy",
+      "text": "A Fluid Trash Can deletes fluid accepted from pipes. Right-click it with a filled bucket to discard the contents and keep the empty bucket.$(br2)The Energy Trash Can consumes incoming Forge Energy. It is useful as a sink when testing a generator."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:fluid_trash_rcp",
+      "recipe2": "extrautilitiesrebirth:trashcanenergy_rcp",
+      "title": "Fluid and Energy"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:storage/drums"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:trash_can": 0,
+    "extrautilitiesrebirth:trash_can_fluid": 2,
+    "extrautilitiesrebirth:trash_can_energy": 2
+  }
+}

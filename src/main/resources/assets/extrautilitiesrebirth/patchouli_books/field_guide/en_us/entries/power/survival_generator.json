@@ -1,0 +1,19 @@
+{
+  "name": "Survival Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:survival_generator",
+  "sortnum": 31,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Burns ordinary furnace fuel at 30 FE/t. Use coal or charcoal for a simple starter supply. The normal furnace burn time determines the yield."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:survival_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:survival_generator": 0
+  }
+}

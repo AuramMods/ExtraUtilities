@@ -1,0 +1,19 @@
+{
+  "name": "Overclocked Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:overclocked_generator",
+  "sortnum": 38,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Burns ordinary furnace fuel at 60 FE/t. Base duration follows Forge’s standard fuel burn time, so the same fuel yields twice as much FE as in a Furnace Generator."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:overclocked_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:overclocked_generator": 0
+  }
+}

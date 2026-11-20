@@ -1,0 +1,22 @@
+{
+  "name": "Solar and Lunar Panels",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:solar_panel",
+  "sortnum": 12,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place both panels in the open with a clear view of the sky. Solar makes 10 FE/t by day, and Lunar makes 15 FE/t by night.$(br2)Each buffers 100,000 FE and sends stored power to adjacent receivers. Stored FE can still leave when the panel is idle."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:solar_panel_rcp",
+      "recipe2": "extrautilitiesrebirth:lunar_panel_rcp",
+      "title": "Solar and Lunar"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:solar_panel": 0,
+    "extrautilitiesrebirth:lunar_panel": 0
+  }
+}

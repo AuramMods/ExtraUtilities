@@ -1,0 +1,27 @@
+{
+  "name": "Gold Chest",
+  "category": "extrautilitiesrebirth:storage",
+  "icon": "extrautilitiesrebirth:gold_chest",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A Gold Chest holds 54 slots in one block. Open it to store items or connect hoppers or compatible item pipes to automate it.$(br2)Item data such as a custom name or damage is retained. Stacks with different data stay separate."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:gold_chest_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/golden_bag",
+        "extrautilitiesrebirth:storage/inventory_interface",
+        "extrautilitiesrebirth:storage/creative_chest"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:gold_chest": 0
+  }
+}

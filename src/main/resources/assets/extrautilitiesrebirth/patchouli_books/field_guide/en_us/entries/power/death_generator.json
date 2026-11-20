@@ -1,0 +1,19 @@
+{
+  "name": "Death Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:death_generator",
+  "sortnum": 43,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Bones, bone meal, bone blocks, and rotten flesh each burn for 600 ticks at 40 FE/t. The fuel list comes from the forge:death_gen_tag item tag."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:death_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:death_generator": 0
+  }
+}

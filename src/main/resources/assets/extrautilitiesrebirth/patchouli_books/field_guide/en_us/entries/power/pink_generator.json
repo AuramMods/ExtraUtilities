@@ -1,0 +1,19 @@
+{
+  "name": "Pink Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:pink_generator",
+  "sortnum": 39,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Items in forge:pink_items burn for 300 ticks at 75 FE/t. Pink dye and pink tulips work, as do pink wool, carpet, beds, banners, glass, panes, candles, shulker boxes, concrete, powder, terracotta, and glazed terracotta."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:pink_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:pink_generator": 0
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Slimey Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:slimey_generator",
+  "sortnum": 41,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Slimeballs and slime blocks each burn for 100 ticks at 300 FE/t. Use loose slimeballs for the same 30,000 FE per fuel item."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:slimey_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:slimey_generator": 0
+  }
+}

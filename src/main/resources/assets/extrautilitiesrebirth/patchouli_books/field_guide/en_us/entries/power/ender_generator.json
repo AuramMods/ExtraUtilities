@@ -1,0 +1,19 @@
+{
+  "name": "Ender Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:ender_generator",
+  "sortnum": 33,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "An Ender Pearl or Eye of Ender burns for 1,200 ticks at 70 FE/t. Both fuels give the same output and duration."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_generator": 0
+  }
+}

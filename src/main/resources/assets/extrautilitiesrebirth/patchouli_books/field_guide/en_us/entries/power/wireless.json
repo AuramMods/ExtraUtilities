@@ -1,0 +1,63 @@
+{
+  "name": "Wireless FE Battery",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:wireless_fe_battery",
+  "sortnum": 14,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Feed power into a Wireless FE Battery to send it to nearby machines. Each battery buffers 3,300 FE and tracks up to ten receivers. Receivers must be in the same dimension and strictly less than ten blocks away."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:wireless_fe_battery_rcp"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Example Power Link",
+      "multiblock": {
+        "pattern": [
+          [
+            "F___",
+            "0___",
+            "____",
+            "___R"
+          ]
+        ],
+        "mapping": {
+          "F": "extrautilitiesrebirth:furnace_generator",
+          "0": "extrautilitiesrebirth:wireless_fe_battery",
+          "R": "extrautilitiesrebirth:furnace"
+        }
+      },
+      "text": "Power feeds the battery next to the generator. Select the remote machine with a Wrench to link it."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Link a Receiver",
+      "text": "$(li)Right-click an FE receiver with the Wrench to select it.$(li)Right-click the battery with the same Wrench to add the link.$(li)Repeat for additional receivers. The battery shares available energy among loaded, compatible targets."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Manage Links",
+      "text": "To remove a link, select the receiver again, then sneak-right-click the battery. Empty-handed right-click shows stored FE and the link count.$(br2)Keep both ends loaded. Another Wireless FE Battery cannot be the wireless receiver."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:fe_transmitter",
+      "title": "FE Transmitter",
+      "text": "The FE Transmitter is a wired 3,200 FE buffer available in Creative. It exposes an FE port for insertion and extraction. The Wireless FE Battery handles remote links."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/wrench",
+        "extrautilitiesrebirth:power/sky_panels"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:wireless_fe_battery": 0,
+    "extrautilitiesrebirth:fe_transmitter": 5
+  }
+}

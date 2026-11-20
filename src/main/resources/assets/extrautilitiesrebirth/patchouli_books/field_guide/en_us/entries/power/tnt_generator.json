@@ -1,0 +1,31 @@
+{
+  "name": "TNT Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:tnt_generator",
+  "sortnum": 34,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Put TNT in the fuel slot. Each block supplies 200 FE/t for 1,200 ticks at base speed, for 240,000 FE overall. An attached receiver must draw energy to make room after the 100,000 FE buffer fills."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:explosive_generator_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Troubleshooting",
+      "text": "If the display shows zero while TNT is present, switch to Ignore or supply redstone in Signal mode. Make sure the adjacent machine accepts FE on the connected face."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:power/generator_upgrades"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:tnt_generator": 0
+  }
+}

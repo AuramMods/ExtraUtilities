@@ -1,0 +1,19 @@
+{
+  "name": "Frosty Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:frosty_generator_1",
+  "sortnum": 35,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Burns snow, snow blocks, snowballs, regular ice, packed ice, or blue ice. Each item burns for 1,200 ticks at 35 FE/t. The fuel list comes from the forge:frosty_gen_tag item tag."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:frosty_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:frosty_generator_1": 0
+  }
+}

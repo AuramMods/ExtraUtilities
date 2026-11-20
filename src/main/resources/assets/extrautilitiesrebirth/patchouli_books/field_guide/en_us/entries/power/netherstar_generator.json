@@ -1,0 +1,19 @@
+{
+  "name": "Netherstar Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:netherstar_generator",
+  "sortnum": 37,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "One Nether Star burns for 2,400 ticks at up to 100,000 FE/t. Connect a receiver that can take large bursts. A full buffer pauses the burn, so the star lasts longer if output is limited."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:netherstar_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:netherstar_generator": 0
+  }
+}

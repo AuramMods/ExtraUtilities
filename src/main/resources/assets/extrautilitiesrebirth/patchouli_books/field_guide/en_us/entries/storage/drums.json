@@ -1,0 +1,55 @@
+{
+  "name": "Fluid Drums",
+  "category": "extrautilitiesrebirth:storage",
+  "icon": "extrautilitiesrebirth:stone_drum",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "A drum stores one kind of fluid at a time. Right-click with a full container to fill it, or with an empty container to draw fluid. An empty-handed click reports the fluid and volume. One bucket is 1,000 mB."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Capacity by Tier",
+      "text": "$(li)Stone Drum: 16 buckets.$(li)Iron Drum: 256 buckets.$(li)Reinforced Drum: 4,096 buckets.$(li)Bedrock Drum: 65,536 buckets.$(br2)Connect fluid pipes to any face. A comparator reports how full the drum is."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:stone_drum_rcp",
+      "recipe2": "extrautilitiesrebirth:iron_drum_rcp",
+      "title": "Stone and Iron"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:reinforced_drum_rcp",
+      "recipe2": "extrautilitiesrebirth:bedrock_drum_rcp",
+      "title": "Reinforced and Bedrock"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Move a Full Drum",
+      "text": "Mine a filled drum to move it. The dropped item retains its fluid and restores it when placed.$(br2)Read the item tooltip for what it carries. A drum can directly receive from the Ender Thermic Pump if placed on top."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:creative_drum",
+      "title": "Creative Drum",
+      "text": "In Creative, right-click an empty Creative Drum with a filled fluid container to set its sample. Once set, it supplies an unlimited amount of that fluid. Use a fresh drum for a different sample."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:mining/ender_thermic_pump",
+        "extrautilitiesrebirth:power/magma_generator",
+        "extrautilitiesrebirth:storage/trash_cans"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:stone_drum": 1,
+    "extrautilitiesrebirth:iron_drum": 1,
+    "extrautilitiesrebirth:reinforced_drum": 1,
+    "extrautilitiesrebirth:bedrock_drum": 1,
+    "extrautilitiesrebirth:creative_drum": 5
+  }
+}

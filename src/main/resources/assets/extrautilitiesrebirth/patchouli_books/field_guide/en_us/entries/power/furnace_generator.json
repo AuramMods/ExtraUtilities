@@ -1,0 +1,19 @@
+{
+  "name": "Furnace Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:furnace_generator",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Burns any fuel with a positive Forge furnace burn time, including coal and charcoal. It makes 30 FE/t for that fuel’s normal burn duration. The fuel’s usual container remainder is returned."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:furnace_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:furnace_generator": 0
+  }
+}

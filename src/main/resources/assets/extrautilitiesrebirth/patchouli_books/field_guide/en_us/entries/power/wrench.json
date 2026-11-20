@@ -1,0 +1,20 @@
+{
+  "name": "Wrench",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:wrench",
+  "sortnum": 16,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Use a Wrench to configure $(l:extrautilitiesrebirth:power/wireless)Wireless FE Batteries$(/l) and the $(l:extrautilitiesrebirth:power/rainbow_generator)Rainbow Generator$(/l). For wireless power, select the receiver first. For Rainbow power, sneak-right-click the Rainbow core first."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:wrench_rcp",
+      "text": "Using the Wrench on a compatible fluid tank can also report the fluid and amount."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:wrench": 0
+  }
+}

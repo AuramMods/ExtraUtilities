@@ -1,0 +1,19 @@
+{
+  "name": "Redstone Generator",
+  "category": "extrautilitiesrebirth:power",
+  "icon": "extrautilitiesrebirth:redstone_generator",
+  "sortnum": 42,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Redstone dust burns for 100 ticks at 300 FE/t. Use loose dust in the fuel slot. Redstone signals are a separate control selected with the Signal button."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:heated_redstone_generator_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:redstone_generator": 0
+  }
+}
