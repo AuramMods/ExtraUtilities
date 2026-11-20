@@ -1,0 +1,32 @@
+{
+  "name": "Creative Harvest & Sample",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:creative_harvest",
+  "sortnum": 90,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:creative_harvest",
+      "title": "Creative Harvest",
+      "text": "This block stays in place when broken normally in Creative. Sneak while breaking it in Creative to collect one copy. It is available in the Extra Utilities creative tab."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:creative_inv_sample",
+      "title": "Creative Inventory Sample",
+      "text": "Creative Inv Sample is the icon for the Extra Utilities creative tab. You can place and break it like a decorative block."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:storage/creative_chest",
+        "extrautilitiesrebirth:power/creative_energy",
+        "extrautilitiesrebirth:storage/drums"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:creative_harvest": 0,
+    "extrautilitiesrebirth:creative_inv_sample": 1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Angel Block",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:angel_block",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Look into empty space and right-click to place an Angel Block about three blocks away without support. This gives you a starting block for sky builds. You can also place it normally against an existing face."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:angel_block_recipe"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:equipment/golden_feather"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:angel_block": 0
+  }
+}

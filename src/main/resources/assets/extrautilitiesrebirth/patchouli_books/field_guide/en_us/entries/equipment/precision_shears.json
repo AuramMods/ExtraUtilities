@@ -1,0 +1,19 @@
+{
+  "name": "Precision Shears",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:precision_shears",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Sneak-right-click a block to put it directly into your inventory. The block must be collectible with a stone-tier tool, have an item form, and have no block entity. Leave room in your inventory for the recovered block."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:precision_shears_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:precision_shears": 0
+  }
+}

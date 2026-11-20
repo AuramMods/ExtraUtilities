@@ -1,0 +1,19 @@
+{
+  "name": "Destruction Pickaxe",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:destruction_pickaxe",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Destruction Pickaxe breaks stone, cobblestone, deepslate, and cobbled deepslate quickly and voids their drops. It is deliberately slow on everything else. Other blocks, including ores, keep their normal loot."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:destrunction_pickaxe_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:destruction_pickaxe": 0
+  }
+}

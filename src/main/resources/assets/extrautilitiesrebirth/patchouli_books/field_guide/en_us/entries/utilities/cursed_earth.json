@@ -1,0 +1,34 @@
+{
+  "name": "Drop of Evil & Cursed Earth",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:dropof_evil",
+  "sortnum": 60,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:dropof_evil",
+      "text": "Wither Skeletons can drop a Drop of Evil when mob loot is enabled. The base chance is 10%, plus 10 percentage points per Looting level. Right-click a grass block with the drop to turn it into Cursed Earth."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Cursed Earth",
+      "text": "In darkness, Cursed Earth spreads to nearby exposed grass or dirt and can spawn creepers, blazes, spiders, or skeletons. Spawning stops at eight nearby monsters. Give the mobs room and keep the farm lit while building."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Control the Farm",
+      "text": "Light level 9 or above stops spreading and spawning. Bright daylight with a clear sky can turn Cursed Earth back into ordinary dirt. Peaceful difficulty and disabling mob spawning also stop the monster spawns."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:utilities/spikes",
+        "extrautilitiesrebirth:utilities/chandelier"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:dropof_evil": 0,
+    "extrautilitiesrebirth:cursed_earth": 1
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "Using This Guide",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:wrench",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Combine a book, redstone dust, and cyan dye to craft this guide. It is also in the Extra Utilities creative tab. Search from the book index for an item or entry name. Shift-click a linked item icon to jump to what covers it."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:field_guide"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power",
+        "extrautilitiesrebirth:machines/machine_block",
+        "extrautilitiesrebirth:mining/ender_quarry"
+      ],
+      "title": "Where to Start"
+    }
+  ]
+}

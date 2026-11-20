@@ -35,7 +35,7 @@ This port includes a large set of utility-focused content inspired by older Extr
 - `170` total registered items (`130` block items + `40` standalone items).
 - `46` block entities.
 - `12` GUI menus/screens.
-- `155` crafting recipes.
+- `155` crafting and smelting recipes, plus the optional Patchouli guide recipe.
 - End worldgen integration for Ender Lily Endstone (configured + placed feature + biome modifier).
 
 ## Feature Highlights
@@ -104,8 +104,13 @@ Includes many generator types such as:
 
 With Patchouli installed, combine a book, redstone dust, and cyan dye in any
 crafting grid to make the Extra Utilities Guide. It is also in the Extra
-Utilities creative tab. The first entry covers crafting and operating the
-original Ender Quarry.
+Utilities creative tab. Eight chapters cover progression from your first
+generator to the original Ender Quarry, with live recipes, diagrams, and
+item lookup. The [coverage checklist](docs/FIELD_GUIDE_COVERAGE.md) records
+where each registered item, block, and recipe is explained.
+
+When editing the book, run `python3 scripts/check_field_guide.py` to verify
+coverage, recipe page types, and internal references.
 
 ## Setting up the Ender Quarry
 

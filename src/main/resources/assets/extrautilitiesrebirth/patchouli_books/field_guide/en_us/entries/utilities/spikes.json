@@ -1,0 +1,53 @@
+{
+  "name": "Mob Spikes",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:iron_spike",
+  "sortnum": 70,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Spikes hurt living creatures that touch them. Wooden Spikes can weaken a mob but leave it at half a heart. Stone and Iron Spikes can finish it. Use the material recipes to choose the right tier for your farm."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:wood_spike_rcp",
+      "recipe2": "extrautilitiesrebirth:stone_spike_rcp",
+      "title": "Wood and Stone"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:iron_spike_rcp",
+      "recipe2": "extrautilitiesrebirth:gold_spike_rcp",
+      "title": "Iron and Gold"
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:diamond_spike_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Experience and Mob Loot",
+      "text": "Gold Spikes cause eligible mobs to drop experience. Diamond Spikes count as a player kill for special mob loot and suppress experience. Select the tier by what you want to collect."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:creative_spikes",
+      "title": "Creative Spikes",
+      "text": "Creative Spikes deal very high damage on contact. This tier is available from Creative."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:utilities/cursed_earth"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:wood_spike": 0,
+    "extrautilitiesrebirth:stone_spike": 1,
+    "extrautilitiesrebirth:iron_spike": 2,
+    "extrautilitiesrebirth:gold_spike": 4,
+    "extrautilitiesrebirth:diamond_spike": 4,
+    "extrautilitiesrebirth:creative_spikes": 5
+  }
+}

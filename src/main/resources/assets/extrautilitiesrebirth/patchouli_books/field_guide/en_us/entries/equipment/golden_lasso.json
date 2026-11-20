@@ -1,0 +1,24 @@
+{
+  "name": "Golden Lasso",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:golden_lasso",
+  "sortnum": 70,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Right-click a passive animal or villager with an empty Golden Lasso to capture it. Carry the filled lasso to a clear spot and right-click a block to release the mob on the adjacent face. Names and mob data are preserved."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:golden_lasso_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Capture and Release",
+      "text": "Hostile mobs and mobs with a target are rejected. Remove leads and passengers, stop trading with villagers, and use your own tamed animals.$(br2)If release is blocked or protected, the lasso stays filled. A filled lasso holds one mob."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:golden_lasso": 0
+  }
+}

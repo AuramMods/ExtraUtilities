@@ -1,0 +1,31 @@
+{
+  "name": "Angel Ring & Flying Squid Ring",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:angel_ring",
+  "sortnum": 90,
+  "pages": [
+    {
+      "type": "patchouli:link",
+      "title": "Angel Ring",
+      "text": "The Angel Ring item in this mod’s creative tab opens a clickable chat link. Flight is provided by DenisMasterHerobrine’s separate Angel Ring mod when installed. Use that mod’s ring for its flight mechanics.",
+      "url": "https://www.curseforge.com/minecraft/mc-mods/angel-ring",
+      "link_text": "Angel Ring Project"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:ring_of_the_flying_squid",
+      "title": "Flying Squid Ring",
+      "text": "This legacy ring is available in Creative. It has no bundled recipe or flight mechanic in this port. For movement or fall protection, use the Chicken Wing Rings."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:equipment/wing_rings"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:angel_ring": 0,
+    "extrautilitiesrebirth:ring_of_the_flying_squid": 1
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "Kikoku & Etheric Sword",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:kikoku",
+  "sortnum": 60,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Both blades add an armor-piercing effect during the original hit. Kikoku adds four points of piercing damage. The Etheric Sword adds one point of piercing damage per four armor points on its target."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:kikoku_rcp",
+      "recipe2": "extrautilitiesrebirth:etheric_sword_rcp",
+      "title": "Armor-Piercing Blades"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:materials/unstable_metals",
+        "extrautilitiesrebirth:materials/enchanted_metals"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:kikoku": 0,
+    "extrautilitiesrebirth:etheric_sword": 0
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "Chicken Wing Rings",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:chicken_wing_ring",
+  "sortnum": 80,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Carry the Chicken Wing Ring in your inventory or offhand for 10% faster movement. It also boosts jumps and spends one durability on each boosted jump. Carrying duplicates does not stack the effect."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:chicken_wing_ring_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Advanced Wing Ring",
+      "text": "The Advanced Chicken Wing Ring absorbs fall damage while carried or held offhand. It spends one durability when it prevents damage. Its effect is separate from the basic ring’s movement boost."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:advanced_chicken_wing_ring_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:equipment/legacy_rings",
+        "extrautilitiesrebirth:equipment/golden_feather"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:chicken_wing_ring": 0,
+    "extrautilitiesrebirth:advanced_chicken_wing_ring": 2
+  }
+}

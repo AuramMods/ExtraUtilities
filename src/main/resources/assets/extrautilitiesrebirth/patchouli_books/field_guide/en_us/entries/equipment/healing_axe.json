@@ -1,0 +1,24 @@
+{
+  "name": "Healing Axe",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:healing_axe",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Use the Healing Axe on a living target as a normal attack to give it some of your health. It can transfer up to one heart from you per hit and will leave you at least half a heart. The healing effect harms undead instead."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:healing_axe_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "While Held",
+      "text": "Hold the axe in your main hand or offhand to restore one hunger point every two seconds while hungry. A successful health transfer uses durability."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:healing_axe": 0
+  }
+}

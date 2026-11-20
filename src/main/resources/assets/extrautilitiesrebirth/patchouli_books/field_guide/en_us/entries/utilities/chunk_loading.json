@@ -1,0 +1,31 @@
+{
+  "name": "Chunk Loading Wand",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:chunk_loading_wand",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place the Chunk Loading Wand as a block in the chunk that should keep ticking. It keeps its own 16×16 chunk loaded. A setup crossing chunk borders can need more than one."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:chunk_loading_wand_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Manage Loaded Chunks",
+      "text": "The ticket belongs to the placed wand and persists across restarts. Break the wand to release its ticket. If several wands cover the same chunk, the chunk can stay loaded until the last is removed."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/wireless",
+        "extrautilitiesrebirth:mining/ender_thermic_pump"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:chunk_loading_wand": 0
+  }
+}

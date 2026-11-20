@@ -1,0 +1,26 @@
+{
+  "name": "Magical Apple",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:magical_apple",
+  "sortnum": 100,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Magical Apple restores 10 hunger points. Craft eight at a time with Magical Wood or process sixteen apples and four lapis in the $(l:extrautilitiesrebirth:machines/enchanter)Enchanter$(/l) for 16,000 FE."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:magical_apple_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:building/timber",
+        "extrautilitiesrebirth:machines/enchanter"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:magical_apple": 0
+  }
+}

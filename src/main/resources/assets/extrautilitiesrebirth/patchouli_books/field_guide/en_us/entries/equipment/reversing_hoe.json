@@ -1,0 +1,19 @@
+{
+  "name": "Reversing Hoe",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:reversing_hoe",
+  "sortnum": 50,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Right-click a growing crop to turn it back one age. The Reversing Hoe also turns dirt into grass blocks and cobblestone into stone. On other surfaces it behaves like a regular hoe. Each reversal costs one durability."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:reversing_hoe_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:reversing_hoe": 0
+  }
+}

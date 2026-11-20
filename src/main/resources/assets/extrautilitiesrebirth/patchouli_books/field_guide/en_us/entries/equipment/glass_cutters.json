@@ -1,0 +1,35 @@
+{
+  "name": "Glass Cutters",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:glass_cutter",
+  "sortnum": 0,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Right-click glass or a pane to recover the same block. Both cutters work on vanilla and modded blocks tagged as glass or glass panes. Protected blocks still follow normal break permissions."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:glass_cutter_rcp",
+      "recipe2": "extrautilitiesrebirth:reinforced_glass_cutter_rcp",
+      "title": "Ordinary and Reinforced"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Choose a Cutter",
+      "text": "The ordinary cutter loses one durability and has a half-second cooldown. The Reinforced Glass Cutter has no cooldown or wear when cutting placed glass.$(br2)Both can make $(l:extrautilitiesrebirth:materials/ender_parts)Ender Shards$(/l) in a crafting grid."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:building/decorative_glass",
+        "extrautilitiesrebirth:building/selective_glass",
+        "extrautilitiesrebirth:building/utility_glass"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:glass_cutter": 0,
+    "extrautilitiesrebirth:reinforced_glass_cutter": 2
+  }
+}

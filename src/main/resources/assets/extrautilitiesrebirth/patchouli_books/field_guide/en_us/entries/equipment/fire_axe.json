@@ -1,0 +1,19 @@
+{
+  "name": "Fire Axe",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:fire_axe",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Break one log with the Fire Axe to harvest connected logs, including touching corners. Leaves stay in place. It stops after 512 extra logs or at unloaded areas. Protected logs are respected. Avoid using it on connected log buildings you want to keep."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:fire_axe_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:fire_axe": 0
+  }
+}

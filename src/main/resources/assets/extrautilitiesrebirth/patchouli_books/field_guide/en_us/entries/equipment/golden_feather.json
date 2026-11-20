@@ -1,0 +1,26 @@
+{
+  "name": "Golden Feather",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:golden_feather",
+  "sortnum": 81,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Craft the Golden Feather as a component for Wing Rings, Angel Blocks, and the Gold Chest. Carrying the feather by itself does not grant the ring effects."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:golden_feather_rcp"
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:equipment/wing_rings",
+        "extrautilitiesrebirth:utilities/angel_block"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:golden_feather": 0
+  }
+}

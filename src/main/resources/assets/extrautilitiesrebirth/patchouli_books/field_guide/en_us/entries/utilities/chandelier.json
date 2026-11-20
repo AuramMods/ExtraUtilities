@@ -1,0 +1,38 @@
+{
+  "name": "Chandelier",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:chandelier",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Hang a Chandelier under a solid ceiling. It gives light level 15 and blocks natural hostile mob spawns within 16 blocks. It does not remove existing mobs. Place additional chandeliers to cover a larger room."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:chandilier_rcp"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Ceiling Mount",
+      "multiblock": {
+        "pattern": [
+          [
+            "S"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "mapping": {
+          "S": "minecraft:stone",
+          "0": "extrautilitiesrebirth:chandelier"
+        }
+      },
+      "text": "Hang it from the underside of a solid block."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:chandelier": 0
+  }
+}

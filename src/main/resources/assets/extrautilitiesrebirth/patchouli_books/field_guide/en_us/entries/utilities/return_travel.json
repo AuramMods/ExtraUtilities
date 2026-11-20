@@ -1,0 +1,34 @@
+{
+  "name": "Portal & Portable Globe",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:portable_globe",
+  "sortnum": 50,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place and right-click an Overworld Portal in the Overworld to save the spot just above it. Right-click a portal you place in another dimension to return. The return point is per player and shared with the Portable Globe."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:overworld_portal_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Portable Globe",
+      "text": "Right-click the Portable Globe in the Overworld to save where you are standing. Use it from another dimension to return there without placing a block. A successful return starts a ten-minute Globe cooldown."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:portable_globe_rcp"
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Safe Landing",
+      "text": "The return point keeps its full height, including below zero. If it is unsafe, the portal or globe tries the surface above it. With no safe saved landing, it falls back to Overworld spawn."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:overworld_portal": 0,
+    "extrautilitiesrebirth:portable_globe": 2
+  }
+}

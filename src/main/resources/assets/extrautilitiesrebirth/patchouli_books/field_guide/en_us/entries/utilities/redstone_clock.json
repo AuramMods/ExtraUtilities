@@ -1,0 +1,47 @@
+{
+  "name": "Redstone Clock",
+  "category": "extrautilitiesrebirth:utilities",
+  "icon": "extrautilitiesrebirth:redstone_clock",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Redstone Clock alternates between its two block states every 18 game ticks. Place a comparator against it to read the pulse at signal strength 15 or 0. It saves its current phase."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:redstone_clock_rcp"
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Read the Clock",
+      "multiblock": {
+        "pattern": [
+          [
+            "0C"
+          ]
+        ],
+        "mapping": {
+          "0": "extrautilitiesrebirth:redstone_clock",
+          "C": "minecraft:comparator[facing=north]"
+        }
+      },
+      "text": "Point the comparator so its rear touches the clock. Run redstone dust from the output."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "On and Off States",
+      "text": "The off-state block is part of the same clock and is also exposed in Creative. The placed clock alternates either way. In Signal mode a fuel generator can use this pulse to pause and resume its burn."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:power/first_power"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:redstone_clock": 0,
+    "extrautilitiesrebirth:redstone_clock_off": 3
+  }
+}

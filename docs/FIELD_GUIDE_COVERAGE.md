@@ -9,13 +9,13 @@ fuel rules, drops, world generation, and rituals are described in their
 respective entries. Those acquisition paths are separate from the
 datapack recipe IDs in the second table.
 
-## Registered content (136/170)
+## Registered content (170/170)
 
 | Status | Item or block | Registry ID | Guide |
 | --- | --- | --- | --- |
-| Open | Advanced Chicken Wing Ring | `advanced_chicken_wing_ring` |  |
-| Open | Angel Block | `angel_block` |  |
-| Open | Angel Ring | `angel_ring` |  |
+| ✓ | Advanced Chicken Wing Ring | `advanced_chicken_wing_ring` | Chicken Wing Rings (p. 3) |
+| ✓ | Angel Block | `angel_block` | Angel Block (p. 1) |
+| ✓ | Angel Ring | `angel_ring` | Angel Ring & Flying Squid Ring (p. 1) |
 | ✓ | Bedrockium Bricks | `bedrock_bricks` | Bedrockium (p. 4) |
 | ✓ | Bedrockium Cobblestone | `bedrock_cobblestone` | Bedrockium (p. 4) |
 | ✓ | Bedrock Drum | `bedrock_drum` | Fluid Drums (p. 2) |
@@ -25,10 +25,10 @@ datapack recipe IDs in the second table.
 | ✓ | Block of Enchaned Metal | `block_of_enchaned_metal` | Enchanted & Evil Metals (p. 2) |
 | ✓ | Block of Evil Infused Iron | `block_of_evil_infused_iron` | Enchanted & Evil Metals (p. 4) |
 | ✓ | Border Stone | `border_stone` | Stonework (p. 2) |
-| Open | Chandelier | `chandelier` |  |
-| Open | Chicken Wing Ring | `chicken_wing_ring` |  |
+| ✓ | Chandelier | `chandelier` | Chandelier (p. 1) |
+| ✓ | Chicken Wing Ring | `chicken_wing_ring` | Chicken Wing Rings (p. 1) |
 | ✓ | Chiseled Stone Bricks | `chisled_stone_bricks` | Stonework (p. 3) |
-| Open | Chunk Loading Wand | `chunk_loading_wand` |  |
+| ✓ | Chunk Loading Wand | `chunk_loading_wand` | Chunk Loading Wand (p. 1) |
 | ✓ | Clear Glass | `clean_glass` | Decorative Glass (p. 2) |
 | ✓ | Compressed Cobblestone | `compressed_cobblestone` | Compressed Cobblestone (p. 3) |
 | ✓ | Compressed Dirt | `compressed_dirt` | Compressed Dirt (p. 3) |
@@ -37,26 +37,26 @@ datapack recipe IDs in the second table.
 | ✓ | Creative Chest | `creative_chest` | Creative Chest (p. 1) |
 | ✓ | Creative Drum | `creative_drum` | Fluid Drums (p. 6) |
 | ✓ | Creative Energy Storage | `creative_energy_storage` | Creative Energy Storage (p. 1) |
-| Open | Creative Harvest | `creative_harvest` |  |
-| Open | Creative Inv Sample | `creative_inv_sample` |  |
-| Open | Creative Spikes | `creative_spikes` |  |
+| ✓ | Creative Harvest | `creative_harvest` | Creative Harvest & Sample (p. 1) |
+| ✓ | Creative Inv Sample | `creative_inv_sample` | Creative Harvest & Sample (p. 2) |
+| ✓ | Creative Spikes | `creative_spikes` | Mob Spikes (p. 6) |
 | ✓ | Creeper Glass | `creeper_glass` | Decorative Glass (p. 5) |
 | ✓ | Culinary Generator | `culinary_generator` | Culinary Generator (p. 1) |
-| Open | Cursed Earth | `cursed_earth` |  |
+| ✓ | Cursed Earth | `cursed_earth` | Drop of Evil & Cursed Earth (p. 2) |
 | ✓ | Dark Ethereal Glass | `dark_ethereal_glass` | Selective Glass (p. 3) |
 | ✓ | Dark Glass | `dark_glass` | Utility Glass (p. 1) |
 | ✓ | Death Generator | `death_generator` | Death Generator (p. 1) |
 | ✓ | Demon Ingot | `demon_ingot` | Demon Metal (p. 1) |
-| Open | Destruction Pickaxe | `destruction_pickaxe` |  |
+| ✓ | Destruction Pickaxe | `destruction_pickaxe` | Destruction Pickaxe (p. 1) |
 | ✓ | Devision Sigil [Stable] | `devision_sigil` | Division Sigil & Unstable Metal (p. 1) |
 | ✓ | Diamond Edged Computational Matrix | `diamond_edged_computational_matrix` | Ender Components (p. 5) |
-| Open | Diamond Spike | `diamond_spike` |  |
+| ✓ | Diamond Spike | `diamond_spike` | Mob Spikes (p. 5) |
 | ✓ | Disenchantment Generator | `disenchantment_generator` | Disenchantment Generator (p. 1) |
 | ✓ | Compressed Cobblestone | `double_compressed_cobblestone` | Compressed Cobblestone (p. 4) |
 | ✓ | Double Compressed Dirt | `double_compressed_dirt` | Compressed Dirt (p. 4) |
 | ✓ | Double Compressed Gravel | `double_compressed_gravel` | Compressed Gravel (p. 4) |
 | ✓ | Double Compressed Sand | `double_compressed_sand` | Compressed Sand (p. 4) |
-| Open | Drop of Evil | `dropof_evil` |  |
+| ✓ | Drop of Evil | `dropof_evil` | Drop of Evil & Cursed Earth (p. 1) |
 | ✓ | Edged Glass | `edged_glass` | Decorative Glass (p. 3) |
 | ✓ | Edged Stone Bricks | `edged_stone_bricks` | Stonework (p. 3) |
 | ✓ | Enchanted Ingot | `enchanted_ingot` | Enchanted & Evil Metals (p. 1) |
@@ -84,40 +84,40 @@ datapack recipe IDs in the second table.
 | ✓ | Ender Quarry World-Hole Upgrade | `ender_quarry_world_hole_upgrade` | Quarry Upgrades (p. 4) |
 | ✓ | Ender Shard | `ender_shard` | Ender Components (p. 1) |
 | ✓ | Ender Thermic Pump | `ender_thermic_pump` | Ender Thermic Pump (p. 2) |
-| Open | Erosion Shovel | `erosion_shovel` |  |
+| ✓ | Erosion Shovel | `erosion_shovel` | Erosion Shovel (p. 1) |
 | ✓ | Ethereal Glass | `ethereal_glass` | Selective Glass (p. 1) |
-| Open | Etheric Sword | `etheric_sword` |  |
+| ✓ | Etheric Sword | `etheric_sword` | Kikoku & Etheric Sword (p. 1) |
 | ✓ | Evil Infused Iron Ingot | `evil_infused_iron_ingot` | Enchanted & Evil Metals (p. 3) |
 | ✓ | Eye of Redstone | `eye_of_redstone` | Redstone Components (p. 4) |
 | ✓ | Fe Transmitter | `fe_transmitter` | Wireless FE Battery (p. 6) |
 | ✓ | Ferrous Juniper Log | `ferrous_juniper_log` | Magical & Ferrous Wood (p. 3) |
 | ✓ | Ferrous Juniper Planks | `ferrous_juniper_planks` | Magical & Ferrous Wood (p. 3) |
-| Open | Fire Axe | `fire_axe` |  |
+| ✓ | Fire Axe | `fire_axe` | Fire Axe (p. 1) |
 | ✓ | Frosty Generator | `frosty_generator_1` | Frosty Generator (p. 1) |
 | ✓ | Furnace | `furnace` | Powered Furnace (p. 1) |
 | ✓ | Furnace Generator | `furnace_generator` | Furnace Generator (p. 1) |
 | ✓ | Glass Bricks | `glass_bricks` | Decorative Glass (p. 4) |
-| Open | Glass Cutter | `glass_cutter` |  |
+| ✓ | Glass Cutter | `glass_cutter` | Glass Cutters (p. 1) |
 | ✓ | Glowstone Glass | `glowstone_glass` | Utility Glass (p. 1) |
 | ✓ | Gold Chest | `gold_chest` | Gold Chest (p. 1) |
-| Open | Gold Spike | `gold_spike` |  |
+| ✓ | Gold Spike | `gold_spike` | Mob Spikes (p. 5) |
 | ✓ | Golden Bag Of Holding | `golden_bag_of_holding` | Golden Bag of Holding (p. 1) |
 | ✓ | Golden Edged Glass | `golden_edged_glass` | Decorative Glass (p. 3) |
-| Open | Golden Feather | `golden_feather` |  |
-| Open | Golden Lasso | `golden_lasso` |  |
+| ✓ | Golden Feather | `golden_feather` | Golden Feather (p. 1) |
+| ✓ | Golden Lasso | `golden_lasso` | Golden Lasso (p. 1) |
 | ✓ | Halitosis Generator | `halitosis_generator` | Halitosis Generator (p. 1) |
-| Open | Healing Axe | `healing_axe` |  |
+| ✓ | Healing Axe | `healing_axe` | Healing Axe (p. 1) |
 | ✓ | Heart Glass | `heart_glass` | Decorative Glass (p. 5) |
 | ✓ | Ineffable Glass | `ineffable_glass` | Selective Glass (p. 1) |
 | ✓ | Ineffable Inverted Glass | `ineffable_inverted_glass` | Selective Glass (p. 1) |
 | ✓ | Inventory Interface | `inventory_interface` | Inventory Interface (p. 1) |
 | ✓ | Iron Drum | `iron_drum` | Fluid Drums (p. 2) |
-| Open | Iron Spike | `iron_spike` |  |
-| Open | Kikoku | `kikoku` |  |
+| ✓ | Iron Spike | `iron_spike` | Mob Spikes (p. 3) |
+| ✓ | Kikoku | `kikoku` | Kikoku & Etheric Sword (p. 1) |
 | ✓ | Lunar Panel | `lunar_panel` | Solar and Lunar Panels (p. 1) |
 | ✓ | Lunar Reactive Dust | `lunar_reactive_dust` | Resonator (p. 4) |
 | ✓ | Machine Block | `machine_block` | Machine Block (p. 1) |
-| Open | Magical Apple | `magical_apple` |  |
+| ✓ | Magical Apple | `magical_apple` | Magical Apple (p. 1) |
 | ✓ | Magical Planks | `magical_planks` | Magical & Ferrous Wood (p. 2) |
 | ✓ | Magical Wood | `magical_wood` | Magical & Ferrous Wood (p. 1) |
 | ✓ | Magma Generator | `magma_generator` | Magma Generator (p. 1) |
@@ -129,12 +129,12 @@ datapack recipe IDs in the second table.
 | ✓ | Octuple Compressed Cobblestone | `octuple_compressed_cobblestone` | Compressed Cobblestone (p. 10) |
 | ✓ | Opinium Core Amazing | `opinium_core_amazing` | Amazing Opinium Core (p. 1) |
 | ✓ | Overclocked Generator | `overclocked_generator` | Overclocked Generator (p. 1) |
-| Open | Overworld Portal | `overworld_portal` |  |
+| ✓ | Overworld Portal | `overworld_portal` | Portal & Portable Globe (p. 1) |
 | ✓ | Pink Generator | `pink_generator` | Pink Generator (p. 1) |
 | ✓ | Polished Stone | `polished_stone` | Stonework (p. 2) |
-| Open | Portable Globe | `portable_globe` |  |
+| ✓ | Portable Globe | `portable_globe` | Portal & Portable Globe (p. 3) |
 | ✓ | Potion Generator | `potion_generator_1` | Potion Generator (p. 1) |
-| Open | Precision Shears | `precision_shears` |  |
+| ✓ | Precision Shears | `precision_shears` | Precision Shears (p. 1) |
 | ✓ | Quadruple Compressed Cobblestone | `quadruple_compressed_cobblestone` | Compressed Cobblestone (p. 6) |
 | ✓ | Quadruple Compressed Dirt | `quadruple_compressed_dirt` | Compressed Dirt (p. 6) |
 | ✓ | Quantum Quarry | `quantum_quarry` | Quantum Quarry (WIP) (p. 1) |
@@ -146,16 +146,16 @@ datapack recipe IDs in the second table.
 | ✓ | Rainbow Stone | `rainbow_stone` | Stonework (p. 4) |
 | ✓ | Rainbow Generator (top half) | `rainmbow_generator_top` | Rainbow Generator (p. 2) |
 | ✓ | Red Coal | `red_coal` | Resonator (p. 4) |
-| Open | Redstone Clock | `redstone_clock` |  |
-| Open | Redstone Clock | `redstone_clock_off` |  |
+| ✓ | Redstone Clock | `redstone_clock` | Redstone Clock (p. 1) |
+| ✓ | Redstone Clock | `redstone_clock_off` | Redstone Clock (p. 4) |
 | ✓ | Redstone Crystal | `redstone_crystal` | Redstone Components (p. 1) |
 | ✓ | Redstone Generator | `redstone_generator` | Redstone Generator (p. 1) |
 | ✓ | Reinforced Dark Glass | `reinforced_dark_glass` | Utility Glass (p. 1) |
 | ✓ | Reinforced Drum | `reinforced_drum` | Fluid Drums (p. 2) |
-| Open | Reinforced Glass Cutter | `reinforced_glass_cutter` |  |
+| ✓ | Reinforced Glass Cutter | `reinforced_glass_cutter` | Glass Cutters (p. 3) |
 | ✓ | Resonator | `resonator` | Resonator (p. 1) |
-| Open | Reversing Hoe | `reversing_hoe` |  |
-| Open | Ring Of The Flying Squid | `ring_of_the_flying_squid` |  |
+| ✓ | Reversing Hoe | `reversing_hoe` | Reversing Hoe (p. 1) |
+| ✓ | Ring Of The Flying Squid | `ring_of_the_flying_squid` | Angel Ring & Flying Squid Ring (p. 2) |
 | ✓ | Sandy Glass | `sandy_glass` | Utility Glass (p. 1) |
 | ✓ | Septuple Compressed Cobblestone | `septuple_compressed_cobblestone` | Compressed Cobblestone (p. 9) |
 | ✓ | Sextuple Compressed Cobblestone | `sextuple_compressed_cobblestone` | Compressed Cobblestone (p. 8) |
@@ -165,7 +165,7 @@ datapack recipe IDs in the second table.
 | ✓ | Speed Upgrade | `speed_upgrade` | Generator Speed Upgrades (p. 2) |
 | ✓ | Square Glass | `square_glass` | Decorative Glass (p. 4) |
 | ✓ | Stone Drum | `stone_drum` | Fluid Drums (p. 2) |
-| Open | Stone Spike | `stone_spike` |  |
+| ✓ | Stone Spike | `stone_spike` | Mob Spikes (p. 2) |
 | ✓ | Stoneburnt | `stoneburnt` | Stonework (p. 4) |
 | ✓ | Super Speed Upgrade | `super_speed_upgrade` | Generator Speed Upgrades (p. 4) |
 | ✓ | Survival Generator | `survival_generator` | Survival Generator (p. 1) |
@@ -181,15 +181,15 @@ datapack recipe IDs in the second table.
 | ✓ | Upgrade Base | `upgrade_base` | Resonator (p. 4) |
 | ✓ | Wireless FE Battery | `wireless_fe_battery` | Wireless FE Battery (p. 1) |
 | ✓ | Wireless RF Heating Coil | `wireless_rf_heating_coil` | Resonator (p. 5) |
-| Open | Wood Spike | `wood_spike` |  |
+| ✓ | Wood Spike | `wood_spike` | Mob Spikes (p. 1) |
 | ✓ | Wrench | `wrench` | Wrench (p. 1) |
 
-## Datapack recipes (129/156)
+## Datapack recipes (156/156)
 
 | Status | Recipe ID | Guide |
 | --- | --- | --- |
-| Open | `advanced_chicken_wing_ring_rcp` |  |
-| Open | `angel_block_recipe` |  |
+| ✓ | `advanced_chicken_wing_ring_rcp` | Chicken Wing Rings (p. 4) |
+| ✓ | `angel_block_recipe` | Angel Block (p. 2) |
 | ✓ | `bedingot_1_rcp` | Bedrockium (p. 6) |
 | ✓ | `bedingot_2_rcp` | Bedrockium (p. 6) |
 | ✓ | `bedingot_3_rcp` | Bedrockium (p. 7) |
@@ -201,10 +201,10 @@ datapack recipe IDs in the second table.
 | ✓ | `block_of_enchanted_metal_rcp` | Enchanted & Evil Metals (p. 2) |
 | ✓ | `block_of_enchanted_metal_reverse_rcp` | Enchanted & Evil Metals (p. 2) |
 | ✓ | `border_stone_rcp` | Stonework (p. 2) |
-| Open | `chandilier_rcp` |  |
-| Open | `chicken_wing_ring_rcp` |  |
+| ✓ | `chandilier_rcp` | Chandelier (p. 2) |
+| ✓ | `chicken_wing_ring_rcp` | Chicken Wing Rings (p. 2) |
 | ✓ | `chisled_stone_rcp` | Stonework (p. 3) |
-| Open | `chunk_loading_wand_rcp` |  |
+| ✓ | `chunk_loading_wand_rcp` | Chunk Loading Wand (p. 2) |
 | ✓ | `clear_glass_rcp` | Decorative Glass (p. 2) |
 | ✓ | `com_cob_1_rcp` | Compressed Cobblestone (p. 3) |
 | ✓ | `com_cob_1_rev_rcp` | Compressed Cobblestone (p. 3) |
@@ -246,8 +246,8 @@ datapack recipe IDs in the second table.
 | ✓ | `decmrcp` | Ender Components (p. 5) |
 | ✓ | `demon_metal_rcp` | Demon Metal (p. 3) |
 | ✓ | `deom_block_reverse_rcp` | Demon Metal (p. 3) |
-| Open | `destrunction_pickaxe_rcp` |  |
-| Open | `diamond_spike_rcp` |  |
+| ✓ | `destrunction_pickaxe_rcp` | Destruction Pickaxe (p. 2) |
+| ✓ | `diamond_spike_rcp` | Mob Spikes (p. 4) |
 | ✓ | `disenchantment_generator_rcp` | Disenchantment Generator (p. 2) |
 | ✓ | `edged_glass_rcp` | Decorative Glass (p. 3) |
 | ✓ | `edged_stone_bricks_rcp` | Stonework (p. 3) |
@@ -262,40 +262,40 @@ datapack recipe IDs in the second table.
 | ✓ | `ender_shard_2_rcp` | Ender Components (p. 2) |
 | ✓ | `ender_shard_rcp` | Ender Components (p. 2) |
 | ✓ | `ender_thermic_pump_rcp` | Ender Thermic Pump (p. 2) |
-| Open | `erosion_shovel_rcp` |  |
+| ✓ | `erosion_shovel_rcp` | Erosion Shovel (p. 2) |
 | ✓ | `ethereal_glass_rcp` | Selective Glass (p. 2) |
-| Open | `etheric_sword_rcp` |  |
+| ✓ | `etheric_sword_rcp` | Kikoku & Etheric Sword (p. 2) |
 | ✓ | `evil_block_reverse_rcp` | Enchanted & Evil Metals (p. 4) |
 | ✓ | `evil_iron_rcp` | Enchanted & Evil Metals (p. 4) |
 | ✓ | `explosive_generator_rcp` | TNT Generator (p. 2) |
 | ✓ | `eyeof_redstone_rcp` | Redstone Components (p. 4) |
-| Open | `field_guide` |  |
-| Open | `fire_axe_rcp` |  |
+| ✓ | `field_guide` | Using This Guide (p. 2) |
+| ✓ | `fire_axe_rcp` | Fire Axe (p. 2) |
 | ✓ | `fluid_trash_rcp` | Trash Cans (p. 4) |
 | ✓ | `frosty_generator_rcp` | Frosty Generator (p. 2) |
 | ✓ | `furnace_generator_rcp` | Furnace Generator (p. 2) |
 | ✓ | `furnace_rcp` | Powered Furnace (p. 2) |
 | ✓ | `glass_bricks_rcp` | Decorative Glass (p. 4) |
-| Open | `glass_cutter_rcp` |  |
+| ✓ | `glass_cutter_rcp` | Glass Cutters (p. 2) |
 | ✓ | `glow_stone_glass_rcp` | Utility Glass (p. 3) |
 | ✓ | `gold_chest_rcp` | Gold Chest (p. 2) |
-| Open | `gold_spike_rcp` |  |
+| ✓ | `gold_spike_rcp` | Mob Spikes (p. 3) |
 | ✓ | `golden_bag_rcp` | Golden Bag of Holding (p. 2) |
 | ✓ | `golden_edged_glass_rcp` | Decorative Glass (p. 3) |
-| Open | `golden_feather_rcp` |  |
-| Open | `golden_lasso_rcp` |  |
+| ✓ | `golden_feather_rcp` | Golden Feather (p. 2) |
+| ✓ | `golden_lasso_rcp` | Golden Lasso (p. 2) |
 | ✓ | `halitosis_generator_rcp` | Halitosis Generator (p. 2) |
-| Open | `healing_axe_rcp` |  |
+| ✓ | `healing_axe_rcp` | Healing Axe (p. 2) |
 | ✓ | `heart_glass_rcp` | Decorative Glass (p. 5) |
 | ✓ | `heated_redstone_generator_rcp` | Redstone Generator (p. 2) |
 | ✓ | `ineffable_glass_rcp` | Selective Glass (p. 4) |
 | ✓ | `ineffable_inverted_glass_rcp` | Selective Glass (p. 4) |
 | ✓ | `iron_drum_rcp` | Fluid Drums (p. 3) |
-| Open | `iron_spike_rcp` |  |
-| Open | `kikoku_rcp` |  |
+| ✓ | `iron_spike_rcp` | Mob Spikes (p. 3) |
+| ✓ | `kikoku_rcp` | Kikoku & Etheric Sword (p. 2) |
 | ✓ | `lunar_panel_rcp` | Solar and Lunar Panels (p. 2) |
 | ✓ | `machine_block_rcp` | Machine Block (p. 2) |
-| Open | `magical_apple_rcp` |  |
+| ✓ | `magical_apple_rcp` | Magical Apple (p. 2) |
 | ✓ | `magical_planks_rcp` | Magical & Ferrous Wood (p. 2) |
 | ✓ | `magical_wood_rcp` | Magical & Ferrous Wood (p. 2) |
 | ✓ | `magma_generator_rcp` | Magma Generator (p. 2) |
@@ -305,22 +305,22 @@ datapack recipe IDs in the second table.
 | ✓ | `netherstar_generator_rcp` | Netherstar Generator (p. 2) |
 | ✓ | `obsidian_glass_rcp` | Utility Glass (p. 3) |
 | ✓ | `overclocked_generator_rcp` | Overclocked Generator (p. 2) |
-| Open | `overworld_portal_rcp` |  |
+| ✓ | `overworld_portal_rcp` | Portal & Portable Globe (p. 2) |
 | ✓ | `pink_generator_rcp` | Pink Generator (p. 2) |
 | ✓ | `polished_stone_rcp` | Stonework (p. 2) |
-| Open | `portable_globe_rcp` |  |
+| ✓ | `portable_globe_rcp` | Portal & Portable Globe (p. 4) |
 | ✓ | `potion_generator_rcp` | Potion Generator (p. 2) |
-| Open | `precision_shears_rcp` |  |
+| ✓ | `precision_shears_rcp` | Precision Shears (p. 2) |
 | ✓ | `rainbow_bot_rcp` | Rainbow Generator (p. 2) |
 | ✓ | `rainbow_rcp` | Rainbow Generator (p. 3) |
 | ✓ | `rainbow_top_rcp` | Rainbow Generator (p. 2) |
-| Open | `redstone_clock_rcp` |  |
+| ✓ | `redstone_clock_rcp` | Redstone Clock (p. 2) |
 | ✓ | `reinforced_dark_glass_rcp` | Utility Glass (p. 2) |
 | ✓ | `reinforced_drum_rcp` | Fluid Drums (p. 4) |
-| Open | `reinforced_glass_cutter_rcp` |  |
+| ✓ | `reinforced_glass_cutter_rcp` | Glass Cutters (p. 2) |
 | ✓ | `resonating_redstone_crystal_rcp` | Redstone Components (p. 2) |
 | ✓ | `resonator_rcp` | Resonator (p. 2) |
-| Open | `reversing_hoe_rcp` |  |
+| ✓ | `reversing_hoe_rcp` | Reversing Hoe (p. 2) |
 | ✓ | `sandy_glass_rcp` | Utility Glass (p. 4) |
 | ✓ | `slimey_generator_rcp` | Slimey Generator (p. 2) |
 | ✓ | `solar_panel_rcp` | Solar and Lunar Panels (p. 2) |
@@ -329,7 +329,7 @@ datapack recipe IDs in the second table.
 | ✓ | `speed_upgrade_rcp` | Generator Speed Upgrades (p. 2) |
 | ✓ | `square_glass_rcp` | Decorative Glass (p. 4) |
 | ✓ | `stone_drum_rcp` | Fluid Drums (p. 3) |
-| Open | `stone_spike_rcp` |  |
+| ✓ | `stone_spike_rcp` | Mob Spikes (p. 2) |
 | ✓ | `survival_generator_rcp` | Survival Generator (p. 2) |
 | ✓ | `swirling_glass_rcp` | Decorative Glass (p. 6) |
 | ✓ | `trash_can_rcp` | Trash Cans (p. 2) |
@@ -341,6 +341,6 @@ datapack recipe IDs in the second table.
 | ✓ | `upgrade_base_rcp` | Quarry Upgrades (p. 2) |
 | ✓ | `upgrade_speed_magic_rcp` | Generator Speed Upgrades (p. 3) |
 | ✓ | `wireless_fe_battery_rcp` | Wireless FE Battery (p. 2) |
-| Open | `wood_spike_rcp` |  |
+| ✓ | `wood_spike_rcp` | Mob Spikes (p. 2) |
 | ✓ | `world_hole_upgrade_rcp` | Quarry Upgrades (p. 4) |
 | ✓ | `wrench_rcp` | Wrench (p. 2) |

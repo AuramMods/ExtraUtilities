@@ -1,0 +1,19 @@
+{
+  "name": "Erosion Shovel",
+  "category": "extrautilitiesrebirth:equipment",
+  "icon": "extrautilitiesrebirth:erosion_shovel",
+  "sortnum": 21,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The Erosion Shovel voids dirt-tag, sand-tag, and gravel drops. Dig one of those blocks and it also clears contiguous sand or gravel directly above it. The extra blocks cost durability. The shovel leaves ores and other blocks alone."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:erosion_shovel_rcp"
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:erosion_shovel": 0
+  }
+}
