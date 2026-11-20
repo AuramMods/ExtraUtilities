@@ -1,5 +1,6 @@
 {
-  "name": "Mining",
-  "description": "Lay out an excavation and automate block harvesting.",
-  "icon": "extrautilitiesrebirth:ender_quarry"
+  "name": "Mining & Fluids",
+  "description": "Mark an excavation, move water or lava, and grow Ender Lilies.",
+  "icon": "extrautilitiesrebirth:ender_quarry",
+  "sortnum": 50
 }

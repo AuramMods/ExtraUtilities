@@ -1,0 +1,32 @@
+{
+  "name": "Ender Markers",
+  "category": "extrautilitiesrebirth:mining",
+  "icon": "extrautilitiesrebirth:ender_marker",
+  "sortnum": 10,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Four Ender Markers outline the dig area for the Ender Quarry or Ender Thermic Pump.$(br2)Put adjacent corners on the same X or Z coordinate. Keep the four markers at the same height, with at least one block inside the rectangle."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_marker_rcp",
+      "text": "Craft enough markers for four corners. Right-click the one your machine will touch."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Link a Corner",
+      "text": "The scan checks up to 512 blocks along each axis. It reports the coordinates of the corners it finds and ends with $(thing)State: Complete$() when the rectangle is valid.$(br2)Move stray nearby markers out of the scan lines if they are picked up first."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:mining/ender_quarry",
+        "extrautilitiesrebirth:mining/ender_thermic_pump"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_marker": 0
+  }
+}

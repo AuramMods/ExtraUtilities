@@ -1,0 +1,23 @@
+{
+  "name": "Quantum Quarry (WIP)",
+  "category": "extrautilitiesrebirth:mining",
+  "icon": "extrautilitiesrebirth:quantum_quarry",
+  "sortnum": 90,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:quantum_quarry",
+      "text": "The Quantum Quarry is a work-in-progress block available in Creative. It has an assembly check and a prototype menu. For a working mining machine, build the $(l:extrautilitiesrebirth:mining/ender_quarry)Ender Quarry$(/l)."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:quantum_quarry_actuator",
+      "title": "Quantum Quarry Actuator",
+      "text": "The Quantum Quarry Actuator is the companion Creative block. The assembly check expects an actuator against each of the six faces. This assembly has no production recipe or mining output."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:quantum_quarry": 0,
+    "extrautilitiesrebirth:quantum_quarry_actuator": 1
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "name": "Ender Thermic Pump",
+  "category": "extrautilitiesrebirth:mining",
+  "icon": "extrautilitiesrebirth:ender_thermic_pump",
+  "sortnum": 30,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The pump scans below a marked rectangle for water or lava. Link $(l:extrautilitiesrebirth:mining/ender_markers)four Ender Markers$(/l) as for a quarry and place the pump beside the linked corner.$(br2)Right-click to start it. Supply FE and set a tank directly above the pump."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_thermic_pump_rcp",
+      "text": "The Ender Quarry recipe consumes two completed pumps."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Receiver Placement",
+      "multiblock": {
+        "pattern": [
+          [
+            "D"
+          ],
+          [
+            "0"
+          ]
+        ],
+        "mapping": {
+          "D": "extrautilitiesrebirth:stone_drum",
+          "0": "extrautilitiesrebirth:ender_thermic_pump"
+        }
+      },
+      "text": "The receiver must accept fluid from below. Supply FE and attach the corner marker on free faces."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Collecting Fluid",
+      "text": "The first source the pump takes selects water or lava for that run. It skips flowing liquid and waterlogged blocks. Each collected source yields one bucket.$(br2)The pump starts one block below itself and scans down to the world’s minimum build height."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Tank and Backfill",
+      "text": "The pump keeps up to $(thing)64 buckets$() in its internal tank and stops when the next bucket will not fit. It resumes when a receiver accepts fluid.$(br2)A drained source becomes stone. An adjacent $(l:extrautilitiesrebirth:mining/quarry_upgrades)World Hole Upgrade$(/l) leaves air instead."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Troubleshooting",
+      "text": "If the scan stalls, check the FE supply and keep the target chunk loaded. Check that the tank above can accept the selected fluid from its underside.$(br2)Right-click the pump to see whether it is active, blocked, or finished."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_thermic_pump": 1
+  }
+}

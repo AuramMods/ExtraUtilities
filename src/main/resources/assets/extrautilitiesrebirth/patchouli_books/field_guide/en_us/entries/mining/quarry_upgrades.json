@@ -1,0 +1,61 @@
+{
+  "name": "Quarry Upgrades",
+  "category": "extrautilitiesrebirth:mining",
+  "icon": "extrautilitiesrebirth:ender_quarry_speed_upgrade",
+  "sortnum": 20,
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "Place an upgrade block directly against a free face of the quarry. The Upgrade Base is used in crafting. Leave room for the marker, FE, and the output inventory."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:upgrade_base_rcp",
+      "recipe2": "extrautilitiesrebirth:ender_quarry_speed_one_rcp",
+      "title": "Base and Speed I"
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade",
+      "title": "Silk Touch",
+      "text": "Silk Touch uses the block’s Silk Touch loot rules so eligible ores and blocks can be collected intact. It multiplies the quarry’s power draw by five. This variant is available in Creative."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:world_hole_upgrade_rcp",
+      "text": "Leaves the excavation open. It also doubles the power draw and reduces the speed setting."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade_2",
+      "title": "Speed II",
+      "text": "Speed II raises the speed setting by four and triples the base power draw. It is available in Creative."
+    },
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade_3",
+      "title": "Speed III",
+      "text": "Speed III raises the speed setting by eight and increases the base power draw fivefold. It is available in Creative."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Speed I",
+      "text": "Speed I raises the speed setting by two and doubles the base power draw. Faster work can also increase the number of steps attempted per tick.$(br2)$(l:extrautilitiesrebirth:mining/ender_quarry)Check your quarry$(/l) for power or blocked output after adding upgrades."
+    },
+    {
+      "type": "patchouli:relations",
+      "entries": [
+        "extrautilitiesrebirth:mining/ender_quarry",
+        "extrautilitiesrebirth:mining/ender_thermic_pump"
+      ]
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_quarry_upgrade_base": 1,
+    "extrautilitiesrebirth:ender_quarry_speed_upgrade": 6,
+    "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade": 2,
+    "extrautilitiesrebirth:ender_quarry_world_hole_upgrade": 3,
+    "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade_2": 4,
+    "extrautilitiesrebirth:ender_quarry_silk_touch_upgrade_3": 5
+  }
+}

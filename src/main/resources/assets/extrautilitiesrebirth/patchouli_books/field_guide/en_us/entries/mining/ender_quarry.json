@@ -2,25 +2,74 @@
   "name": "Ender Quarry",
   "category": "extrautilitiesrebirth:mining",
   "icon": "extrautilitiesrebirth:ender_quarry",
+  "sortnum": 0,
   "pages": [
     {
       "type": "patchouli:text",
-      "text": "The $(item)Ender Quarry$() uses Forge Energy to dig inside a marked rectangle. It starts one block below the quarry, sends the drops into an adjacent inventory, and fills the excavation with dirt."
+      "text": "The Ender Quarry mines the interior of a rectangle while leaving the surface in place. It starts one block below the machine and works downward to the bottom of the dimension.$(br2)Bring four $(l:extrautilitiesrebirth:mining/ender_markers)Ender Markers$(/l), a chest, and a source of Forge Energy (FE)."
     },
     {
       "type": "patchouli:crafting",
       "recipe": "extrautilitiesrebirth:ender_quarry_rcp",
-      "text": "Any sapling works in the top slot. Bring four Ender Markers to the site."
+      "text": "Any sapling fits the top-center slot. The two Ender Thermic Pumps are crafting ingredients."
+    },
+    {
+      "type": "patchouli:multiblock",
+      "name": "Example Dig Site",
+      "multiblock": {
+        "pattern": [
+          [
+            "_____",
+            "_____",
+            "_____",
+            "_____",
+            "_____",
+            "C____"
+          ],
+          [
+            "M___M",
+            "_____",
+            "_____",
+            "_____",
+            "M___M",
+            "0____"
+          ]
+        ],
+        "mapping": {
+          "M": "extrautilitiesrebirth:ender_marker",
+          "0": "extrautilitiesrebirth:ender_quarry",
+          "C": "minecraft:chest"
+        }
+      },
+      "text": "Click the marker directly beside the quarry. The chest sits on top. Use a free face for power."
     },
     {
       "type": "patchouli:text",
-      "title": "Mark the Site",
-      "text": "$(li)Place an $(item)Ender Marker$() at each corner of a rectangle. Keep all four at the same height.$(li)Right-click the corner where you want the quarry. Check that the scan finds all four markers.$(li)Place the quarry next to that marker on the outside of the rectangle. Right-click the quarry to start it."
+      "title": "Start the Quarry",
+      "text": "$(li)Place four markers on the same Y level, one per corner.$(li)Right-click the corner beside the machine. Wait for $(thing)State: Complete$().$(li)Place the quarry against that corner, outside the rectangle. Right-click it to start."
     },
     {
       "type": "patchouli:text",
-      "title": "Run the Quarry",
-      "text": "Supply FE and place a chest or other inventory against a free face. A full output pauses mining until space opens up.$(br2)Place upgrade blocks against free faces. $(item)Speed$() increases throughput, $(item)Silk Touch$() preserves eligible blocks, and $(item)World Hole$() leaves the excavation open."
+      "title": "Power and Output",
+      "text": "Supply FE on a free face. The quarry holds up to $(thing)100 million FE$(). A standard quarry spends $(thing)260 FE per working tick$() and scans one position every 20 working ticks.$(br2)A chest or other inventory can receive items through any adjacent face."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "What It Leaves",
+      "text": "Unbreakable blocks and air are skipped. The quarry normally replaces harvested blocks with dirt. Drops that cannot be inserted stay buffered. A full or filtered output stops the quarry until there is space for the pending items."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Install Upgrades",
+      "text": "Put dedicated $(l:extrautilitiesrebirth:mining/quarry_upgrades)quarry upgrades$(/l) on free faces. Speed raises the power draw. Silk Touch keeps eligible blocks intact. World Hole replaces harvested blocks with air.$(br2)Leave separate faces free for your power connection and chest."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Troubleshooting",
+      "text": "$(li)Missing marker: align the four corners and click the corner touching the machine.$(li)No progress: check FE, especially after adding upgrades.$(li)Blocked output: empty the chest or open its input side.$(li)Right-click the quarry to see its current state."
     }
-  ]
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_quarry": 1
+  }
 }

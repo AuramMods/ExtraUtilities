@@ -1,0 +1,40 @@
+{
+  "name": "Ender Lilies",
+  "category": "extrautilitiesrebirth:mining",
+  "icon": "extrautilitiesrebirth:ender_lilly_stage_1",
+  "sortnum": 40,
+  "pages": [
+    {
+      "type": "patchouli:spotlight",
+      "item": "extrautilitiesrebirth:ender_lilly_endstone",
+      "title": "Find a Seed",
+      "text": "Look for Ender Lily Endstone in newly generated End terrain. Ore placement attempts are between Y=0 and Y=60. Breaking the ore yields an Ender Lily Seed."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_lilly_seed_rcp",
+      "text": "If you have a block of Ender Lily Endstone, you can also convert it into a seed."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Growing Ender Lilies",
+      "text": "Plant the seed on End Stone or Ender Core. Ender Core speeds growth. The plant grows through eight stages.$(br2)Right-click a ripe plant to take one Ender Pearl and restart growth. Avoid touching ripe plants because they deal damage."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Harvest and Replant",
+      "text": "Break a fully grown lily or remove its support to recover the seed and one Ender Pearl. An immature plant drops its seed.$(br2)The later growth stages are exposed as separate blocks in Creative."
+    }
+  ],
+  "extra_recipe_mappings": {
+    "extrautilitiesrebirth:ender_lilly_endstone": 0,
+    "extrautilitiesrebirth:ender_lilly_stage_1": 2,
+    "extrautilitiesrebirth:ender_lilly_stage_2": 3,
+    "extrautilitiesrebirth:ender_lilly_stage_3": 3,
+    "extrautilitiesrebirth:ender_lilly_stage_4": 3,
+    "extrautilitiesrebirth:ender_lilly_stage_5": 3,
+    "extrautilitiesrebirth:ender_lilly_stage_6": 3,
+    "extrautilitiesrebirth:ender_lilly_stage_7": 3,
+    "extrautilitiesrebirth:ender_lilly_stage_8": 3
+  }
+}
