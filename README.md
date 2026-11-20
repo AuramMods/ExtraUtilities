@@ -100,6 +100,13 @@ Includes many generator types such as:
 - `extra-mods-1.20.1/` - local jar dependencies loaded as runtime mods for dev.
 - `models/` - model source assets used by elements/resources.
 
+## In-game field guide
+
+With Patchouli installed, combine a book, redstone dust, and cyan dye in any
+crafting grid to make the Extra Utilities Guide. It is also in the Extra
+Utilities creative tab. The first entry covers crafting and operating the
+original Ender Quarry.
+
 ## Setting up the Ender Quarry
 
 Place four Ender Markers at the corners of a rectangle at the same height.

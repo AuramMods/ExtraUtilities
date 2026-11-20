@@ -1,0 +1,21 @@
+{
+  "name": "book.extrautilitiesrebirth.field_guide.name",
+  "landing_text": "book.extrautilitiesrebirth.field_guide.landing",
+  "model": "extrautilitiesrebirth:field_guide",
+  "creative_tab": "extrautilitiesrebirth:auram_tab",
+  "use_resource_pack": true,
+  "book_texture": "extrautilitiesrebirth:textures/gui/field_guide/book.png",
+  "filler_texture": "extrautilitiesrebirth:textures/gui/field_guide/page_filler.png",
+  "crafting_texture": "extrautilitiesrebirth:textures/gui/field_guide/crafting.png",
+  "text_color": "243b3e",
+  "header_color": "2f5559",
+  "nameplate_color": "e2f2f0",
+  "link_color": "246d73",
+  "link_hover_color": "357f87",
+  "show_progress": false,
+  "show_toasts": false,
+  "macros": {
+    "$(item)": "$(#29666d)",
+    "$(thing)": "$(#3d6267)"
+  }
+}

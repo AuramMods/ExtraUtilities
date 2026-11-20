@@ -15,10 +15,15 @@ import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 import net.minecraftforge.gametest.GameTestHolder;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @GameTestHolder(ExtrautilitiesrebirthMod.MODID)
 @PrefixGameTestTemplate(false)
 public class CraftingProgressionGameTests {
+    private static final ResourceLocation FIELD_GUIDE = ResourceLocation.tryBuild(ExtrautilitiesrebirthMod.MODID, "field_guide");
+    private static final ResourceLocation PATCHOULI_BOOK = ResourceLocation.tryBuild("patchouli", "guide_book");
+
     @GameTest(template = "machine_test")
     public static void bundledRecipesLoadAndCraftAtTheirVanillaWorkstations(GameTestHelper test) {
         var level = test.getLevel();
@@ -28,6 +33,10 @@ public class CraftingProgressionGameTests {
         test.assertTrue(!files.isEmpty(), "The mod's recipe resources should be loaded");
         for (var file : files.keySet()) {
             var id = ResourceLocation.tryBuild(file.getNamespace(), file.getPath().substring("recipes/".length(), file.getPath().length() - ".json".length()));
+            if (FIELD_GUIDE.equals(id) && !ModList.get().isLoaded("patchouli")) {
+                test.assertTrue(recipes.byKey(id).isEmpty(), "The guide recipe should be absent without Patchouli");
+                continue;
+            }
             var recipe = recipes.byKey(id).orElseThrow(() -> new AssertionError("Recipe failed to load " + id));
             ItemStack result;
             if (recipe instanceof CraftingRecipe crafting) {
@@ -55,6 +64,11 @@ public class CraftingProgressionGameTests {
             var expected = recipe.getResultItem(level.registryAccess());
             test.assertTrue(!result.isEmpty() && ItemStack.matches(result, expected),
                     "Recipe " + id + " produced " + result + " at its workstation, expected " + expected);
+            if (FIELD_GUIDE.equals(id)) {
+                test.assertTrue(PATCHOULI_BOOK.equals(ForgeRegistries.ITEMS.getKey(result.getItem()))
+                                && result.hasTag() && FIELD_GUIDE.toString().equals(result.getTag().getString("patchouli:book")),
+                        "The guide recipe should craft the Extra Utilities Guide");
+            }
         }
         test.succeed();
     }

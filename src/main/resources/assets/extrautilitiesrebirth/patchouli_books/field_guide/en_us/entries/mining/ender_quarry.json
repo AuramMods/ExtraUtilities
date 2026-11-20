@@ -1,0 +1,26 @@
+{
+  "name": "Ender Quarry",
+  "category": "extrautilitiesrebirth:mining",
+  "icon": "extrautilitiesrebirth:ender_quarry",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "The $(item)Ender Quarry$() uses Forge Energy to dig inside a marked rectangle. It starts one block below the quarry, sends the drops into an adjacent inventory, and fills the excavation with dirt."
+    },
+    {
+      "type": "patchouli:crafting",
+      "recipe": "extrautilitiesrebirth:ender_quarry_rcp",
+      "text": "Any sapling works in the top slot. Bring four Ender Markers to the site."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Mark the Site",
+      "text": "$(li)Place an $(item)Ender Marker$() at each corner of a rectangle. Keep all four at the same height.$(li)Right-click the corner where you want the quarry. Check that the scan finds all four markers.$(li)Place the quarry next to that marker on the outside of the rectangle. Right-click the quarry to start it."
+    },
+    {
+      "type": "patchouli:text",
+      "title": "Run the Quarry",
+      "text": "Supply FE and place a chest or other inventory against a free face. A full output pauses mining until space opens up.$(br2)Place upgrade blocks against free faces. $(item)Speed$() increases throughput, $(item)Silk Touch$() preserves eligible blocks, and $(item)World Hole$() leaves the excavation open."
+    }
+  ]
+}

@@ -1,4 +1,6 @@
 {
+  "book.extrautilitiesrebirth.field_guide.name": "Extra Utilities Guide",
+  "book.extrautilitiesrebirth.field_guide.landing": "Plan, power, and run your first excavation with the $(l:extrautilitiesrebirth:mining/ender_quarry)Ender Quarry$(/l).",
   "block.extrautilitiesrebirth.polished_stone": "Polished Stone",
   "item.extrautilitiesrebirth.healing_axe": "Healing Axe",
   "block.extrautilitiesrebirth.angel_block": "Angel Block",

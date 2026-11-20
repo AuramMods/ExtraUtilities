@@ -35,3 +35,10 @@ RELEASE
     ordering="NONE"
     side="BOTH"
 
+
+[[dependencies.extrautilitiesrebirth]]
+    modId="patchouli"
+    mandatory=false
+    versionRange="[0,)"
+    ordering="AFTER"
+    side="BOTH"

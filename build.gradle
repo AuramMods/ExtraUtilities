@@ -24,7 +24,8 @@ sourceSets {
     }
 }
 
-def gameTestProfile = providers.gradleProperty('minimalRuntime').map { it.toBoolean() ? 'minimal' : 'integrations' }.orElse('integrations')
+def minimalRuntime = providers.gradleProperty('minimalRuntime').map { it.toBoolean() }.orElse(false)
+def gameTestProfile = minimalRuntime.map { it ? 'minimal' : 'integrations' }
 
 minecraft {
     mappings channel: 'official', version: '1.20.1'
@@ -75,8 +76,20 @@ minecraft {
     }
 }
 
+repositories {
+    maven {
+        url 'https://www.cursemaven.com'
+        content {
+            includeModule 'curse.maven', 'patchouli-306770'
+        }
+    }
+}
+
 dependencies {
     minecraft "net.minecraftforge:forge:1.20.1-47.4.10"
+    if (!minimalRuntime.get()) {
+        runtimeOnly fg.deobf('curse.maven:patchouli-306770:6164575')
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
