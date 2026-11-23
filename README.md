@@ -136,7 +136,9 @@ the bundled workspace.
 
 ## Build Instructions
 
-Run the Gradle wrapper with a Java 17 JDK.
+Run all builds, tests, and release packaging locally with the Gradle wrapper
+and a Java 17 JDK. Keep GitHub Actions workflows out of this repository.
+Upload locally built release jars to GitHub Releases.
 
 ```bash
 ./gradlew build
