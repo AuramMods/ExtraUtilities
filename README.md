@@ -10,7 +10,7 @@ This project is built with MCreator-generated structure plus custom Java code an
 |---|---|---|
 | Mod ID | `extrautilitiesrebirth` | `src/main/resources/META-INF/mods.toml` |
 | Display Name | `Extra Utilities Rebirth` | `src/main/resources/META-INF/mods.toml` |
-| Mod and artifact version | `1.7.5` | `build.gradle` |
+| Mod and artifact version | `1.7.6` | `build.gradle` |
 | Minecraft Version | `1.20.1` | `build.gradle` / `mods.toml` |
 | Forge Version | `1.20.1-47.4.10` | `build.gradle` |
 | Java Version | `17` | `build.gradle` |
@@ -146,7 +146,7 @@ Upload locally built release jars to GitHub Releases.
 ./gradlew runGameTestServer -PminimalRuntime=true
 ```
 
-The build produces `build/libs/extrautilitiesrebirth-1.7.5.jar`. The GameTest
+The build produces `build/libs/extrautilitiesrebirth-1.7.6.jar`. The GameTest
 server runs without a window and stores separate worlds for the two profiles in
 `build/forge-gametest`. The minimal runtime run leaves out JEI and the optional
 development mod jars.
